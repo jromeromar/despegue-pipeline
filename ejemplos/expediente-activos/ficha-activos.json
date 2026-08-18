@@ -23,6 +23,7 @@
     "Icetex"
    ],
    "evidencia": "«la mayor parte de inmuebles que vendemos son inmuebles del Estado que sí o sí se deben hacer por subasta electrónica»",
+   "evidencia_dependencias": "«el 95% de la llave la maneja directamente SAE» — «hay que esperar la agenda de las territoriales»",
    "volumen_declarado": "portafolio público de 6.300 inmuebles"
   },
   {
@@ -77,6 +78,11 @@
   "comparte_base_contactos": true,
   "catalogo_estructurado": "si",
   "canal_dominante": "WhatsApp (número principal único)",
+  "seguimiento_post_primer_contacto": {
+   "modo_declarado": "manual",
+   "secuencia_automatica": "no_capturado",
+   "evidencia": "«ya hemos logrado de manera manual ir mitigando los leads»"
+  },
   "mls_brokers": {
    "existe": true,
    "sistema": "Wasi",
@@ -130,6 +136,11 @@
    }
   ],
   "equipo_atencion": "10 personas atendiendo canales (declarado sesión 1)",
+  "reportes": {
+   "modo": "cada territorial arma su propio informe en Excel",
+   "consolidacion": "no",
+   "evidencia": "«no hay un sistema íntegro que las maneje» — «la realidad es que no existe métrica»"
+  },
   "puntos_de_aprobacion": "no_capturado",
   "indicadores_impuestos_externamente": [
    {
@@ -142,7 +153,9 @@
    "existe": true,
    "cual": "Sagrilaft (SARLAFT) — estudio de lavado de activos",
    "momento": "al registrarse para actuar comercialmente",
-   "evidencia": "«el registro va anclado a un estudio de Sagrilaft»"
+   "pasos_declarados": 14,
+   "evidencia": "«el registro va anclado a un estudio de Sagrilaft»",
+   "evidencia_pasos": "«son 14 pasos de formulario, esto es peor que un formulario de Bancolombia»"
   }
  },
  "C_territorio": {
@@ -220,7 +233,8 @@
    "meta_ads": "formulario nativo (lead form)",
    "google_ads": "tráfico al sitio",
    "sitio_web": "sin formulario — solo botón a WhatsApp",
-   "portales": "correo o WhatsApp del portal"
+   "portales": "correo o WhatsApp del portal",
+   "evidencia": "«No tienen cómo saber qué fuente de tráfico genera más ventas tampoco» — «Correcto»"
   }
  },
  "E_multiplicadores": {
@@ -242,6 +256,7 @@
   "detalle_modo": "cero datos de ticket, margen, comisión o ad spend en 90 minutos de sesión",
   "volumenes_capturados": {
    "represados": 3900,
+   "evidencia_represados": "«Ahora mismo tenemos como 4.000 leads ahí abiertos y no tenemos el personal para atender a 4.000 personas»",
    "leads_portales_ultimo_mes": 145,
    "leads_portales_promedio_mes": 306,
    "leads_portales_jun_jul": 822,

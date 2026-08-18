@@ -90,7 +90,7 @@
    "categoria": "fuga",
    "dominante": false,
    "estado": "activa",
-   "evidencia_ficha": "A_lineas_de_negocio (sin secuencia en ninguna línea)",
+   "evidencia_ficha": "A_lineas_de_negocio (sin secuencia en ninguna línea) + A_notas.seguimiento_post_primer_contacto",
    "evidencia_textual": "«ya hemos logrado de manera manual ir mitigando los leads»",
    "cuantificacion": {
     "valor": "las mismas 3.900 de F-08: aquí se referencia, no se suma",
@@ -133,7 +133,7 @@
    "categoria": "ceguera",
    "dominante": false,
    "estado": "activa",
-   "evidencia_ficha": "B_estructura (informes individuales en Excel por territorial)",
+   "evidencia_ficha": "B_estructura.reportes (informes individuales en Excel por territorial)",
    "evidencia_textual": "«no hay un sistema íntegro que las maneje» — «la realidad es que no existe métrica»",
    "cuantificacion": {
     "valor": "cero visibilidad de asistencia a citas",
