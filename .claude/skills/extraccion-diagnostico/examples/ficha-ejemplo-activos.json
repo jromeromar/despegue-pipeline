@@ -1,0 +1,272 @@
+{
+ "_meta": {
+  "cliente": "Activos por Colombia S.A.S.",
+  "fuentes": [
+   "Sesión estratégica 11-ago-2026, 23m42s (Jhonny Florez, TI)",
+   "Sesión estratégica 12-ago-2026, ~1h05 (Jhonny, Jesús, Tatiana, Alexandra, Jeffrey, Steven, Thalia)"
+  ],
+  "extraido_por": "etapa-1-extraccion-diagnostico",
+  "regla": "solo lo dicho. Lo no dicho se marca no_capturado, nunca se infiere.",
+  "version_ficha": "0.2.1"
+ },
+ "A_lineas_de_negocio": [
+  {
+   "id": "venta-subasta-sae",
+   "nombre": "Venta de inmuebles del Estado (SAE y entidades)",
+   "sujeto_del_embudo": "demandante",
+   "control_del_activo": "tercero_institucional",
+   "mecanismo_de_cierre": "subasta",
+   "dependencias_externas": [
+    "SAE: 95% de las llaves",
+    "territoriales: agendan la visita",
+    "Fondo de Reparación de Víctimas",
+    "Icetex"
+   ],
+   "evidencia": "«la mayor parte de inmuebles que vendemos son inmuebles del Estado que sí o sí se deben hacer por subasta electrónica»",
+   "volumen_declarado": "portafolio público de 6.300 inmuebles"
+  },
+  {
+   "id": "venta-privados",
+   "nombre": "Venta de inmuebles de privados (captación de terceros)",
+   "sujeto_del_embudo": "demandante",
+   "control_del_activo": "tercero_privado",
+   "mecanismo_de_cierre": "venta_directa",
+   "dependencias_externas": [],
+   "evidencia": "«las únicas ventas directas que hacemos son las de inmuebles que son de privados»"
+  },
+  {
+   "id": "venta-societarios",
+   "nombre": "Venta de inmuebles societarios propios",
+   "sujeto_del_embudo": "demandante",
+   "control_del_activo": "propio",
+   "mecanismo_de_cierre": "venta_directa",
+   "dependencias_externas": [],
+   "evidencia": "«los inmuebles societarios propios, de los cuales sí podemos hacer programaciones, porque sí contamos con las llaves»"
+  },
+  {
+   "id": "arriendo",
+   "nombre": "Arrendamiento",
+   "sujeto_del_embudo": "demandante",
+   "control_del_activo": "mixto",
+   "mecanismo_de_cierre": "contrato_recurrente",
+   "dependencias_externas": [
+    "SAE/territoriales para llaves en inmuebles del Estado"
+   ],
+   "evidencia": "línea con equipo propio (Tatiana): 20–30 conversaciones/día"
+  },
+  {
+   "id": "captacion",
+   "nombre": "Captación de inmuebles (propietarios)",
+   "sujeto_del_embudo": "oferente",
+   "control_del_activo": "tercero_privado",
+   "mecanismo_de_cierre": "contrato_recurrente",
+   "dependencias_externas": [],
+   "evidencia": "Steven: recorridos de precaptación, letreros de «se vende/se arrienda», corretaje comercial e industrial"
+  },
+  {
+   "id": "administracion",
+   "nombre": "Administración de inmuebles comercial/industrial",
+   "sujeto_del_embudo": "demandante",
+   "control_del_activo": "propio",
+   "mecanismo_de_cierre": "contrato_recurrente",
+   "dependencias_externas": [],
+   "evidencia": "mencionada como línea; detalle no_capturado"
+  }
+ ],
+ "A_notas": {
+  "comparte_base_contactos": true,
+  "catalogo_estructurado": "si",
+  "canal_dominante": "WhatsApp (número principal único)",
+  "mls_brokers": {
+   "existe": true,
+   "sistema": "Wasi",
+   "modo": "se activan usuarios y se dejan las líneas de cada broker; el broker luego llama a Activos",
+   "evidencia": "«tenemos una MLS con un grupo de brokers en el país»"
+  }
+ },
+ "B_estructura": {
+  "personas_declaradas": [
+   {
+    "nombre": "Jhonny Florez",
+    "funcion": "sistema",
+    "cargo": "Coordinador de TI",
+    "presente": true
+   },
+   {
+    "nombre": "Jesús Hernández",
+    "funcion": "coordinador",
+    "cargo": "Mercadeo/comunicaciones",
+    "presente": true
+   },
+   {
+    "nombre": "Tatiana Sierra",
+    "funcion": "coordinador",
+    "cargo": "Arriendos (área administrativa)",
+    "presente": true
+   },
+   {
+    "nombre": "Alexandra Balza",
+    "funcion": "asesor",
+    "cargo": "Ventas",
+    "presente": true
+   },
+   {
+    "nombre": "Jeffrey Guerrero",
+    "funcion": "habilitador_de_activo",
+    "cargo": "Operaciones",
+    "presente": true
+   },
+   {
+    "nombre": "Steven",
+    "funcion": "captador",
+    "cargo": "Captación/corretaje",
+    "presente": true
+   },
+   {
+    "nombre": "Territoriales",
+    "funcion": "externo_afiliado",
+    "cargo": "Agendan visitas y gestionan llaves",
+    "presente": false
+   }
+  ],
+  "equipo_atencion": "10 personas atendiendo canales (declarado sesión 1)",
+  "puntos_de_aprobacion": "no_capturado",
+  "indicadores_impuestos_externamente": [
+   {
+    "cual": "Cumplimiento con SAE sobre gestión de leads",
+    "efecto_perverso_declarado": "no_capturado en esta sesión",
+    "evidencia": "jerarquía de solicitud: comercial Activos → comercial SAE → territorial"
+   }
+  ],
+  "cumplimiento": {
+   "existe": true,
+   "cual": "Sagrilaft (SARLAFT) — estudio de lavado de activos",
+   "momento": "al registrarse para actuar comercialmente",
+   "evidencia": "«el registro va anclado a un estudio de Sagrilaft»"
+  }
+ },
+ "C_territorio": {
+  "cobertura": "nacional",
+  "modelo": "territoriales por región (externas, no empleadas por Activos)",
+  "evidencia": "«cubrimiento nacional, que eso es un plus»",
+  "sedes": "Barranquilla (Alto Prado)"
+ },
+ "D_stack": {
+  "sistemas": [
+   {
+    "nombre": "Activit",
+    "rol": "plataforma propia: registro de cliente, Sagrilaft, subasta electrónica",
+    "estado": "activo",
+    "integrable": "no_capturado",
+    "es_donde_ocurre_el_cierre": true
+   },
+   {
+    "nombre": "Domus",
+    "rol": "CRM inmobiliario",
+    "estado": "abandonado",
+    "integrable": "no_capturado",
+    "evidencia": "«antes teníamos control de clientes en Domus… con 5.000 inmuebles eso no se puede hacer»"
+   },
+   {
+    "nombre": "Wasi",
+    "rol": "CRM/MLS con brokers y conexión a portales",
+    "estado": "activo",
+    "integrable": "no_capturado"
+   },
+   {
+    "nombre": "Actichat (sobre inops)",
+    "rol": "agente de IA en WhatsApp",
+    "estado": "apagado",
+    "integrable": "n/a",
+    "evidencia": "«el agente no es efectivo, la conversación no es fluida»"
+   }
+  ],
+  "portales": [
+   "Fincaraíz",
+   "Metrocuadrado",
+   "Properati",
+   "Ciencuadras",
+   "Vivienda…",
+   "otros gratuitos"
+  ],
+  "pauta": [
+   "Meta Ads",
+   "Google Ads",
+   "TikTok"
+  ],
+  "catalogo_del_negocio": {
+   "catalogo_estructurado": "si",
+   "donde_vive": "Activit + Wasi",
+   "items_activos": 6300
+  },
+  "whatsapp_estado": "no_capturado",
+  "whatsapp_limite_conversaciones": "no_capturado",
+  "numeros_publicados": [
+   {
+    "numero": "línea principal WhatsApp",
+    "tipo": "no_capturado",
+    "donde_esta_publicado": "web, pauta, portales, redes"
+   },
+   {
+    "numero": "segunda línea",
+    "tipo": "no_capturado",
+    "donde_esta_publicado": "campañas Meta divididas ventas/arriendos"
+   }
+  ],
+  "numero_dedicado_por_canal": false,
+  "llamadas_medidas": "no",
+  "decision_del_numero": "no_capturado",
+  "captura_por_canal": {
+   "meta_ads": "formulario nativo (lead form)",
+   "google_ads": "tráfico al sitio",
+   "sitio_web": "sin formulario — solo botón a WhatsApp",
+   "portales": "correo o WhatsApp del portal"
+  }
+ },
+ "E_multiplicadores": {
+  "lineas_de_negocio": 6,
+  "sujetos_del_embudo": 2,
+  "mecanismos_de_cierre": 3,
+  "jerarquia": "comercial → territorial externa → SAE",
+  "territorio": "nacional",
+  "control_del_activo": [
+   "propio",
+   "tercero_privado",
+   "tercero_institucional"
+  ],
+  "multiplicador_estimado": 2.3
+ },
+ "F_calidad_del_diagnostico": {
+  "datos_economicos_capturados": "no",
+  "modo_propuesta": "B",
+  "detalle_modo": "cero datos de ticket, margen, comisión o ad spend en 90 minutos de sesión",
+  "volumenes_capturados": {
+   "represados": 3900,
+   "leads_portales_ultimo_mes": 145,
+   "leads_portales_promedio_mes": 306,
+   "leads_portales_jun_jul": 822,
+   "conversaciones_dia_actual": "~100 (antes 10)",
+   "conversaciones_arriendo_dia": "20–30",
+   "serie_portales": {
+    "marzo": 66,
+    "abril": 123,
+    "junio": 145,
+    "julio": 188
+   }
+  },
+  "datos_en_conflicto": [
+   {
+    "tema": "captura por formulario",
+    "estado": "RESUELTO — no era conflicto: cada quien hablaba de un objeto distinto",
+    "resolucion": "La pauta de Meta SÍ usa formulario nativo (lead form). El sitio web NO tiene formulario de contacto: solo un botón que lleva a WhatsApp.",
+    "leccion": "Jhonny respondía por la pauta; Jesús por el sitio. Ambas afirmaciones eran ciertas."
+   }
+  ],
+  "funciones_sin_representacion": [
+   "territoriales (dueñas del agendamiento y de las llaves)"
+  ],
+  "decisor_presente": "no_capturado",
+  "linea_base_caso_exito": "parcial: volúmenes sí, dinero no",
+  "base_legal_contacto_base_historica": "no_capturado"
+ }
+}
