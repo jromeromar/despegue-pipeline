@@ -1,7 +1,7 @@
 {
  "_meta": {
-  "total": 81,
-  "version": "639f4fc256",
+  "total": 82,
+  "version": "429593a761",
   "fuente": ".claude/skills/seleccion-propuesta/references/modulos"
  },
  "componentes": {
@@ -525,10 +525,10 @@
    "costo_externo": null,
    "_archivo": "modulo-gestion.md"
   },
-  "gestion-chatbot-precalificacion": {
-   "id": "gestion-chatbot-precalificacion",
-   "nombre_interno": "Agente IA de precalificación y FAQ con escalamiento a humano",
-   "nombre_cliente": "Un asistente que atiende a todos, califica y entrega listos a tu equipo",
+  "gestion-asistente-informativo": {
+   "id": "gestion-asistente-informativo",
+   "nombre_interno": "Asistente IA informativo: FAQ de proceso, requisitos y estado del catálogo, con escalamiento a humano",
+   "nombre_cliente": "Un asistente que sabe del negocio y responde al instante lo que tu equipo repite todo el día",
    "tipo": "chatbot_ia",
    "plan_minimo": "avanzado",
    "visibilidad_cliente": "front",
@@ -539,6 +539,21 @@
     "F-08",
     "F-14"
    ],
+   "mecanismo_entrega": "contenido_a_medida",
+   "costo_externo": null,
+   "_archivo": "modulo-gestion.md"
+  },
+  "gestion-precalificador": {
+   "id": "gestion-precalificador",
+   "nombre_interno": "Agente IA de precalificación: triage por línea, temperatura y entrega del lead desmenuzado",
+   "nombre_cliente": "Tu equipo solo habla con quien sí va a comprar",
+   "tipo": "chatbot_ia",
+   "plan_minimo": "inteligente",
+   "visibilidad_cliente": "front",
+   "posicion_journey": 26,
+   "se_instancia_por": "[linea_negocio]",
+   "aplica_si": "siempre",
+   "cierra_fugas": [],
    "mecanismo_entrega": "contenido_a_medida",
    "costo_externo": null,
    "_archivo": "modulo-gestion.md"
@@ -933,8 +948,8 @@
    "costo_externo": null,
    "_archivo": "modulo-reactivacion.md"
   },
-  "reactivacion-precalificacion-ia": {
-   "id": "reactivacion-precalificacion-ia",
+  "reactivacion-absorcion-oleadas": {
+   "id": "reactivacion-absorcion-oleadas",
    "nombre_interno": "IA que atiende la avalancha de respuestas: precalifica, actualiza interés y rutea",
    "nombre_cliente": "Cuando 400 dormidos contestan el mismo día, nadie del equipo se ahoga",
    "tipo": "chatbot_ia",

@@ -197,10 +197,20 @@ Reglas del híbrido:
 
 Debe reportar el total y un hash de versión. Ese hash queda registrado en cada
 propuesta: es lo que permite saber si una propuesta vieja se hizo con librería
-vieja. Estado conocido al montar esta carpeta: **81 componentes, hash
-`639f4fc256`, distribución 30 fundamental / 29 avanzado / 21 inteligente**, más
-un componente sin plan (la integración de plataforma propia — correcto por V11:
-lo no nativo no viaja dentro del plan).
+vieja. Estado actual: **82 componentes, hash `429593a761`, distribución 30
+fundamental / 29 avanzado / 22 inteligente**, más un componente sin plan (la
+integración de plataforma propia — correcto por V11: lo no nativo no viaja
+dentro del plan).
+
+Estado anterior: 81 componentes, hash `639f4fc256`, 30/29/21. El salto lo
+produjo la corrección C2 del catálogo de habilidades IA, que dividió
+`gestion-chatbot-precalificacion` en `gestion-asistente-informativo`
+(avanzado) y `gestion-precalificador` (inteligente). **Las propuestas emitidas
+contra `639f4fc256` referencian dos ids que ya no existen** —el dividido y
+`reactivacion-precalificacion-ia`, renombrado por C4—: validarlas contra la
+librería nueva falla, y eso es exactamente para lo que el hash está en cada
+propuesta. Una propuesta vieja no se edita (regla 7): si su alcance sigue
+vigente se emite `-v2` contra la librería nueva.
 
 **Carpeta compartida:** esta carpeta vive en OneDrive compartido. La librería y
 la política son únicas y compartidas a propósito — nadie trabaja sobre copias
