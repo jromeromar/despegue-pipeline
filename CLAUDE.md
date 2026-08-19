@@ -25,6 +25,19 @@ Ejecuta las tres etapas **en orden y sin pedir confirmación entre ellas**,
 corriendo el validador de cada una antes de pasar a la siguiente y
 deteniéndote si alguno falla.
 
+**La regla tiene una sola excepción, y es a propósito: la compuerta de
+confirmación de nombres propios** al cierre de la etapa 1. La regla existe para
+que el pipeline no pida permiso por cosas que ya están decididas; la grafía de un
+nombre propio no está decidida —la transcripción de Teams la destroza— y no hay
+forma de deducirla: hay que preguntarla. Es la única parada interactiva de la
+cadena. No se agregan otras.
+
+**En corrida desatendida** (tarea programada, cron, sin humano al otro lado) la
+compuerta **no bloquea**: las tres etapas corren completas, todos los nombres
+quedan `por_confirmar`, y la entrega lo dice **en su primera línea** — «N nombres
+propios sin confirmar: la propuesta no se presenta hasta revisarlos». Una corrida
+desatendida produce un expediente utilizable, no presentable.
+
 **Etapa 1 — `extraccion-diagnostico`.** Lee su SKILL.md y su contrato de ficha
 completos. Produce `clientes/<cliente>/salida/ficha-<cliente>.json` desde las
 transcripciones de `clientes/<cliente>/entrada/` (si hay varias, se consolidan
@@ -36,6 +49,15 @@ en una sola ficha). Convierte los .docx a texto plano primero. Valida:
 Después haz la auto-revisión J1-J6 de
 `.claude/skills/extraccion-diagnostico/references/criterios-evaluacion.md`:
 una línea por criterio, pasa o duda concreta.
+
+Y **antes de pasar a la etapa 2, corre la compuerta de nombres** (SKILL.md de la
+etapa 1, §Compuerta): una tabla con todos los nombres propios —razón social,
+marca, cada persona, cada sistema— con su grafía, su estado y las variantes
+literales de la transcripción, y una sola pregunta al consultor. Lo que confirme
+pasa a `confirmada` con su fuente escrita; lo que corrija se reescribe
+conservando las variantes; lo que no sepa queda `por_confirmar`. Después
+revalida la ficha y sigue. Corrección aquí = corrección en los tres archivos;
+corrección después = rehacer los tres.
 
 **Etapa 2 — `evaluacion-modular`.** Revalida la ficha (compuerta de entrada),
 lee su SKILL.md y el catálogo de fugas COMPLETO. Produce
@@ -64,9 +86,15 @@ precios los escribe el script:
 **Entrega final, siempre en este formato:**
 
 1. Tabla de los tres archivos con su ruta y su línea de validación.
-2. **Agenda de la segunda llamada**: los `no_capturado` de la ficha
-   priorizados — primero los que cambian plan o precio.
-3. **Decisiones que requieren criterio humano**: plan recomendado con su razón,
+2. **Estado de los nombres propios**: cuántos quedaron `confirmada` y cuántos
+   `por_confirmar`, y la lista de los pendientes con sus variantes. Si hay alguno
+   pendiente, esto va **primero**, antes de la tabla: la grafía se imprime en el
+   lienzo que el cliente lee, y una propuesta con el apellido del dueño mal
+   escrito no se presenta.
+3. **Agenda de la segunda llamada**: los `no_capturado` de la ficha
+   priorizados — primero los que cambian plan o precio. Las grafías sin confirmar
+   van arriba: se resuelven con una foto de una factura o una firma de correo.
+4. **Decisiones que requieren criterio humano**: plan recomendado con su razón,
    ajustes manuales de instancias, advertencias que quedaron en pie.
 
 ---
@@ -85,7 +113,10 @@ precios los escribe el script:
    va en advertencias, no se cuela.
 4. **No inferir en la etapa 1.** Lo que no se dijo en la sesión es
    `no_capturado`, y eso es un producto: es la agenda de la segunda llamada.
-   Una ficha sin huecos es señal de invención.
+   Una ficha sin huecos es señal de invención. Los **nombres propios** son el
+   caso extremo: no se adivina cómo se escribe un apellido ni se elige la
+   variante que suena mejor. Se registra lo oído con sus variantes, y la
+   compuerta de nombres lo pregunta antes de la etapa 2.
 5. **Política comercial:** vive en `politica-comercial.json` y solo la edita
    Jaime. Si falta o está incompleta, detenerse y pedirla — nunca inventar
    precios ni tramos.
