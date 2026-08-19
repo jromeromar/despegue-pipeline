@@ -21,16 +21,29 @@ sesión (vale la última), unidades ambiguas (¿al día o al mes?), y deseos
 expresados como hechos ("queremos un solo número" es deseo en
 `decision_del_numero`, no estado actual).
 
-**Nombres propios: la fidelidad también es ortográfica.** La transcripción
-automática es fonética, y una marca o un apellido mal transcrito viaja hasta el
-lienzo que el cliente lee («Gosen casa de Comidas» → «Gocé en casa de comidas»).
-Verificar `_meta.marca`: ¿la grafía de la ficha es una que alguien de la empresa
-escribió, o solo se oyó? Si solo se oyó, `estado` debe decir `por_confirmar` y
-`variantes_en_transcripcion` debe traer las grafías literales sin corregir. Dos
-fallas simétricas, como en J4: dar por buena la grafía de la transcripción, y
+**Nombres propios: la fidelidad también es ortográfica. Y este criterio ya no es
+solo autorrevisión: es lo que ejecuta la compuerta.** La transcripción automática
+es fonética, y una marca o un apellido mal transcrito viaja hasta el lienzo que el
+cliente lee («Gosen casa de Comidas» → «Gocé en casa de comidas»; la telefonista
+salió «Sharina», «Yanina» y «Danina» en ocho segundos; «Pixo Gestión» salió
+«It's pizza», «BXO», «Pitso» y «Bitso»).
+
+Qué se verifica, en los cuatro lugares donde el contrato v0.3 lo declara
+(`_meta.marca`, `_meta.razon_social`, cada persona, cada sistema): ¿la grafía de
+la ficha es una que **alguien de la empresa escribió**, o solo se oyó? Si solo se
+oyó, el estado dice `por_confirmar` y `variantes_en_transcripcion` trae las
+grafías literales sin corregir. Si dice `confirmada`, `fuente_escrita` nombra
+dónde se vio escrita — y el título de la reunión de Teams no cuenta: lo escribió
+Ropofy.
+
+Dos fallas simétricas, como en J4: dar por buena la grafía de la transcripción, y
 "corregirla" adivinando —que es inferir—. Lo correcto es registrar lo oído,
-marcarlo por confirmar y preguntarlo. Ningún script puede juzgar esto: es de este
-criterio.
+marcarlo por confirmar y **preguntarlo**, que es exactamente lo que hace la
+**compuerta de confirmación de nombres** al cierre de la etapa 1 (`SKILL.md`
+§Compuerta). O sea: J2 dejó de ser un criterio que solo se autorrevisa y pasó a
+ser el criterio que la compuerta ejecuta con el consultor delante. Ningún script
+puede juzgarlo — `validar_ficha.py` bloque I solo verifica que la duda esté bien
+declarada.
 
 ## J3 — Clasificación de líneas: ¿el eje correcto?
 Cada línea con su `sujeto_del_embudo`, `control_del_activo` y
@@ -69,5 +82,6 @@ falló aunque todo lo demás pase.
 |---|---|
 | Cada ejecución de la skill | `validar_ficha.py` — bloquea la entrega si falla |
 | Auto-revisión antes de entregar | J1–J6 como checklist mental, con la transcripción abierta |
+| **Cierre de la etapa 1, con el consultor delante** | **J2 sobre los nombres propios, ejecutado por la compuerta de confirmación** (`SKILL.md` §Compuerta). Es el único criterio que no se queda en autorrevisión: se pregunta y se resuelve antes de la etapa 2. En corrida desatendida no bloquea y todo queda `por_confirmar`. |
 | Auditoría periódica (1 de cada N fichas) | Humano o Claude evaluador con J1–J6, muestreando 10 datos |
 | Compuerta de la etapa 2 | La etapa 2 corre el validador de nuevo antes de consumir la ficha |
