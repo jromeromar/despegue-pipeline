@@ -1,2 +1,8 @@
 __pycache__/
 *.pyc
+
+# Expedientes de clientes: viven en OneDrive (despegue-operacion/), nunca aquí.
+# Cuando el pipeline corre en un sandbox crea clientes/<cliente>/entrada|salida/
+# con la transcripción y los JSON del expediente — dato de cliente que este repo
+# no debe guardar ni versionar.
+clientes/

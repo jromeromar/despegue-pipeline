@@ -113,6 +113,14 @@ el equipo):**
 - `politica-comercial.json` — precios base, tramos, tope de descuento (solo Jaime)
 - `config-acceso.json` — URL del repo y token de solo-lectura para clonar
 
+**El repo ignora `clientes/`** (está en `.gitignore`). Cuando el pipeline corre
+en un sandbox crea `clientes/<cliente>/entrada|salida/` con la transcripción y
+los JSON del expediente: eso es dato de cliente —nombres, teléfonos, cifras del
+negocio— y vive en OneDrive, nunca versionado aquí. El único expediente que sí
+está en el repo es `ejemplos/expediente-activos/`, el caso de referencia
+acordado. Si un expediente aparece en `git status`, es un error: se saca del
+repo, no se commitea.
+
 Si una observación del cliente cambia el alcance, la propuesta nueva es `-v2`;
 la anterior **nunca se edita ni se borra**.
 ---
