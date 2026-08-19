@@ -148,6 +148,43 @@ def validar(p, lib, diag=None):
                 E.append(f"9k · dato destacado de as_is.{carril} · «{etiqueta}» sin 'unidad': un número "
                          f"suelto en el lienzo no dice nada ({dato})")
 
+    # ---------- 10. Estado de los nombres propios (heredado de la etapa 1) ----------
+    # Que un nombre siga por confirmar NO invalida la propuesta: a veces se presenta
+    # sabiendo que falta confirmar. Lo que no puede pasar es presentarla sin saberlo.
+    ver_p = tuple(int(n) for n in re.findall(r'\d+', str(p.get('_contrato','')))[:2])
+    v03_p = ver_p >= (0, 3)
+    ESTADOS_G = ('confirmada', 'por_confirmar')
+    cli = p.get('cliente')
+    cli_txt = cli if isinstance(cli, str) else (cli.get('nombre') if isinstance(cli, dict) else str(cli))
+    if not isinstance(cli, str):
+        W.append(f"10h · 'cliente' no es texto sino {type(cli).__name__} y el contrato dice str "
+                 "(schema-propuesta.md): decidir si el contrato gana esos campos o el archivo los pierde — "
+                 "el estado de la grafía viaja aparte en cliente_grafia_estado, no dentro de 'cliente'")
+    est_cli = p.get('cliente_grafia_estado')
+    if est_cli is None:
+        (E if v03_p else W).append(
+            "10a · sin cliente_grafia_estado: el estado de la grafía se hereda de la ficha "
+            "(contrato v0.3) — sin él nadie sabe si el nombre del cliente está confirmado")
+    elif est_cli not in ESTADOS_G:
+        E.append(f"10b · cliente_grafia_estado inválido {est_cli!r} — solo 'confirmada' o 'por_confirmar'")
+    elif est_cli == 'por_confirmar':
+        W.append(f"10c · la propuesta sale con el nombre del cliente ({cli_txt!r}) SIN CONFIRMAR: "
+                 "revisar la grafía antes de presentarla — se imprime en el lienzo que el cliente lee")
+
+    pend = p.get('nombres_por_confirmar')
+    if pend is None:
+        (E if v03_p else W).append("10d · sin nombres_por_confirmar (contrato v0.3): usar [] si están todos confirmados")
+    elif not isinstance(pend, list):
+        E.append(f"10e · nombres_por_confirmar no es una lista ({type(pend).__name__})")
+    else:
+        for fila in pend:
+            if not isinstance(fila, list) or len(fila) != 2 or not all(str(x).strip() for x in fila):
+                E.append(f"10f · fila de nombres_por_confirmar mal formada — se espera [que_es, grafia]: {fila}")
+        if pend:
+            listado = ' · '.join(f"{f[0]}: {f[1]}" for f in pend if isinstance(f, list) and len(f) == 2)
+            W.append(f"10g · {len(pend)} nombre(s) propio(s) que esta propuesta imprime siguen sin confirmar "
+                     f"({listado}): se corrigen en la ficha y se rehace la cadena, nunca a mano aquí")
+
     return E, W
 
 if __name__ == '__main__':

@@ -6,7 +6,12 @@ la ficha ni el diagnóstico: todo lo que el lienzo muestra sale de aquí.
 ```
 {
   "_contrato": str,                  // "propuesta v<X>" — versión de este schema
-  "cliente": str,
+  "cliente": str,                    // la grafía que se imprime (heredada de ficha._meta.marca.grafia)
+  "cliente_grafia_estado": "confirmada" | "por_confirmar",   // v0.3 — heredado de la ficha
+  "razon_social": str|null,          // v0.3 — heredado de ficha._meta.razon_social; null si no_capturado
+  "nombres_por_confirmar": [         // v0.3 — los nombres propios que ESTA propuesta imprime
+    [ que_es, grafia ]               //   y siguen sin confirmar. [] si están todos confirmados.
+  ],
   "titular": str,                    // el hero: la cifra o el dolor, en una frase
   "resumen": str,                    // prosa de "lo que entendimos de su negocio"
   "sesiones": [ str ],
@@ -101,7 +106,27 @@ la ficha ni el diagnóstico: todo lo que el lienzo muestra sale de aquí.
      simplemente no destacará nada, que es preferible a destacar el número
      equivocado.
 
+8. **El estado de los nombres propios viaja hasta aquí.** La grafía de un nombre
+   propio se confirma en la etapa 1 (compuerta de nombres) y esta etapa la
+   **hereda sin re-juzgar**, como fugas y madurez: `cliente_grafia_estado`,
+   `razon_social` y `nombres_por_confirmar` se copian del estado de la ficha. Un
+   nombre sin confirmar no bloquea la propuesta —el validador **advierte**, no
+   falla— porque a veces se presenta sabiendo que falta confirmar; lo que no puede
+   pasar es presentarlo **sin saberlo**. Si la propuesta corrige una grafía por su
+   cuenta, está inventando: la corrección se hace en la ficha y se rehace la
+   cadena.
+
+   *Por qué `cliente_grafia_estado` es un campo plano y no `cliente.grafia_estado`:
+   `cliente` es la cadena que el lienzo imprime. Convertirla en objeto rompería al
+   renderizador el día del merge, igual que habría pasado con las filas del as-is.
+   El estado viaja al lado, no dentro.*
+
 ## Nota para el renderizador
+
+`cliente` sigue siendo un **string** y se imprime tal cual; el estado de su
+grafía viaja aparte en `cliente_grafia_estado`. Con `por_confirmar`, o con
+`nombres_por_confirmar` no vacío, el panel del consultor debería avisarlo antes
+de que el documento se envíe al cliente — el dato ya está en el JSON.
 
 El dato destacado de cada fila del as-is se lee de `fila[2]` — **jamás
 extrayendo dígitos de `fila[1]`**. Una fila de longitud 2 no tiene cifra: la

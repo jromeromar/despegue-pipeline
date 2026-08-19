@@ -1,6 +1,26 @@
 {
- "_contrato": "propuesta.json v0.2 — salida de las etapas 1-3, entrada del renderizador",
+ "_contrato": "propuesta.json v0.3 — salida de las etapas 1-3, entrada del renderizador",
  "cliente": "Activos por Colombia S.A.S.",
+ "cliente_grafia_estado": "por_confirmar",
+ "razon_social": null,
+ "nombres_por_confirmar": [
+  [
+   "marca",
+   "Activos por Colombia S.A.S."
+  ],
+  [
+   "sistema",
+   "Activit"
+  ],
+  [
+   "sistema",
+   "Wasi"
+  ],
+  [
+   "sistema",
+   "Actichat"
+  ]
+ ],
  "sesiones": [
   "11-ago-2026 · 23 min",
   "12-ago-2026 · 1h05"

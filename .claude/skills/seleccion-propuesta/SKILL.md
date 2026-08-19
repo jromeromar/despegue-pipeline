@@ -86,6 +86,11 @@ dudoso, leer su bloque completo en el módulo, no solo la fila compilada.
 8. **Heredar sin recalcular**: fugas, madurez, nota, modo, silencios y
    advertencias vienen del diagnóstico tal cual. Esta etapa agrega — las
    condiciones de arranque, la razón de los no_aplican — pero no re-juzga.
+   Se hereda también el **estado de los nombres propios** que fijó la compuerta
+   de la etapa 1: `cliente_grafia_estado`, `razon_social` y
+   `nombres_por_confirmar` con los nombres que esta propuesta imprime y siguen
+   sin confirmar. Una grafía dudosa **no se corrige aquí**: se corrige en la
+   ficha y se rehace la cadena. Corregirla en la propuesta es inventar.
 9. **Salida**: `propuesta-<cliente>.json` validada con
    `scripts/validar_propuesta.py` antes de entregar.
 
@@ -138,6 +143,7 @@ tramificar el precio, no para comprometer alcance por línea. La frase segura:
 - [ ] Carril de integraciones con etiqueta de costo cada una
 - [ ] Multiplicador aritméticamente correcto por plan
 - [ ] Fugas/madurez/nota idénticas al diagnóstico (herencia sin edición)
+- [ ] `cliente_grafia_estado`, `razon_social` y `nombres_por_confirmar` heredados de la ficha, sin corregir grafías aquí
 - [ ] Cada fila del as-is con dato duro declara `{cifra, unidad}` en el tercer elemento, y esa cifra aparece literal en su nota
 - [ ] Ninguna nota del as-is con más de una cifra (si trae dos, se reescribe o se parte la fila)
 - [ ] Cero HTML, cero colores, cero coordenadas
