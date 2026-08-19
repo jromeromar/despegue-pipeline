@@ -6,6 +6,8 @@ la ficha ni el diagnóstico: todo lo que el lienzo muestra sale de aquí.
 ```
 {
   "_contrato": str,                  // "propuesta v<X>" — versión de este schema
+  "libreria_hash": str,              // v0.4 OBLIGATORIO — el `_meta.version` de la librería
+                                     //   compilada contra la que se emitió esta propuesta
   "cliente": str,                    // la grafía que se imprime (heredada de ficha._meta.marca.grafia)
   "cliente_grafia_estado": "confirmada" | "por_confirmar",   // v0.3 — heredado de la ficha
   "razon_social": str|null,          // v0.3 — heredado de ficha._meta.razon_social; null si no_capturado
@@ -120,6 +122,26 @@ la ficha ni el diagnóstico: todo lo que el lienzo muestra sale de aquí.
    `cliente` es la cadena que el lienzo imprime. Convertirla en objeto rompería al
    renderizador el día del merge, igual que habría pasado con las filas del as-is.
    El estado viaja al lado, no dentro.*
+
+9. **`libreria_hash` es obligatorio y decide cómo se valida (v0.4).** La skill de
+   selección lo escribe al emitir, copiado del `_meta.version` de la librería
+   compilada que usó. No es decorativo: es lo que permite validar una propuesta
+   vieja sin romper nada.
+
+   | Caso | Qué hace `validar_propuesta.py` |
+   |---|---|
+   | `libreria_hash` == hash de la librería con la que se valida | **Validación completa.** Todo id del alcance se verifica contra la librería. |
+   | `libreria_hash` distinto del hash actual | La marca **histórica**: valida estructura, aritmética y herencia, pero **no** los ids contra la librería nueva. Sale **0 con advertencia**. |
+   | Sin `libreria_hash` y `_contrato` anterior a v0.4 | Histórica por definición: se emitió antes de que el campo existiera. Sale 0 con advertencia. |
+   | Sin `libreria_hash` y `_contrato` v0.4+ | **Error.** La skill tenía que escribirlo. |
+
+   El problema que esto resuelve: una corrección de la librería que divide o
+   renombra un componente deja a las propuestas ya emitidas apuntando a ids que
+   ya no existen. Esas propuestas **no se editan** (regla 7 de la casa: el
+   expediente del cliente es su historial), así que la validación tiene que
+   entender que son históricas en vez de fallar. Si el alcance de una propuesta
+   vieja sigue vigente, se emite `-v2` contra la librería nueva; la vieja se
+   queda como historia, y valida.
 
 ## Nota para el renderizador
 

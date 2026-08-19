@@ -1,5 +1,6 @@
 {
  "_contrato": "propuesta.json v0.3 — salida de las etapas 1-3, entrada del renderizador",
+ "libreria_hash": "639f4fc256",
  "cliente": {
   "nombre": "Activos por Colombia S.A.S.",
   "ciudad": "Barranquilla",

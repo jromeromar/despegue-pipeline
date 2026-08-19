@@ -10,19 +10,45 @@ def validar(p, lib, diag=None):
     E, W = [], []
     comps_lib = lib.get('componentes', lib)
 
+    # ---------- 0. Modo de validación: completa o histórica (contrato v0.4) ----------
+    # Una corrección de la librería (dividir o renombrar un componente) deja a las
+    # propuestas ya emitidas apuntando a ids que ya no existen. Esas propuestas no se
+    # editan (regla 7 de la casa), así que la validación las reconoce como históricas
+    # en vez de fallar: estructura, aritmética y herencia sí; ids contra la librería, no.
+    hash_lib = (lib.get('_meta') or {}).get('version')
+    hash_prop = p.get('libreria_hash')
+    ver_c = tuple(int(n) for n in re.findall(r'\d+', str(p.get('_contrato', '')))[:2])
+    historica = False
+    if hash_prop and hash_lib and hash_prop != hash_lib:
+        historica = True
+        W.append(f"0h · PROPUESTA HISTÓRICA: emitida contra la librería {hash_prop} y validada contra "
+                 f"{hash_lib} — se valida estructura, aritmética y herencia, no los ids contra la "
+                 "librería nueva. Si su alcance sigue vigente, se emite -v2 (regla 7: la vieja no se edita)")
+    elif not hash_prop:
+        if ver_c >= (0, 4):
+            E.append("0a · sin libreria_hash y la propuesta se declara v0.4+: la skill de selección debe "
+                     "escribirlo al emitir, copiado del _meta.version de la librería compilada que usó")
+        else:
+            historica = True
+            W.append(f"0h · PROPUESTA HISTÓRICA: sin libreria_hash y contrato anterior a v0.4 — se emitió "
+                     f"antes de que el campo existiera. Validada contra la librería {hash_lib or '(sin hash)'}: "
+                     "estructura, aritmética y herencia solamente")
+    # en modo histórico los hallazgos contra la librería informan, no bloquean
+    LIB = W if historica else E
+
     # ---------- 1. Componentes contra la librería ----------
     sel = p.get('componentes', {})
     if not sel: E.append("1a · cero componentes seleccionados")
     for cid, c in sel.items():
         if cid not in comps_lib:
-            E.append(f"1b · '{cid}' no existe en la librería compilada")
+            LIB.append(f"1b · '{cid}' no existe en la librería compilada")
             continue
         ref = comps_lib[cid]
         pm = ref.get('plan_minimo')
         if pm is None:
-            E.append(f"1c · '{cid}' tiene plan_minimo null en la librería: V11 — va al carril, no al plan")
+            LIB.append(f"1c · '{cid}' tiene plan_minimo null en la librería: V11 — va al carril, no al plan")
         elif ORDEN.get(c.get('plan'), 0) < ORDEN.get(pm, 9):
-            E.append(f"1d · '{cid}' vendido en {c.get('plan')} pero su plan mínimo es {pm}")
+            LIB.append(f"1d · '{cid}' vendido en {c.get('plan')} pero su plan mínimo es {pm}")
         if not isinstance(c.get('instancias'), int) or c['instancias'] < 1:
             E.append(f"1e · '{cid}' con instancias inválidas: {c.get('instancias')}")
 
@@ -194,5 +220,7 @@ if __name__ == '__main__':
     E, W = validar(p, lib, diag)
     for e in E: print("✖", e)
     for w in W: print("⚠", w)
-    print(("✔ propuesta válida" + (f" · {len(W)} advertencias" if W else " sin observaciones")) if not E else f"✖ {len(E)} errores")
+    hist = " (histórica)" if any(w.startswith("0h ·") for w in W) else ""
+    print((f"✔ propuesta válida{hist}" + (f" · {len(W)} advertencias" if W else " sin observaciones"))
+          if not E else f"✖ {len(E)} errores")
     sys.exit(1 if E else 0)

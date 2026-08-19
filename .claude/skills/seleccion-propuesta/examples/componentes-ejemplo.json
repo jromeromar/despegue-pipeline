@@ -2,7 +2,8 @@
  "_meta": {
   "total": 81,
   "version": "639f4fc256",
-  "fuente": "/home/claude"
+  "fuente": "/home/claude",
+  "_nota": "Snapshot CONGELADO de la librería 639f4fc256 (81 componentes). Pareja fija de examples/propuesta-ejemplo-activos.json, que se emitió contra este hash: los dos se validan juntos y en modo completo. No se regenera — regenerarlo dejaría a la propuesta de ejemplo apuntando a ids que ya no existen. La librería viva es libreria/componentes.json."
  },
  "componentes": {
   "atraccion-landing-captura": {

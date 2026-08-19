@@ -92,7 +92,10 @@ dudoso, leer su bloque completo en el módulo, no solo la fila compilada.
    sin confirmar. Una grafía dudosa **no se corrige aquí**: se corrige en la
    ficha y se rehace la cadena. Corregirla en la propuesta es inventar.
 9. **Salida**: `propuesta-<cliente>.json` validada con
-   `scripts/validar_propuesta.py` antes de entregar.
+   `scripts/validar_propuesta.py` antes de entregar. Escribir **`libreria_hash`**
+   con el `_meta.version` de la librería compilada que se acaba de usar: es la
+   procedencia de la propuesta y lo que permite validarla dentro de un año, cuando
+   la librería haya cambiado, sin editarla ni romper la validación (schema §9).
 
 ## Puntos de criterio humano (los únicos)
 
@@ -149,7 +152,8 @@ tramificar el precio, no para comprometer alcance por línea. La frase segura:
 - [ ] Cero HTML, cero colores, cero coordenadas
 - [ ] Instancias, multiplicador y precios los escribió `calcular_condicion.py`, no el modelo
 - [ ] Ajustes manuales de instancias marcados con `instancias_fijadas_por_consultor`
-- [ ] `validar_propuesta.py` pasa (exit 0)
+- [ ] `libreria_hash` escrito con el hash de la librería usada (obligatorio desde v0.4)
+- [ ] `validar_propuesta.py` pasa (exit 0) — y si reporta «histórica», la propuesta se emitió contra otra librería: verificar que era lo esperado
 
 ## Referencias
 
