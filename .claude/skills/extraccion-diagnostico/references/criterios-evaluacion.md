@@ -21,6 +21,17 @@ sesión (vale la última), unidades ambiguas (¿al día o al mes?), y deseos
 expresados como hechos ("queremos un solo número" es deseo en
 `decision_del_numero`, no estado actual).
 
+**Nombres propios: la fidelidad también es ortográfica.** La transcripción
+automática es fonética, y una marca o un apellido mal transcrito viaja hasta el
+lienzo que el cliente lee («Gosen casa de Comidas» → «Gocé en casa de comidas»).
+Verificar `_meta.marca`: ¿la grafía de la ficha es una que alguien de la empresa
+escribió, o solo se oyó? Si solo se oyó, `estado` debe decir `por_confirmar` y
+`variantes_en_transcripcion` debe traer las grafías literales sin corregir. Dos
+fallas simétricas, como en J4: dar por buena la grafía de la transcripción, y
+"corregirla" adivinando —que es inferir—. Lo correcto es registrar lo oído,
+marcarlo por confirmar y preguntarlo. Ningún script puede juzgar esto: es de este
+criterio.
+
 ## J3 — Clasificación de líneas: ¿el eje correcto?
 Cada línea con su `sujeto_del_embudo`, `control_del_activo` y
 `mecanismo_de_cierre` correctos. Los errores caros: colapsar líneas porque

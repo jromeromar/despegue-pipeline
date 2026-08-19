@@ -46,8 +46,8 @@ una sesión de 60 minutos es señal de invención, no de calidad.
    datos económicos capturados (define `modo_propuesta` A o B),
    `datos_en_conflicto`, `decisor_presente`, `base_legal_contacto`.
 6. **Salida**: un único archivo `ficha-<cliente>.json`, UTF-8, con el bloque
-   `_meta` (fuentes, fecha, versión de ficha). Entregarlo como archivo, no
-   pegado en la conversación.
+   `_meta` (fuentes, fecha, versión de ficha y `marca` con la grafía del nombre
+   propio y su estado). Entregarlo como archivo, no pegado en la conversación.
 
 ## Trampas conocidas (cada una costó un error real)
 
@@ -77,6 +77,21 @@ el estudio, o fija el calendario (aseguradora, entidad estatal, franquiciante),
 eso va en `dependencias_externas` de la línea y condiciona qué se puede
 prometer. Buscarlo activamente: los entrevistados lo mencionan de pasada.
 
+**El nombre propio que la transcripción destroza.** Teams y Meet transcriben
+fonéticamente: los nombres propios —marcas, apellidos, nombres de sistemas— salen
+mal y salen mal de varias formas distintas en la misma sesión. Caso real: la marca
+«Gosen casa de Comidas» (Gosen es un apellido) quedó como «Gocé en casa de
+comidas» y «G o SEN casa de comidas», y la ficha arrastró la grafía equivocada
+hasta la propuesta que el cliente leyó. La regla de no inferir no se toca: **no se
+adivina cómo se escribe un apellido**. Lo que se hace es declararlo — en
+`_meta.marca` van la grafía que se usará, `estado: "por_confirmar"` y las
+variantes literales que trae la transcripción, copiadas sin corregir. Solo se pone
+`confirmada` si la grafía se vio **escrita** por alguien de la empresa (correo,
+firma, factura, sitio, documento compartido); oírla en la sesión no confirma nada.
+Señales de que hay que revisar: el nombre aparece con dos grafías distintas, se
+parte en letras sueltas, o suena a palabra común donde debería ir un apellido.
+Aplica igual a los nombres de sistemas del bloque D.
+
 **Small talk y datos personales.** Las sesiones traen charla de ciudad, clima,
 familia. Nada de eso entra a la ficha salvo que sea dato operativo (la sede sí;
 que el consultor sea de la misma ciudad, no).
@@ -89,6 +104,7 @@ que el consultor sea de la misma ciudad, no).
 - [ ] `modo_propuesta` = "B" si no hay ticket, margen, comisión ni ad spend
 - [ ] `funciones_sin_representacion` revisado (¿quién es dueño de un proceso y no estuvo?)
 - [ ] Bloque D incluye `whatsapp_estado`, `numeros_publicados`, `llamadas_medidas`, `decision_del_numero` (aunque sea todo no_capturado: la sesión vieja no los preguntaba)
+- [ ] `_meta.marca` con la grafía, su `estado` y las variantes literales de la transcripción; `confirmada` solo si se vio escrita, y si queda `por_confirmar` va como primera pregunta de la segunda llamada (la grafía se imprime en el lienzo que el cliente lee)
 - [ ] Cero recomendaciones, cero componentes, cero juicios: esta etapa registra, no evalúa
 - [ ] El JSON parsea (validarlo ejecutándolo, no a ojo)
 

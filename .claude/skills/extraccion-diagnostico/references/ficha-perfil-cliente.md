@@ -6,6 +6,48 @@ Activos por Colombia (ago-2026).
 
 ---
 
+## _meta — de dónde salió la ficha
+
+| Campo | Tipo | Notas |
+|---|---|---|
+| `cliente` | texto | El nombre con el que viaja el expediente. Misma cadena que `marca.grafia`: si difieren, alguien corrigió una y olvidó la otra. |
+| `fuentes` | [texto] | Una entrada por sesión: fecha, duración y quién habló. |
+| `extraido_por` | texto | La etapa que la produjo. |
+| `regla` | texto | La regla madre, escrita en el archivo para que se lea sola. |
+| `version_ficha` | texto | Contra qué versión de este contrato se extrajo. |
+| `marca` | objeto | La grafía del nombre propio y su estado (**nuevo v0.2.2** — ver abajo). |
+
+**`marca` — la grafía del nombre propio y su estado.** Las transcripciones
+automáticas destrozan los nombres propios, y la ficha es donde la grafía
+equivocada empieza su viaje hasta la propuesta que el cliente lee. Caso real: la
+marca «Gosen casa de Comidas» (Gosen es un apellido) salió de Teams como «Gocé en
+casa de comidas» y «G o SEN casa de comidas», y así llegó al lienzo.
+
+```
+"marca": {
+  "grafia": "Gosen casa de Comidas",
+  "estado": "por_confirmar",
+  "variantes_en_transcripcion": ["Gocé en casa de comidas", "G o SEN casa de comidas"]
+}
+```
+
+| Campo | Notas |
+|---|---|
+| `grafia` | La grafía que viaja a los entregables. Es la mejor que hay hoy, no necesariamente la correcta: eso lo dice `estado`. |
+| `estado` | `confirmada` — alguien de la empresa la escribió y se vio escrita (correo, firma, factura, sitio, documento compartido). · `por_confirmar` — solo se oyó en la sesión: **una transcripción automática no es evidencia de ortografía**. |
+| `variantes_en_transcripcion` | [texto] — las grafías literales que trae la transcripción, copiadas tal cual y sin corregirlas. Son la prueba de por qué está por confirmar y lo que permite rastrear de dónde salió el error. `[]` si la transcripción es consistente. |
+
+Esto **no** relaja la regla de no inferir, la aplica: no se adivina cómo se
+escribe un apellido. Se registra lo que se oyó, se marca `por_confirmar` y se
+confirma con el cliente — es la primera pregunta de la segunda llamada, porque la
+grafía va impresa en el lienzo que él va a leer. Ninguna etapa posterior "arregla"
+el nombre: la propuesta lo arrastra tal cual y el consultor lo corrige antes de
+presentarlo.
+
+No hay validación automática de este campo y no puede haberla: ningún script
+sabe cómo se escribe un apellido. Es checklist humano. Las fichas anteriores a
+v0.2.2 no llevan el bloque; al reprocesarlas se agrega.
+
 ## A. Líneas de negocio
 
 Arreglo. Una entrada por línea de ingreso.
