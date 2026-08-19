@@ -1,7 +1,10 @@
-# Pipeline de diagnóstico comercial Ropofy
+# Pipeline comercial Ropofy
 
-Esta carpeta convierte transcripciones de sesiones estratégicas en propuestas
-(`propuesta.json`) mediante tres skills encadenadas con compuertas de validación.
+Esta carpeta convierte transcripciones de demos comerciales y de sesiones
+estratégicas en archivos validados, mediante skills encadenadas con compuertas
+de validación. Cadena completa: demo comercial (E0) → `prospecto.json` +
+`qa-demo.json` → sesión estratégica (E1) → `ficha.json` → `diagnostico.json`
+(E2) → `propuesta.json` (E3) → blueprint (E4, contrato sin skill todavía).
 El renderizador del lienzo es otra aplicación y consume el `propuesta.json`
 que aquí se produce.
 
@@ -10,12 +13,67 @@ que aquí se produce.
 ## Cómo se usa (el consultor)
 
 1. Crear `clientes/<cliente>/entrada/` y soltar ahí la(s) transcripción(es),
-   con fecha en el nombre: `2026-08-14-sesion-1.docx`.
-2. Decir: **"corre el diagnóstico de <cliente>"**.
-3. Recoger los tres JSON en `clientes/<cliente>/salida/` y la agenda de la
-   segunda llamada que se entrega al final.
+   con fecha en el nombre: `2026-08-14-sesion-1.docx`. Las de demo comercial
+   llevan sufijo `-demo`: `2026-08-14-demo.docx`.
+2. Decir: **"procesa la demo de <cliente>"** (tras la demo de venta) o
+   **"corre el diagnóstico de <cliente>"** (tras la sesión estratégica).
+3. Recoger los JSON en `clientes/<cliente>/salida/` y la agenda que se entrega
+   al final (del diagnóstico si fue demo; de la segunda llamada si fue sesión).
 
 `<cliente>` es un nombre corto sin espacios ni tildes: `activos`, `ayc`.
+
+**Enrutamiento cuando el nombre del archivo no lo dice:** una demo comercial
+sigue el guion de 13 bloques, muestra la plataforma y habla de precios; una
+sesión estratégica diagnostica sin vender. En caso de duda, preguntar antes de
+correr nada — extraer una demo con la skill de la etapa 1 produce una ficha
+falsa, y viceversa.
+
+---
+
+## Cuando el usuario pida "procesa la demo de <cliente>"
+
+Es la **etapa 0** (`extraccion-demo`). Corre completa, sin paradas
+interactivas (los nombres propios de la demo viajan en el prospecto con su
+`confianza`; la compuerta de nombres es de la etapa 1).
+
+1. Lee `.claude/skills/extraccion-demo/SKILL.md` y su contrato
+   (`references/schema-prospecto.md`) completos.
+2. Extrae el texto de la transcripción de demo de `clientes/<cliente>/entrada/`
+   (docx → texto plano). Antes de extraer, resuelve lo de `_meta`: cuántos
+   hablantes reales hay y **dónde termina la demo efectiva** (hay grabaciones
+   que siguen horas; ese audio ambiente no se procesa como demo).
+3. Escribe `clientes/<cliente>/salida/prospecto-<cliente>-<fecha>.json`.
+   Reglas madre: lo no dicho = `no_capturado` con su motivo de ausencia, y
+   **todo dato lleva fuente** — lo que afirmó la ejecutiva o se supuso para
+   cotizar es hipótesis, nunca dato del cliente.
+4. COMPUERTA:
+
+       python3 .claude/skills/extraccion-demo/scripts/validar_prospecto.py \
+         clientes/<cliente>/salida/prospecto-<cliente>-<fecha>.json
+
+5. Con el prospecto validado, genera el QA (los scores los escribe el script,
+   nunca el modelo):
+
+       python3 .claude/skills/extraccion-demo/scripts/qa_demo.py \
+         clientes/<cliente>/salida/prospecto-<cliente>-<fecha>.json \
+         -o clientes/<cliente>/salida/qa-demo-<cliente>-<fecha>.json
+
+6. **Entrega final, siempre en este formato:**
+   1. Tabla de los dos archivos con su ruta y su línea de validación.
+   2. `agenda_diagnostico` priorizada: bloqueantes primero, luego altas.
+   3. El **brief previo listo para WhatsApp**: solo los ítems con
+      `momento: brief_previo`, redactados como mensaje, excluyendo todo lo que
+      el cliente ya declaró en la demo.
+   4. `bloqueos_para_avanzar` y las hipótesis a verificar en pantalla.
+   5. Resumen del QA: score global, semáforo, top-3 acciones de coaching. Las
+      advertencias del validador se reportan textuales (algunas señalan errores
+      comerciales de la demo, no de extracción — para eso existen).
+
+Variante — **"dame el QA de la demo de <cliente>"**: si ya existe el
+`prospecto.json` en `salida/`, corre solo `qa_demo.py` sobre él; no re-extraigas.
+
+Variante — **"dame el brief previo de <cliente>"**: si ya existe el prospecto,
+genera solo el punto 3 de la entrega; si no existe, primero procesa la demo.
 
 ---
 
@@ -41,7 +99,16 @@ desatendida produce un expediente utilizable, no presentable.
 **Etapa 1 — `extraccion-diagnostico`.** Lee su SKILL.md y su contrato de ficha
 completos. Produce `clientes/<cliente>/salida/ficha-<cliente>.json` desde las
 transcripciones de `clientes/<cliente>/entrada/` (si hay varias, se consolidan
-en una sola ficha). Convierte los .docx a texto plano primero. Valida:
+en una sola ficha). Convierte los .docx a texto plano primero.
+
+**Si existe `prospecto-<cliente>-*.json` en `salida/`, es la semilla:** sus
+datos con fuente `cliente_declaro`/`cliente_confirmo` entran a la ficha como
+pre-capturados (con su evidencia, citando la demo como fuente) y en la sesión
+solo se confirman; sus `hipotesis_a_verificar` se contrastan contra lo que la
+sesión diga; su `agenda_diagnostico` es el checklist de cobertura — un ítem
+`bloqueante` del prospecto que la sesión no resolvió va destacado en la agenda
+de la segunda llamada. Nunca registrar como dato de la sesión algo que solo se
+dijo en la demo. Valida:
 
     python3 .claude/skills/extraccion-diagnostico/scripts/validar_ficha.py \
       clientes/<cliente>/salida/ficha-<cliente>.json /tmp/trans-<cliente>.txt
@@ -107,13 +174,17 @@ precios los escribe el script:
 2. **Compuertas duras.** Un validador con exit 1 bloquea la etapa siguiente. Se
    corrige el archivo, jamás se relaja el contrato. Tras 3 intentos fallidos:
    detenerse y reportar los errores del validador textuales, sin parafrasear.
-3. **Pureza de etapa.** La ficha registra, el diagnóstico juzga, la propuesta
-   ofrece. La ficha no evalúa, el diagnóstico no propone, la propuesta no
-   dibuja. La tentación de adelantar contenido significa que falta un campo:
-   va en advertencias, no se cuela.
-4. **No inferir en la etapa 1.** Lo que no se dijo en la sesión es
-   `no_capturado`, y eso es un producto: es la agenda de la segunda llamada.
-   Una ficha sin huecos es señal de invención. Los **nombres propios** son el
+3. **Pureza de etapa.** El prospecto registra la demo, la ficha registra la
+   sesión, el diagnóstico juzga, la propuesta ofrece. Ninguna etapa adelanta
+   el contenido de la siguiente: la tentación de hacerlo significa que falta
+   un campo — va en advertencias, no se cuela.
+4. **No inferir en las etapas de extracción (0 y 1).** Lo que no se dijo es
+   `no_capturado`, y eso es un producto: la agenda del diagnóstico (E0) o de
+   la segunda llamada (E1). Un archivo sin huecos es señal de invención.
+   En el prospecto rige además la **procedencia**: un dato con fuente
+   `ejecutivo_*`, `cliente_asintio` o `cliente_forzado_por_menu` es hipótesis
+   y nunca se propaga a la ficha como dato del cliente.
+   Los **nombres propios** son el
    caso extremo: no se adivina cómo se escribe un apellido ni se elige la
    variante que suena mejor. Se registra lo oído con sus variantes, y la
    compuerta de nombres lo pregunta antes de la etapa 2.
@@ -132,8 +203,12 @@ precios los escribe el script:
 ## Estructura (híbrida: código aquí, datos en OneDrive)
 
 **En este repo (se edita solo por commit):**
-- `.claude/skills/` — las tres etapas con sus contratos, ejemplos y validadores
-- `.claude/commands/diagnostico.md` — el flujo como comando de Claude Code
+- `.claude/skills/` — las etapas con sus contratos, ejemplos y validadores:
+  `extraccion-demo` (E0, incluye el guion de demo v3 y el QA),
+  `extraccion-diagnostico` (E1), `evaluacion-modular` (E2),
+  `seleccion-propuesta` (E3) y `especificacion-blueprint` (E4, solo contrato)
+- `.claude/commands/diagnostico.md` y `.claude/commands/demo.md` — los flujos
+  como comandos de Claude Code
 - `libreria/componentes.json` — librería compilada (regenerable desde los módulos)
 - `ejemplos/expediente-activos/` — un caso terminado de referencia (ficha,
   diagnóstico y propuesta reales)
@@ -166,12 +241,15 @@ ejecución sobre OneDrive, el patrón es:
    `git clone <URL-del-repo> pipeline && cd pipeline` — o descargar el zip del
    repo y descomprimirlo. Si el repo es privado, el token de solo-lectura está en
    `despegue-operacion/config-acceso.json` del OneDrive compartido.
-2. **Traer la transcripción de OneDrive al sandbox** con el conector
-   Microsoft 365: buscarla en `despegue-operacion/clientes/<cliente>/entrada/`.
-3. **Correr las tres etapas en el sandbox** siguiendo la sección "Cuando el
-   usuario pida corre el diagnóstico" tal cual (los validadores de Python
-   corren localmente en el sandbox).
-4. **Subir los resultados a OneDrive** con el conector: los tres JSON a
+2. **Traer los insumos de OneDrive al sandbox** con el conector
+   Microsoft 365: la transcripción desde
+   `despegue-operacion/clientes/<cliente>/entrada/` y, para un diagnóstico,
+   también el `prospecto-<cliente>-*.json` de `salida/` si existe (semilla de
+   la etapa 1) y `politica-comercial.json`.
+3. **Correr la(s) etapa(s) en el sandbox** siguiendo la sección que
+   corresponda ("procesa la demo" o "corre el diagnóstico") tal cual (los
+   validadores de Python corren localmente en el sandbox).
+4. **Subir los resultados a OneDrive** con el conector: los JSON producidos a
    `despegue-operacion/clientes/<cliente>/salida/`. El OneDrive es el expediente
    que ve el equipo; el sandbox es efímero y se descarta.
 

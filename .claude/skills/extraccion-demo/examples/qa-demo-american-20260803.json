@@ -1,0 +1,251 @@
+{
+  "_meta": {
+    "id_qa": "qa-demo-american-20260803",
+    "derivado_de": "demo-american-20260803",
+    "version_qa": "0.1",
+    "version_guion_auditado": "Guion Demo v2026 / genérico",
+    "fecha_demo": "2026-08-03",
+    "ejecutivo": "Mariana Castaño",
+    "duracion_demo_efectiva_min": 38.0
+  },
+  "score_global": 32,
+  "semaforo": "rojo",
+  "dimensiones": {
+    "calificacion": {
+      "score": 35,
+      "hallazgos": [
+        "Identidad del interlocutor no confirmada.",
+        "Decisor ausente/ambiguo y sin fecha de su revisión.",
+        "Detonante con fecha dura capturado pero su ventana temporal quedó sin preguntar."
+      ]
+    },
+    "descubrimiento": {
+      "score": 28,
+      "hallazgos": [
+        "Preguntas fijas formuladas: 0/5.",
+        "Datos económicos capturados: 1/9 (meta mínima del guion v3: 3)."
+      ]
+    },
+    "conduccion": {
+      "score": 42,
+      "hallazgos": [
+        "Validación del entendimiento (bloque 3) omitida.",
+        "Encuadre del demo (bloque 4) omitido: pantalla sin permiso.",
+        "Solo 1 checkpoint(s) durante el demo.",
+        "Monólogo más largo: 14 min (regla: preguntar cada 60-90 s).",
+        "1 pregunta(s) del cliente sin respuesta completa."
+      ]
+    },
+    "precio": {
+      "score": 40,
+      "hallazgos": [
+        "3 desviación(es) de catálogo: implementación mínima (399 vs 499); cotización puntual sin diagnóstico (800 vs el precio sale del diagnóstico, no de la demo); duración del Despegue/Arquitectura (14 y 15 días en la misma llamada vs 14 días)",
+        "La cotización se construyó sobre un volumen supuesto por el ejecutivo."
+      ]
+    },
+    "cierres": {
+      "score": 10,
+      "hallazgos": [
+        "Cierre #1: no se pidió.",
+        "Confirmación de interés: lo inició el cliente, no el ejecutivo.",
+        "Cierre #2: no se pidió.",
+        "Hubo señal de compra explícita y no se cerró ahí (R7)."
+      ]
+    },
+    "riesgo_y_cumplimiento": {
+      "score": 40,
+      "hallazgos": [
+        "Filtro técnico Meta: omitido (R5: sin filtro no hay link de pago).",
+        "2 promesa(s) sin sustento: La línea no se bloquea al migrar a API; «eso pasaba hasta ha; Implementación completa en 3 a 4 semanas."
+      ]
+    },
+    "siguiente_paso": {
+      "score": 35,
+      "hallazgos": [
+        "Next step sin fecha (R6). Había detonante con fecha dura.",
+        "Hay condición registrada, pero sin fecha de check.",
+        "Entregables sin fecha: 2/2."
+      ]
+    }
+  },
+  "resultado_comercial": {
+    "ruta_definida": "diferido_a_tercero",
+    "resultado_demo": "link_prometido",
+    "temperatura_derivada": "caliente",
+    "next_step_con_fecha": false,
+    "quien_inicio_los_cierres": {
+      "cierre_1_valor_y_encaje": "no_ocurrio",
+      "confirmacion_de_interes": "cliente",
+      "cierre_2_decision": "no_ocurrio"
+    }
+  },
+  "adherencia": {
+    "bloques": [
+      {
+        "id": 1,
+        "nombre": "Apertura y encuadre",
+        "estado": "ejecutado"
+      },
+      {
+        "id": 2,
+        "nombre": "Descubrimiento",
+        "estado": "parcial"
+      },
+      {
+        "id": 3,
+        "nombre": "Validación del entendimiento",
+        "estado": "omitido"
+      },
+      {
+        "id": 4,
+        "nombre": "Encuadre del demo",
+        "estado": "omitido"
+      },
+      {
+        "id": 5,
+        "nombre": "Demo conversacional",
+        "estado": "ejecutado_debil"
+      },
+      {
+        "id": 6,
+        "nombre": "Cierre #1",
+        "estado": "ejecutado_debil"
+      },
+      {
+        "id": 7,
+        "nombre": "Confirmación de interés",
+        "estado": "iniciado_por_el_cliente"
+      },
+      {
+        "id": 8,
+        "nombre": "Camino 1-2-3",
+        "estado": "fuera_de_orden"
+      },
+      {
+        "id": 9,
+        "nombre": "Paso 1 Arquitectura/Despegue",
+        "estado": "ejecutado_debil"
+      },
+      {
+        "id": 10,
+        "nombre": "Paso 2 Implementación",
+        "estado": "fuera_de_orden"
+      },
+      {
+        "id": 11,
+        "nombre": "Cierre #2",
+        "estado": "omitido"
+      },
+      {
+        "id": 12,
+        "nombre": "Filtro técnico",
+        "estado": "omitido"
+      },
+      {
+        "id": 13,
+        "nombre": "ATP / Activación",
+        "estado": "parcial"
+      }
+    ],
+    "adherencia_bloques": "6/13",
+    "preguntas_fijas_formuladas": "0/5",
+    "dolores_cuantificados": "1/6",
+    "minuto_primer_precio": "24:10",
+    "minuto_pantalla_compartida": "06:00",
+    "monologo_mas_largo_min": 14
+  },
+  "errores_graves": [
+    {
+      "codigo": "descubrimiento_omitido_o_minimo",
+      "minuto": "01:20",
+      "cita": null
+    },
+    {
+      "codigo": "pregunta_de_configuracion_en_lugar_de_dolor",
+      "minuto": "05:10",
+      "cita": "«¿cuántas líneas de WhatsApp manejan?»"
+    },
+    {
+      "codigo": "demo_sin_encuadre",
+      "minuto": "06:00",
+      "cita": null
+    },
+    {
+      "codigo": "monologo_prolongado_sin_checkpoint",
+      "minuto": "06:00",
+      "cita": null
+    },
+    {
+      "codigo": "precio_antes_de_cierre_1",
+      "minuto": "24:10",
+      "cita": null
+    },
+    {
+      "codigo": "precio_inconsistente_con_catalogo",
+      "minuto": "24:10",
+      "cita": "«desde los 399»"
+    },
+    {
+      "codigo": "cotizacion_sobre_volumen_supuesto",
+      "minuto": "27:00",
+      "cita": "«Supongamos 10 al día… llevémoslo al máximo»"
+    },
+    {
+      "codigo": "sin_validacion_del_entendimiento",
+      "minuto": null,
+      "cita": null
+    },
+    {
+      "codigo": "autoridad_no_calificada",
+      "minuto": "36:40",
+      "cita": null
+    },
+    {
+      "codigo": "filtro_tecnico_omitido",
+      "minuto": null,
+      "cita": null
+    },
+    {
+      "codigo": "promesa_de_plazo_sin_alcance",
+      "minuto": "33:40",
+      "cita": "«de 3 a 4 semanas lista»"
+    },
+    {
+      "codigo": "senal_de_compra_no_capitalizada",
+      "minuto": "19:30",
+      "cita": "«me gusta, prácticamente es lo que estoy buscando»"
+    },
+    {
+      "codigo": "cierre_pasivo_sin_pedir_decision",
+      "minuto": "36:40",
+      "cita": null
+    },
+    {
+      "codigo": "next_step_sin_fecha",
+      "minuto": "37:30",
+      "cita": "«cualquier duda estamos comunicándonos por WhatsApp»"
+    }
+  ],
+  "acciones_coaching": [
+    {
+      "error": "descubrimiento_omitido_o_minimo",
+      "accion": "Correr las 5 preguntas de la ruta (F o A) antes de tocar la pantalla. Son 8 minutos y son el insumo de todo lo demás."
+    },
+    {
+      "error": "pregunta_de_configuracion_en_lugar_de_dolor",
+      "accion": "Separar las preguntas de cotización (usuarios, líneas) de las de dolor: las primeras van en el bloque 10, no en el 2."
+    },
+    {
+      "error": "demo_sin_encuadre",
+      "accion": "No compartir pantalla sin el bloque 4: anunciar los 3 ejes y esperar el «sí»."
+    },
+    {
+      "error": "monologo_prolongado_sin_checkpoint",
+      "accion": "Regla de ritmo: +60-90 s hablando → parar y preguntar. Mínimo una pregunta por acto."
+    },
+    {
+      "error": "precio_antes_de_cierre_1",
+      "accion": "Aplazar el precio con la variante del bloque 1 («los vemos completos hoy mismo») y llegar a él después del cierre #1."
+    }
+  ]
+}

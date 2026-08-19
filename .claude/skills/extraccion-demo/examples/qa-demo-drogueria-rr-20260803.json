@@ -1,0 +1,222 @@
+{
+  "_meta": {
+    "id_qa": "qa-demo-drogueria-rr-20260803",
+    "derivado_de": "demo-drogueria-rr-20260803",
+    "version_qa": "0.1",
+    "version_guion_auditado": "Guion Demo v2026 / genérico",
+    "fecha_demo": "2026-08-03",
+    "ejecutivo": "Mariana Castaño",
+    "duracion_demo_efectiva_min": 56.7
+  },
+  "score_global": 50,
+  "semaforo": "amarillo",
+  "dimensiones": {
+    "calificacion": {
+      "score": 100,
+      "hallazgos": []
+    },
+    "descubrimiento": {
+      "score": 30,
+      "hallazgos": [
+        "Preguntas fijas formuladas: 0/5.",
+        "0 de 5 dolores cuantificados.",
+        "Datos económicos capturados: 2/9 (meta mínima del guion v3: 3)."
+      ]
+    },
+    "conduccion": {
+      "score": 45,
+      "hallazgos": [
+        "Validación del entendimiento (bloque 3) omitida.",
+        "Encuadre del demo (bloque 4) omitido: pantalla sin permiso.",
+        "Monólogo más largo: 6 min (regla: preguntar cada 60-90 s).",
+        "Pantalla compartida al minuto 3 de 57: descubrimiento comprimido.",
+        "2 pregunta(s) del cliente sin respuesta completa."
+      ]
+    },
+    "precio": {
+      "score": 56,
+      "hallazgos": [
+        "Primer precio al minuto 30 de 57 (53% de la llamada): antes del valor.",
+        "2 desviación(es) de catálogo: implementación mínima (800 vs 499); umbral de IA ilimitada (700 y 800 en la misma llamada vs único valor de catálogo)"
+      ]
+    },
+    "cierres": {
+      "score": 35,
+      "hallazgos": [
+        "Cierre #1: no se pidió.",
+        "Confirmación de interés: lo inició el cliente, no el ejecutivo.",
+        "Cierre #2: no se pidió."
+      ]
+    },
+    "riesgo_y_cumplimiento": {
+      "score": 50,
+      "hallazgos": [
+        "Filtro técnico Meta: omitido (R5: sin filtro no hay link de pago).",
+        "1 promesa(s) sin sustento: El CSV del POS al correo permite que la herramienta consulte"
+      ]
+    },
+    "siguiente_paso": {
+      "score": 35,
+      "hallazgos": [
+        "Next step sin fecha (R6). Había detonante con fecha dura.",
+        "Hay condición registrada, pero sin fecha de check.",
+        "Entregables sin fecha: 2/2."
+      ]
+    }
+  },
+  "resultado_comercial": {
+    "ruta_definida": "diferido_por_comparacion_de_proveedores",
+    "resultado_demo": "propuesta_prometida_sin_fecha",
+    "temperatura_derivada": "tibia",
+    "next_step_con_fecha": false,
+    "quien_inicio_los_cierres": {
+      "cierre_1_valor_y_encaje": "no_ocurrio",
+      "confirmacion_de_interes": "cliente",
+      "cierre_2_decision": "no_ocurrio"
+    }
+  },
+  "adherencia": {
+    "bloques": [
+      {
+        "id": 1,
+        "nombre": "Apertura y encuadre",
+        "estado": "ejecutado"
+      },
+      {
+        "id": 2,
+        "nombre": "Descubrimiento",
+        "estado": "parcial"
+      },
+      {
+        "id": 3,
+        "nombre": "Validación del entendimiento",
+        "estado": "omitido"
+      },
+      {
+        "id": 4,
+        "nombre": "Encuadre del demo",
+        "estado": "omitido"
+      },
+      {
+        "id": 5,
+        "nombre": "Demo conversacional",
+        "estado": "ejecutado_debil"
+      },
+      {
+        "id": 6,
+        "nombre": "Cierre #1",
+        "estado": "omitido"
+      },
+      {
+        "id": 7,
+        "nombre": "Confirmación de interés",
+        "estado": "iniciado_por_el_cliente"
+      },
+      {
+        "id": 8,
+        "nombre": "Camino 1-2-3",
+        "estado": "parcial"
+      },
+      {
+        "id": 9,
+        "nombre": "Paso 1 Arquitectura/Despegue",
+        "estado": "ejecutado_debil"
+      },
+      {
+        "id": 10,
+        "nombre": "Paso 2 Implementación",
+        "estado": "fuera_de_orden"
+      },
+      {
+        "id": 11,
+        "nombre": "Cierre #2",
+        "estado": "omitido"
+      },
+      {
+        "id": 12,
+        "nombre": "Filtro técnico",
+        "estado": "omitido"
+      },
+      {
+        "id": 13,
+        "nombre": "ATP / Activación",
+        "estado": "omitido"
+      }
+    ],
+    "adherencia_bloques": "5/13",
+    "preguntas_fijas_formuladas": "0/5",
+    "dolores_cuantificados": "0/5",
+    "minuto_primer_precio": "30:00",
+    "minuto_pantalla_compartida": "03:00",
+    "monologo_mas_largo_min": 6
+  },
+  "errores_graves": [
+    {
+      "codigo": "descubrimiento_omitido_o_minimo",
+      "minuto": "01:40",
+      "cita": null
+    },
+    {
+      "codigo": "demo_sin_encuadre",
+      "minuto": "03:00",
+      "cita": "«te presento por acá también pantalla»"
+    },
+    {
+      "codigo": "precio_antes_de_cierre_1",
+      "minuto": "30:00",
+      "cita": null
+    },
+    {
+      "codigo": "precio_inconsistente_con_catalogo",
+      "minuto": "31:20",
+      "cita": "«va desde los 800 USD hasta los 2500»"
+    },
+    {
+      "codigo": "dolor_no_cuantificado",
+      "minuto": null,
+      "cita": null
+    },
+    {
+      "codigo": "filtro_tecnico_omitido",
+      "minuto": null,
+      "cita": null
+    },
+    {
+      "codigo": "pregunta_del_cliente_sin_responder",
+      "minuto": "51:05",
+      "cita": "«me gustaría saber experiencias»"
+    },
+    {
+      "codigo": "cierre_pasivo_sin_pedir_decision",
+      "minuto": "56:00",
+      "cita": "«Listo, Diego, así quedamos»"
+    },
+    {
+      "codigo": "next_step_sin_fecha",
+      "minuto": "56:00",
+      "cita": null
+    }
+  ],
+  "acciones_coaching": [
+    {
+      "error": "descubrimiento_omitido_o_minimo",
+      "accion": "Correr las 5 preguntas de la ruta (F o A) antes de tocar la pantalla. Son 8 minutos y son el insumo de todo lo demás."
+    },
+    {
+      "error": "demo_sin_encuadre",
+      "accion": "No compartir pantalla sin el bloque 4: anunciar los 3 ejes y esperar el «sí»."
+    },
+    {
+      "error": "precio_antes_de_cierre_1",
+      "accion": "Aplazar el precio con la variante del bloque 1 («los vemos completos hoy mismo») y llegar a él después del cierre #1."
+    },
+    {
+      "error": "precio_inconsistente_con_catalogo",
+      "accion": "R2: solo cifras del catálogo vigente, leídas. Ninguna cifra de memoria."
+    },
+    {
+      "error": "dolor_no_cuantificado",
+      "accion": "Tras cada dolor, la repregunta de número: «¿cuántos al día? ¿cuánto vale uno?». Sin número no hay ROI."
+    }
+  ]
+}

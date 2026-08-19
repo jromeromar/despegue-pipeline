@@ -1,0 +1,483 @@
+{
+  "_meta": {
+    "id_prospecto": "demo-drogueria-rr-20260803",
+    "version_schema": "0.1",
+    "version_guion": "Guion Demo v2026 / genérico",
+    "fuentes": [
+      { "archivo": "Demo Ropofy   Drogueria RR DC   Diego Cardenas .docx", "tipo": "transcripcion", "fecha": "2026-08-03" }
+    ],
+    "fecha_demo": "2026-08-03",
+    "ejecutivo": "Mariana Castaño",
+    "duracion_grabacion_min": 56.7,
+    "duracion_demo_efectiva_min": 56.7,
+    "calidad_transcripcion": {
+      "diarizacion_confiable": true,
+      "n_hablantes_detectados": 2,
+      "n_hablantes_reales": 2,
+      "ruido_asr": "medio",
+      "tramos_no_utilizables": ["nombres de competidores deformados por el ASR (min 55)"]
+    },
+    "extraido_por": "extraccion-demo v0.1",
+    "nota_de_caso": "Caso de calibración A: arquetipo greenfield (cero canal digital), decisor presente, comparación activa de proveedores, modo B. Es el caso que demuestra por qué el guion de descubrimiento no aplica tal cual: no hay fuga que medir, hay canal que construir."
+  },
+
+  "identidad": {
+    "empresa": {
+      "nombre_comercial": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado", "nota": "El título de la reunión dice «Drogueria RR DC»; nunca se pronuncia en la llamada ni se confirma." },
+      "razon_social": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "es_persona_natural": { "valor": true, "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "02:14", "evidencia": "«Diego Cárdenas, como tal, como persona natural, tiene 6 farmacias»", "confianza": "alta", "ausencia": null },
+      "vertical": { "valor": "farmacia_retail", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "02:14", "evidencia": "«tiene 6 farmacias aquí en Granada Meta»", "confianza": "alta", "ausencia": null },
+      "vertical_en_formulario": { "valor": "salud y belleza", "fuente": "formulario_previo", "minuto": "01:40", "evidencia": "«tú no sabías comentado en el formulario que están en el sector salud y belleza»", "confianza": "alta", "ausencia": null },
+      "discrepancia_vertical": { "valor": true, "fuente": "inferido_de_transcripcion", "nota_de_inferencia": "El formulario clasificó 6 droguerías como 'salud y belleza'; la plantilla de demo y los insights de esa vertical no aplican a farmacia retail.", "confianza": "alta", "ausencia": null },
+      "etapa_del_negocio": { "valor": "en_expansion", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "07:20", "evidencia": "«ya apliqué con ellos, ya me aceptaron… debo parecerme a una cadena»", "confianza": "alta", "ausencia": null },
+      "pais": { "valor": "Colombia", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "02:14", "evidencia": "«aquí en Granada Meta»", "confianza": "alta", "ausencia": null },
+      "ciudad": { "valor": "Granada, Meta", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "02:14", "evidencia": "«aquí en Granada Meta»", "confianza": "alta", "ausencia": null },
+      "sedes": [
+        { "nombre_o_ciudad": "Granada, Meta (6 puntos)", "estado": "activa", "evidencia": "«tiene 6 farmacias»" }
+      ],
+      "expansion_declarada": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" }
+    },
+
+    "interlocutores": [
+      {
+        "nombre_en_agenda": "Diego Cardenas",
+        "nombre_en_llamada": "Diego Cárdenas",
+        "identidad_confirmada": true,
+        "cargo": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado", "nota": "Es el dueño (persona natural), pero nunca declaró cargo formal." },
+        "relacion_con_empresa": "dueño",
+        "rol_en_decision": "decide_solo",
+        "alfabetizacion_tecnica": "baja_requiere_llave_en_mano",
+        "evidencia": "«yo soy nuevo en este tema» / «¿mi sistema de tener API, o sea, ese es eso qué es, un archivo?»"
+      }
+    ],
+
+    "decisor": {
+      "presente_en_demo": "si",
+      "quien_decide": "Diego Cárdenas",
+      "perfil_declarado": "Dueño de los 6 puntos, opera como persona natural, sin junta ni socios mencionados.",
+      "mecanismo": "solo",
+      "fecha_de_su_revision": { "valor": "fin de la semana del 3-ago (tras visita a Villavicencio)", "unidad": "fecha_declarada", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "53:40", "evidencia": "«al final de esa semana… voy a tomar una decisión a ver con cuál proveedor»", "confianza": "media", "ausencia": null },
+      "evidencia": "«en el peor de los escenarios me tocaría un usuario por punto» — dimensiona y decide él mismo"
+    },
+
+    "stakeholders_ausentes": [
+      { "nombre": "colega de Villavicencio (27 domiciliarios)", "rol_previsto": "referencia técnica externa que influirá en la decisión", "por_que_importa": "El cliente irá a ver el sistema de un tercero antes de decidir; ese sistema es competencia directa de facto.", "sera_usuario": false },
+      { "nombre": "proveedor del POS Postmas", "rol_previsto": "dueño del dato de inventario", "por_que_importa": "Sin su cooperación no hay stock consultable; ya se comprometió a exportar CSV a un correo.", "sera_usuario": false }
+    ]
+  },
+
+  "origen_y_detonante": {
+    "origen_lead": {
+      "canal": "desconocido",
+      "referidor": null,
+      "sdr_previo": null,
+      "necesidades_predeclaradas": ["automatizar atención", "sector declarado: salud y belleza (incorrecto)"],
+      "prebrief": { "sector": "salud y belleza", "n_asesores": "no_capturado", "dolor_declarado": "no_capturado", "validado_por_cliente": false },
+      "evidencia": "Preguntado en el minuto 55, fuera de orden: «¿cómo llegaste a nosotros, campaña de Facebook?» → «eso yo no fue por campaña… el algoritmo»"
+    },
+
+    "detonante": [
+      {
+        "tipo": "afiliacion_a_cadena_o_franquicia",
+        "descripcion": "Se está afiliando a una cadena que le exige cambio de fachada e imagen; la afiliación ya fue aceptada.",
+        "tercero_involucrado": "cadena de droguerías (no nombrada)",
+        "ventana_temporal": "15 a 20 días para cambio de fachada",
+        "fecha_declarada": "agosto 2026 para investigar, septiembre para arrancar",
+        "es_fecha_dura": true,
+        "evidencia": "«ya apliqué con ellos, ya me aceptaron. Ellos tienen un periodo de 15 a 20 días para venir a cambiar fachada»"
+      },
+      {
+        "tipo": "apertura_de_canal_nuevo",
+        "descripcion": "Quiere abrir domicilios desde cero y ser el primero del municipio en hacerlo de forma independiente.",
+        "tercero_involucrado": null,
+        "ventana_temporal": "septiembre 2026",
+        "fecha_declarada": "septiembre 2026",
+        "es_fecha_dura": false,
+        "evidencia": "«nadie hace domicilios a excepción de droga la rebaja… yo sí quiero de manera independiente… ser pionero, literal»"
+      }
+    ],
+
+    "estado_de_compra": {
+      "competidores_en_evaluacion": [
+        { "nombre": "B2Chat (ASR: 'BDM 8')", "estado": "mencionado" },
+        { "nombre": "Bot Colombia (ASR: 'bus Colombia')", "estado": "mencionado" },
+        { "nombre": "Chatme", "estado": "mencionado" },
+        { "nombre": "proveedor no identificable (ASR: 'Rendy Renya')", "estado": "mencionado" }
+      ],
+      "n_procesos_paralelos": { "valor": "reuniones todo el día del 3-ago; «23 personas» indagadas el viernes anterior", "unidad": "procesos", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "53:10", "evidencia": "«hoy tengo todo el día hasta las 3:00 de la tarde, tengo reuniones, reuniones»", "confianza": "media", "ausencia": null },
+      "plataforma_a_reemplazar": null,
+      "pidio_referencias": { "valor": true, "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "51:05", "evidencia": "«clientes que hayan implementado lo mismo que yo quiero… me gustaría saber experiencias»", "confianza": "alta", "ausencia": null },
+      "build_vs_buy": "no_evaluado",
+      "desinformacion_previa": []
+    }
+  },
+
+  "negocio": {
+    "lineas_negocio": [
+      {
+        "nombre": "Venta de medicamentos en mostrador",
+        "tipo": "retail_fisico",
+        "modalidades": [{ "nombre": "presencial", "es_principal": true }],
+        "es_principal": true,
+        "politica_de_precio": "publico",
+        "paso_obligatorio_del_proceso": null,
+        "mecanismo_de_pago": ["contraentrega", "qr_o_tarjeta_en_entrega"],
+        "insumo_requerido_del_cliente": null,
+        "catalogo": { "estado": "parcial", "donde_vive": "POS Postmas", "items_activos": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" }, "inventarios_separados": 6 },
+        "ticket": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+        "ciclo_dias": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_aplica", "nota": "Venta inmediata en mostrador." },
+        "recurrencia": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" }
+      },
+      {
+        "nombre": "Domicilios (línea nueva, no operativa)",
+        "tipo": "domicilios",
+        "modalidades": [{ "nombre": "domicilio", "es_principal": true }],
+        "es_principal": false,
+        "politica_de_precio": "publico",
+        "paso_obligatorio_del_proceso": { "nombre": "entrega por domiciliario con confirmación", "duracion_min": null, "quien_lo_hace": "domiciliario", "es_virtualizable": false },
+        "mecanismo_de_pago": ["contraentrega", "qr_o_tarjeta_en_entrega", "anticipo_o_abono"],
+        "insumo_requerido_del_cliente": null,
+        "catalogo": { "estado": "parcial", "donde_vive": "POS Postmas", "items_activos": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" }, "inventarios_separados": 6 },
+        "ticket": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "dato_no_existe_en_el_negocio", "nota": "La línea no existe todavía." },
+        "ciclo_dias": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "dato_no_existe_en_el_negocio" },
+        "recurrencia": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "dato_no_existe_en_el_negocio" }
+      }
+    ],
+
+    "economia": {
+      "ticket_promedio": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "margen": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "ad_spend_mensual": { "valor": 0, "unidad": "USD/mes", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "04:30", "evidencia": "«nunca he incursionado en el tema de las redes sociales»", "confianza": "alta", "ausencia": null },
+      "comision": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "tasa_de_cierre": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "facturacion": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "presupuesto_declarado": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado", "nota": "Dijo que los costos «son muy bajitos» pero nunca declaró presupuesto." },
+      "costo_de_personal_sustituible": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "volumen_leads": {
+        "valor": 50, "unidad": "conversaciones", "periodo": "dia", "tipo": "proyectado", "precision": "estimado_por_cliente",
+        "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "30:15",
+        "evidencia": "«vamos a hacer inicialmente unos digamos que 50 conversaciones día»", "confianza": "media", "ausencia": null,
+        "nota": "Volumen actual digital = 0. «No nada, todos estamos en puntos físicos.» La cotización se armó sobre el proyectado, no sobre un actual."
+      },
+      "benchmark_de_sustitucion": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "datos_economicos_capturados": { "n": 2, "de": 9, "modo_propuesta_previsto": "B" }
+    }
+  },
+
+  "operacion_actual": {
+    "canales_entrada": [
+      { "canal": "mostrador_fisico", "es_principal": true, "volumen": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" }, "quien_atiende": "personal de cada punto", "horario": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" }, "evidencia": "«No tengo nada. Todos estamos en puntos físicos»" },
+      { "canal": "web_sin_formulario", "es_principal": false, "volumen": { "valor": 0, "unidad": "leads/mes", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "05:10", "evidencia": "«realmente no le he metido con fuerza a eso»", "confianza": "media", "ausencia": null }, "quien_atiende": "nadie", "horario": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_aplica" }, "evidencia": "Google My Business creado y abandonado" }
+    ],
+
+    "equipo_comercial": {
+      "personas_que_atienden_leads": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado", "nota": "Nunca se preguntó el tamaño del equipo. Único proxy: «6 equipos, mis computadores»." },
+      "roles_mencionados": ["dueño", "personal de punto", "domiciliario (rol a crear)"],
+      "horarios": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "quien_responde_fuera_de_horario": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado", "nota": "Quiere que sea la IA: «llegar al punto donde sea una gente trabajando 24/7»." },
+      "terceros_que_operan_canales": []
+    },
+
+    "respuesta_y_seguimiento": {
+      "canales_de_entrada_confirmados": { "valor": "solo mostrador físico; ningún canal digital operativo", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "03:50", "evidencia": "«No tengo nada. No quiero un WhatsApp, no sé cómo se llame un WhatsApp donde yo pueda tenerlo abierto en varios puntos»", "confianza": "alta", "ausencia": null },
+      "que_pasa_cuando_no_se_responde": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "dato_no_existe_en_el_negocio", "nota": "No hay canal digital: no existe la situación." },
+      "frecuencia_de_no_respuesta": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "dato_no_existe_en_el_negocio" },
+      "seguimiento_sistematizado": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "dato_no_existe_en_el_negocio" },
+      "medicion_de_leads_perdidos": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "dato_no_existe_en_el_negocio" },
+      "punto_de_quiebre_al_duplicar_volumen": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "tiempo_de_respuesta_actual": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "dato_no_existe_en_el_negocio" },
+      "exito_60_90_dias": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" }
+    },
+
+    "stack": [
+      { "nombre": "Postmas (POS/inventarios)", "categoria": "erp_pos", "estado": "activo", "es_fuente_de_verdad": true, "api_disponible": false, "mecanismo_alternativo": "exportación CSV a un correo cada 30-60 min (comprometido por el proveedor en vivo)", "debe_integrarse": "obligatoria", "riesgo": "El stock no se actualiza en tiempo real: la IA puede vender un producto agotado.", "evidencia": "«todavía no manejan API. Sí puede generar un archivo llamando CSV… lo puede colocar en un correo»" },
+      { "nombre": "ninguno", "categoria": "crm", "estado": "inexistente", "es_fuente_de_verdad": false, "api_disponible": null, "mecanismo_alternativo": null, "debe_integrarse": "no", "riesgo": null, "evidencia": "Greenfield declarado" },
+      { "nombre": "Google My Business", "categoria": "perfil_google", "estado": "abandonado", "es_fuente_de_verdad": false, "api_disponible": null, "mecanismo_alternativo": null, "debe_integrarse": "deseable", "riesgo": null, "evidencia": "«yo alcancé a crear unas páginas de eso… realmente no le he metido con fuerza»" },
+      { "nombre": "ninguna", "categoria": "pasarela_de_pago", "estado": "inexistente", "es_fuente_de_verdad": false, "api_disponible": null, "mecanismo_alternativo": "QR/tarjeta en la entrega", "debe_integrarse": "deseable", "riesgo": "El pago anticipado que ofrece no tiene medio digital que lo soporte.", "evidencia": "«puede esperar a que vaya el domicilio y reciba el dinero o le hagan el pago con la tarjeta, con el QR»" }
+    ],
+
+    "whatsapp": {
+      "n_lineas": { "valor": 0, "unidad": "lineas", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "03:50", "evidencia": "«No quiero un WhatsApp, no sé cómo se llame un WhatsApp donde yo pueda tenerlo abierto en varios puntos»", "confianza": "alta", "ausencia": null },
+      "tipo": "desconocido",
+      "antiguedad_linea": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_aplica" },
+      "usos_actuales": [],
+      "numeros_publicados": [],
+      "historial_bloqueo_meta": { "ocurrio": false, "motivo": null, "cuando": null },
+      "criticidad_de_la_linea": "baja",
+      "decision_del_numero_pendiente": "numero_nuevo",
+      "restricciones_aceptadas": []
+    },
+
+    "habilitacion_meta": {
+      "estado_del_filtro": "omitido",
+      "business_manager": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "admin_del_bm": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "fanpage": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "cuenta_publicitaria": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "bloqueos_o_restricciones": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "categoria_permitida": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado", "nota": "Farmacia y medicamentos: categoría con restricciones propias de Meta. Nadie lo verificó." },
+      "accesos_en_manos_de_terceros": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado", "nota": "Riesgo real: las redes serán de la cadena, no suyas." }
+    }
+  },
+
+  "dolores_y_requisitos": {
+    "dolores": [
+      { "id": "d1-sin-canal-digital", "enunciado": "No existe ningún canal digital; toda la venta depende del mostrador.", "arquetipo": "arranque_de_canal_inexistente", "quien_lo_verbalizo": "cliente", "tipo": "evidenciado", "cuantificado": false, "magnitud": null,
+        "citas": [ { "texto": "«No tengo nada»", "hablante": "Diego Cárdenas", "minuto": "03:50" }, { "texto": "«todos estamos en puntos físicos y ya miramos la necesidad de llegar al cliente»", "hablante": "Diego Cárdenas", "minuto": "03:20" } ] },
+      { "id": "d2-inventario-fragmentado", "enunciado": "Seis inventarios separados: si un punto no tiene el producto, la venta se pierde aunque otro punto lo tenga.", "arquetipo": "inventario_o_catalogo_fragmentado", "quien_lo_verbalizo": "cliente", "tipo": "evidenciado", "cuantificado": false, "magnitud": null,
+        "citas": [ { "texto": "«tengo 6 inventarios diferentes… lo que no tiene una lo tiene la otra»", "hablante": "Diego Cárdenas", "minuto": "18:40" }, { "texto": "«no puedo limitar a un solo punto que de pronto no lo tiene y ya murió la venta»", "hablante": "Diego Cárdenas", "minuto": "19:10" } ] },
+      { "id": "d3-costo-de-personal", "enunciado": "Quiere atención 24/7 sin sumar personal; la única intervención humana que acepta es la entrega.", "arquetipo": "costo_de_personal_para_escalar", "quien_lo_verbalizo": "cliente", "tipo": "anticipado", "cuantificado": false, "magnitud": null,
+        "citas": [ { "texto": "«llegar al punto donde sea una gente trabajando 24/7. Y la única intervención humana que quiero será el domiciliario»", "hablante": "Diego Cárdenas", "minuto": "21:30" } ] },
+      { "id": "d4-retencion-resolver-siempre", "enunciado": "Quiere resolver siempre al cliente, incluso derivándolo, para no perderlo.", "arquetipo": "sin_seguimiento", "quien_lo_verbalizo": "cliente", "tipo": "anticipado", "cuantificado": false, "magnitud": null,
+        "citas": [ { "texto": "«así le toque ir a buscarlo en otra cadena, pero es solucionar, es quiero darles la solución»", "hablante": "Diego Cárdenas", "minuto": "20:05" } ] },
+      { "id": "d5-costos-ocultos", "enunciado": "Teme costos ocultos y caídas de plataforma.", "arquetipo": "fragilidad_del_canal", "quien_lo_verbalizo": "cliente", "tipo": "anticipado", "cuantificado": false, "magnitud": null,
+        "citas": [ { "texto": "«mirar costos que no me vayan a salir con costos ocultos… ya no es que se cayó la herramienta, se cayó la página»", "hablante": "Diego Cárdenas", "minuto": "44:20" } ] }
+    ],
+
+    "dolor_dominante_del_cliente": { "valor": "Conectarse al mundo digital para poder vender por domicilio siendo el primero del municipio.", "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "46:30", "evidencia": "«ustedes me pueden conectar al mundo digital… y yo puedo lograr ventas. Sí, eso es el objetivo»", "confianza": "alta", "ausencia": null },
+
+    "requisitos_funcionales_declarados": [
+      { "requisito": "La IA debe consultar los 6 inventarios y responder disponibilidad por punto.", "tipo_de_componente_implicado": "integracion + chatbot_ia", "linea_de_negocio": "Domicilios", "cita": "«la IA tiene la capacidad de buscar en esos 6 archivos»" },
+      { "requisito": "El domiciliario necesita acceso móvil para ver el pedido, marcar entregado y escribir al cliente.", "tipo_de_componente_implicado": "permisos_usuarios + pipeline + app_movil", "linea_de_negocio": "Domicilios", "cita": "«el domiciliario tiene acceso para confirmar el entregado» / «¿cómo se le notifica al domiciliario que ya está?»" },
+      { "requisito": "Todo mensaje al cliente debe salir siempre desde la línea principal, no desde números de asesores.", "tipo_de_componente_implicado": "telefonia + integracion", "linea_de_negocio": "Domicilios", "cita": "«un WhatsApp donde yo pueda tenerlo abierto en varios puntos»" },
+      { "requisito": "Segmentar la base de clientes por categoría para campañas.", "tipo_de_componente_implicado": "segmento", "linea_de_negocio": "Venta de medicamentos en mostrador", "cita": "«¿Puedo categorizar mis clientes?»" },
+      { "requisito": "Ruta directa desde anuncios de redes al WhatsApp (click-to-WhatsApp).", "tipo_de_componente_implicado": "automatizacion + integracion", "linea_de_negocio": "Domicilios", "cita": "«desde las mismas redes sociales… entran ese link, ¿ahí automáticamente lo enviará al WhatsApp?»" }
+    ],
+
+    "alcance_ia_autorizado": "asesor_comercial_completo",
+
+    "restricciones": {
+      "marca_blanca_requerida": false,
+      "visibilidad_de_marca_limitada": { "valor": true, "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "49:40", "evidencia": "«estamos por acá en una zona un poco complicada en el tema de orden público y entre menos lo conozcan a uno mejor»", "confianza": "alta", "ausencia": null },
+      "propiedad_de_marca_en_tercero": { "valor": true, "fuente": "cliente_declaro", "hablante": "Diego Cárdenas", "minuto": "50:15", "evidencia": "«una cadena no habla sino de la cadena, no habla de mí… y ya Diego desapareció»", "confianza": "alta", "ausencia": null },
+      "confidencialidad_de_datos": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "base_legal_de_contacto": { "valor": "no_capturado", "fuente": "n/a", "ausencia": "no_preguntado" },
+      "otras": ["Datos de salud: régimen de dato sensible no explorado."]
+    }
+  },
+
+  "reaccion_a_la_demo": {
+    "modulos_mostrados": ["conversaciones_omnicanal", "agente_ia", "embudos_pipeline", "contactos_y_segmentos", "campanas_masivas", "marketing_planeador", "ad_manager_reporteria_meta", "inventario_productos", "app_movil", "dashboards"],
+    "modulos_con_interes_real": [
+      { "modulo": "embudos_pipeline", "señal": "n_preguntas", "evidencia": "Volvió tres veces al flujo del domiciliario: «el embudo de pedido solamente lo manejaría el domiciliario»" },
+      { "modulo": "inventario_productos", "señal": "n_preguntas", "evidencia": "«la IA tiene la capacidad de buscar en esos 6 archivos»" },
+      { "modulo": "contactos_y_segmentos", "señal": "cita", "evidencia": "«¿Puedo categorizar mis clientes?»" }
+    ],
+    "modulos_ignorados": ["dashboards", "marketing_planeador", "ad_manager_reporteria_meta"],
+    "preguntas_del_cliente": [
+      { "texto": "¿El domiciliario tiene acceso para confirmar el entregado?", "minuto": "26:10", "categoria": "funcional", "respondida": "si" },
+      { "texto": "¿Cómo se le notifica al domiciliario que ya está el pedido?", "minuto": "27:05", "categoria": "funcional", "respondida": "si" },
+      { "texto": "¿Puedo categorizar mis clientes?", "minuto": "33:20", "categoria": "funcional", "respondida": "si" },
+      { "texto": "Desde las redes sociales, ¿el link lo lleva automáticamente al WhatsApp?", "minuto": "35:40", "categoria": "funcional", "respondida": "si" },
+      { "texto": "¿La IA puede buscar en esos 6 archivos de inventario?", "minuto": "29:00", "categoria": "tecnica", "respondida": "parcial" },
+      { "texto": "¿Mi sistema de tener API, eso qué es, un archivo?", "minuto": "28:10", "categoria": "tecnica", "respondida": "si" },
+      { "texto": "¿Esa mensualidad en cuánto puede oscilar?", "minuto": "30:00", "categoria": "comercial_precio", "respondida": "si" },
+      { "texto": "¿Tienen clientes que hayan implementado lo mismo que yo quiero? Me gustaría saber experiencias.", "minuto": "51:05", "categoria": "confianza_y_datos", "respondida": "prometio_averiguar" }
+    ],
+    "preguntas_sin_responder": [
+      { "texto": "Referencias de clientes con la misma implementación", "minuto": "51:05", "compromiso": "«yo voy a averiguar con el equipo qué clientes tenemos activos y te envío las referencias» — sin fecha" }
+    ],
+    "senales_de_compra": [
+      { "texto": "«ustedes me pueden conectar al mundo digital y yo puedo lograr ventas. Sí, eso es el objetivo»", "minuto": "46:30", "fuerza": "media" },
+      { "texto": "«realmente los costos son muy bajitos»", "minuto": "42:10", "fuerza": "media" }
+    ],
+    "senales_de_riesgo": [
+      { "texto": "«estoy en consulta, tengo ahorita otra a las 10:00 de la mañana… voy a tomar una decisión a ver con cuál proveedor»", "minuto": "53:10" },
+      { "texto": "Viaje a Villavicencio a ver el sistema de un colega antes de decidir", "minuto": "54:20" }
+    ],
+    "nivel_de_atencion": "alta",
+
+    "objeciones": [
+      { "tipo": "precio_invertido", "cita": "«realmente los costos son muy bajitos. O sea, en el peor de los escenarios, 2500 dólares… son muy económicos»", "minuto": "42:10", "manejo": "no_abordada", "pendiente": true },
+      { "tipo": "competencia_en_evaluacion", "cita": "«voy a tomar una decisión a ver con cuál proveedor o cuál plataforma»", "minuto": "53:10", "manejo": "no_abordada", "pendiente": true },
+      { "tipo": "timing_o_presupuesto_futuro", "cita": "«me asigné el mes de agosto como para investigar… digamos que sería para el mes de septiembre»", "minuto": "52:30", "manejo": "no_abordada", "pendiente": true },
+      { "tipo": "prueba_social_faltante", "cita": "«me gustaría saber experiencias»", "minuto": "51:05", "manejo": "sin_respuesta_prometio_averiguar", "pendiente": true },
+      { "tipo": "costos_ocultos", "cita": "«que no me vayan a salir con costos ocultos»", "minuto": "44:20", "manejo": "resuelta", "pendiente": false },
+      { "tipo": "falta_de_criterio_propio", "cita": "«yo soy nuevo en este tema»", "minuto": "28:10", "manejo": "resuelta", "pendiente": false }
+    ]
+  },
+
+  "lo_que_dijo_ropofy": {
+    "cotizacion_dicha": {
+      "plan_nombre": "5 usuarios (+1 de regalo para cubrir 6 puntos)",
+      "usuarios_cotizados": 6,
+      "precio_plan_mes": 199,
+      "modo_ia": "ilimitada",
+      "tarifa_ia_dicha": 0.19,
+      "umbral_ia_dicho": "700 y luego 800 en la misma llamada",
+      "tarifa_whatsapp_dicha": 0.0131,
+      "pais_de_la_tarifa": "Colombia",
+      "implementacion_min_dicho": 800,
+      "implementacion_max_dicho": 2500,
+      "cotizacion_puntual_improvisada": null,
+      "despegue_precio_dicho": 24,
+      "despegue_dias_dicho": 14,
+      "total_mensual_dicho": 358,
+      "supuesto_de_volumen_usado": { "valor": "1.500 conversaciones/mes (50/día × 30)", "origen": "proyeccion_del_cliente_extrapolada_por_el_ejecutivo" },
+      "minuto_del_primer_precio": "30:00"
+    },
+    "desviaciones_de_catalogo": [
+      { "concepto": "implementación mínima", "valor_dicho": 800, "valor_de_catalogo": 499, "minuto": "31:20", "gravedad": "alta" },
+      { "concepto": "umbral de IA ilimitada", "valor_dicho": "700 y 800 en la misma llamada", "valor_de_catalogo": "único valor de catálogo", "minuto": "38:40", "gravedad": "media" }
+    ],
+    "promesas": [
+      { "promesa": "El CSV del POS al correo permite que la herramienta consulte inventario.", "tipo": "integracion", "tiene_sustento": false, "riesgo": "No es tiempo real; la propia ejecutiva advirtió que la IA puede vender lo agotado. Queda como riesgo asumido sin acuerdo escrito.", "minuto": "29:40", "cita": "«no es una actualización en tiempo real… resulta que ese producto no estaba disponible y la IA lo vende»" }
+    ],
+    "claims_sin_sustento": [],
+    "informacion_de_terceros_revelada": [],
+    "entregables_prometidos": [
+      { "entregable": "Referencias de clientes con implementación similar", "dueño": "ropofy", "canal": "WhatsApp", "fecha_comprometida": null, "cumplido": null },
+      { "entregable": "Canal de YouTube y sitio web de Ropofy", "dueño": "ropofy", "canal": "WhatsApp", "fecha_comprometida": null, "cumplido": null }
+    ]
+  },
+
+  "cierres_y_resultado": {
+    "momentos_de_cierre": {
+      "cierre_1_valor_y_encaje": { "ocurrio": false, "quien_lo_inicio": "no_ocurrio", "pregunta_formulada": null, "hubo_silencio_despues": false, "respuesta_literal": null, "resultado": "no_se_pidio", "minuto": null },
+      "confirmacion_de_interes": { "ocurrio": false, "quien_lo_inicio": "cliente", "pregunta_formulada": null, "hubo_silencio_despues": false, "respuesta_literal": "«ustedes me pueden conectar al mundo digital y yo puedo lograr ventas»", "resultado": "no_se_pidio", "minuto": "46:30" },
+      "cierre_2_decision": { "ocurrio": false, "quien_lo_inicio": "no_ocurrio", "pregunta_formulada": "«No sé si te gustaría activar el despegue…»", "hubo_silencio_despues": false, "respuesta_literal": "«Pues Mariana, como te digo, estoy en consulta… voy a tomar una decisión»", "resultado": "aplazado_a_tercero", "minuto": "53:04" }
+    },
+    "filtro_tecnico": { "estado": "omitido", "minuto": null, "items_verificados": [], "items_omitidos": ["business_manager", "admin_del_bm", "fanpage", "cuenta_publicitaria", "bloqueos_o_restricciones", "categoria_permitida", "accesos_en_manos_de_terceros"], "derivo_a_atp": false },
+    "ruta_definida": "diferido_por_comparacion_de_proveedores",
+    "resultado_demo": "propuesta_prometida_sin_fecha",
+    "next_step": { "descripcion": "El cliente decide al final de la semana tras comparar proveedores y visitar Villavicencio; Ropofy enviará referencias.", "tipo": "cliente_consulta_internamente", "dueño": "cliente", "fecha": null, "condicion": "que el cliente escriba por WhatsApp tras su ronda de proveedores", "tiene_fecha": false },
+    "temperatura_derivada": { "valor": "tibia", "criterios_aplicados": ["decisor presente y con capacidad de pago", "detonante con fecha dura (afiliación a cadena)", "4 objeciones pendientes sin trabajar", "competencia activa con múltiples procesos paralelos", "cierre #2 no ejecutado"] }
+  },
+
+  "ejecucion_del_guion": {
+    "bloques": [
+      { "id": 1, "nombre": "Apertura y encuadre", "estado": "ejecutado", "minuto_inicio": "00:00", "micro_checks_obligatorios": [{ "check": "pidió permiso para el formato y obtuvo sí", "ocurrio": true }], "notas": "Breve y correcto." },
+      { "id": 2, "nombre": "Descubrimiento", "estado": "parcial", "minuto_inicio": "01:40", "micro_checks_obligatorios": [{ "check": "hizo hablar primero al cliente", "ocurrio": true }, { "check": "siguió el orden de las 5 preguntas", "ocurrio": false }], "notas": "~3 min sobre una llamada de 57. Se sustituyó por preguntas de configuración." },
+      { "id": 3, "nombre": "Validación del entendimiento", "estado": "omitido", "minuto_inicio": null, "micro_checks_obligatorios": [{ "check": "«¿voy bien hasta ahí?»", "ocurrio": false }], "notas": null },
+      { "id": 4, "nombre": "Encuadre del demo", "estado": "omitido", "minuto_inicio": null, "micro_checks_obligatorios": [{ "check": "pidió permiso antes de compartir pantalla", "ocurrio": false }], "notas": "Pantalla al minuto 3 con «te presento por acá también pantalla»." },
+      { "id": 5, "nombre": "Demo conversacional", "estado": "ejecutado_debil", "minuto_inicio": "03:00", "micro_checks_obligatorios": [{ "check": "una pregunta por acto", "ocurrio": false }], "notas": "~27 min. Monólogo de 6 min (min 3-10) antes del primer checkpoint; la conducción pasó al cliente." },
+      { "id": 6, "nombre": "Cierre #1", "estado": "omitido", "minuto_inicio": null, "micro_checks_obligatorios": [{ "check": "«¿esto responde a lo que hoy les está pasando?»", "ocurrio": false }], "notas": null },
+      { "id": 7, "nombre": "Confirmación de interés", "estado": "iniciado_por_el_cliente", "minuto_inicio": "46:30", "micro_checks_obligatorios": [{ "check": "pregunta explícita de interés + silencio", "ocurrio": false }], "notas": null },
+      { "id": 8, "nombre": "Camino 1-2-3", "estado": "parcial", "minuto_inicio": "47:11", "micro_checks_obligatorios": [{ "check": "presentó los 3 pasos como camino", "ocurrio": false }], "notas": "Despegue e implementación explicados sin encuadrarlos como camino." },
+      { "id": 9, "nombre": "Paso 1 Arquitectura/Despegue", "estado": "ejecutado_debil", "minuto_inicio": "47:11", "micro_checks_obligatorios": [{ "check": "≥2 micro-checks", "ocurrio": false }], "notas": "Formulación débil: «por si quieres, por si quieres tenerla»." },
+      { "id": 10, "nombre": "Paso 2 Implementación", "estado": "fuera_de_orden", "minuto_inicio": "31:20", "micro_checks_obligatorios": [{ "check": "«¿te queda clara la diferencia?»", "ocurrio": false }], "notas": "Rango 800-2500, dado antes de cualquier cierre." },
+      { "id": 11, "nombre": "Cierre #2", "estado": "omitido", "minuto_inicio": null, "micro_checks_obligatorios": [{ "check": "pregunta de decisión + silencio", "ocurrio": false }], "notas": null },
+      { "id": 12, "nombre": "Filtro técnico", "estado": "omitido", "minuto_inicio": null, "micro_checks_obligatorios": [{ "check": "validó accesos uno a uno", "ocurrio": false }], "notas": "Omitido en el caso de mayor riesgo: sin BM, sin fanpage, sin cuenta publicitaria, categoría farmacia." },
+      { "id": 13, "nombre": "ATP / Activación", "estado": "omitido", "minuto_inicio": null, "micro_checks_obligatorios": [{ "check": "ofreció ATP si no cumple filtro", "ocurrio": false }], "notas": "Ni ATP ni link de pago." }
+    ],
+    "preguntas_fijas_descubrimiento": [
+      { "n": 1, "enunciado_canonico": "¿Por dónde están entrando hoy la mayoría de los leads?", "formulada": "reformulada_como_configuracion", "respuesta_obtenida": "«No tengo nada. Todos estamos en puntos físicos»", "minuto": "03:50" },
+      { "n": 2, "enunciado_canonico": "Cuando entra un mensaje y no se responde rápido, ¿qué pasa? ¿Con qué frecuencia?", "formulada": "no", "respuesta_obtenida": null, "minuto": null },
+      { "n": 3, "enunciado_canonico": "Cuando alguien no compra en el primer contacto, ¿qué hacen después?", "formulada": "no", "respuesta_obtenida": null, "minuto": null },
+      { "n": 4, "enunciado_canonico": "¿Tienen alguna forma de medir cuántos leads se pierden?", "formulada": "no", "respuesta_obtenida": null, "minuto": null },
+      { "n": 5, "enunciado_canonico": "Si mañana duplicas el volumen, ¿qué se rompe primero?", "formulada": "no", "respuesta_obtenida": null, "minuto": null }
+    ],
+    "metricas_ejecucion": {
+      "duracion_efectiva_min": 56.7,
+      "minuto_pantalla_compartida": "03:00",
+      "minuto_primer_precio": "30:00",
+      "monologo_mas_largo_min": 6,
+      "n_preguntas_del_ejecutivo": 9,
+      "n_preguntas_del_cliente": 15,
+      "n_checkpoints_en_demo": 3,
+      "adherencia_bloques": "5/13",
+      "preguntas_fijas_formuladas": "0/5",
+      "dolores_cuantificados": "0/5"
+    },
+    "errores_detectados": [
+      { "codigo": "descubrimiento_omitido_o_minimo", "minuto": "01:40", "cita": null, "gravedad": "alta" },
+      { "codigo": "demo_sin_encuadre", "minuto": "03:00", "cita": "«te presento por acá también pantalla»", "gravedad": "alta" },
+      { "codigo": "monologo_prolongado_sin_checkpoint", "minuto": "03:00", "cita": null, "gravedad": "media" },
+      { "codigo": "demo_conducida_por_el_cliente", "minuto": "10:00", "cita": null, "gravedad": "media" },
+      { "codigo": "precio_antes_de_cierre_1", "minuto": "30:00", "cita": null, "gravedad": "alta" },
+      { "codigo": "precio_inconsistente_con_catalogo", "minuto": "31:20", "cita": "«va desde los 800 USD hasta los 2500»", "gravedad": "alta" },
+      { "codigo": "inconsistencia_interna_de_precio", "minuto": "38:40", "cita": "«menos de 700 consultas… creo que son 800»", "gravedad": "media" },
+      { "codigo": "dolor_no_cuantificado", "minuto": null, "cita": null, "gravedad": "alta" },
+      { "codigo": "filtro_tecnico_omitido", "minuto": null, "cita": null, "gravedad": "alta" },
+      { "codigo": "atp_no_ofrecido", "minuto": null, "cita": null, "gravedad": "media" },
+      { "codigo": "pregunta_del_cliente_sin_responder", "minuto": "51:05", "cita": "«me gustaría saber experiencias»", "gravedad": "alta" },
+      { "codigo": "cierre_pasivo_sin_pedir_decision", "minuto": "56:00", "cita": "«Listo, Diego, así quedamos»", "gravedad": "alta" },
+      { "codigo": "next_step_sin_fecha", "minuto": "56:00", "cita": null, "gravedad": "alta" },
+      { "codigo": "cargos_y_stakeholders_no_capturados", "minuto": null, "cita": null, "gravedad": "media" }
+    ]
+  },
+
+  "calidad_y_agenda": {
+    "datos_en_conflicto": [
+      { "tema": "vertical del negocio", "objeto_a": "clasificación del formulario de contacto", "version_a": "salud y belleza", "objeto_b": "clasificación del formulario de contacto", "version_b": "farmacia retail (6 droguerías) según el cliente", "impacto": "Se usó la plantilla de demo equivocada; los insights de valor mostrados no eran de su sector.", "estado": "resuelto_a_favor_del_cliente" }
+    ],
+
+    "hipotesis_a_verificar": [
+      { "id": "h1", "afirmacion": "El volumen será de ~50 conversaciones/día (1.500/mes) al abrir domicilios.", "quien_la_introdujo": "cliente (estimado) extrapolado por el ejecutivo", "por_que_es_hipotesis": "Es una proyección sin base: hoy el canal digital no existe. La cotización de IA ilimitada (159 USD) se construyó sobre ella.", "como_verificarla": "Definir en el diagnóstico un volumen de arranque conservador y una regla de cambio de plan por umbral medido.", "riesgo_si_es_falsa": "Sobrecosto de IA ilimitada durante meses, o subdimensionamiento si el volumen es mayor." },
+      { "id": "h2", "afirmacion": "El CSV del POS cada 30-60 min es suficiente para que la IA responda disponibilidad.", "quien_la_introdujo": "ejecutivo (aceptó el mecanismo propuesto por el proveedor del POS)", "por_que_es_hipotesis": "Nunca se vio el archivo ni se verificó formato, frecuencia real ni identificadores de producto.", "como_verificarla": "Pedir el CSV real en la sesión y abrirlo en pantalla (evidencia en vivo).", "riesgo_si_es_falsa": "La IA promete stock inexistente; el dolor #2 no se resuelve y se genera uno nuevo." },
+      { "id": "h3", "afirmacion": "El negocio pasa el filtro de categorías permitidas de Meta.", "quien_la_introdujo": "nadie — se asumió por omisión", "por_que_es_hipotesis": "Farmacia y medicamentos tienen restricciones propias en Meta y el filtro no se corrió.", "como_verificarla": "Filtro técnico completo con la cuenta en pantalla antes de prometer canal.", "riesgo_si_es_falsa": "Todo el proyecto de domicilios por WhatsApp/Meta queda bloqueado después de cobrar." }
+    ],
+
+    "vacios": [
+      { "id": "v1", "campo": "empresa.nombre_comercial", "motivo": "no_preguntado", "impacto": "informativo" },
+      { "id": "v2", "campo": "empresa.razon_social", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v3", "campo": "interlocutores[0].cargo", "motivo": "no_preguntado", "impacto": "informativo" },
+      { "id": "v4", "campo": "economia.ticket_promedio", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v5", "campo": "economia.margen", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v6", "campo": "economia.tasa_de_cierre", "motivo": "no_preguntado", "impacto": "encarece_diagnostico" },
+      { "id": "v7", "campo": "economia.comision", "motivo": "no_preguntado", "impacto": "encarece_diagnostico" },
+      { "id": "v8", "campo": "economia.facturacion", "motivo": "no_preguntado", "impacto": "encarece_diagnostico" },
+      { "id": "v9", "campo": "economia.presupuesto_declarado", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v10", "campo": "economia.costo_de_personal_sustituible", "motivo": "no_preguntado", "impacto": "encarece_diagnostico" },
+      { "id": "v11", "campo": "economia.benchmark_de_sustitucion", "motivo": "no_preguntado", "impacto": "informativo" },
+      { "id": "v12", "campo": "operacion_actual.equipo_comercial.personas_que_atienden_leads", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v13", "campo": "operacion_actual.equipo_comercial.horarios", "motivo": "no_preguntado", "impacto": "encarece_diagnostico" },
+      { "id": "v14", "campo": "operacion_actual.equipo_comercial.quien_responde_fuera_de_horario", "motivo": "no_preguntado", "impacto": "encarece_diagnostico" },
+      { "id": "v15", "campo": "respuesta_y_seguimiento.punto_de_quiebre_al_duplicar_volumen", "motivo": "no_preguntado", "impacto": "encarece_diagnostico" },
+      { "id": "v16", "campo": "respuesta_y_seguimiento.exito_60_90_dias", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v17", "campo": "respuesta_y_seguimiento.que_pasa_cuando_no_se_responde", "motivo": "dato_no_existe_en_el_negocio", "impacto": "informativo" },
+      { "id": "v18", "campo": "respuesta_y_seguimiento.seguimiento_sistematizado", "motivo": "dato_no_existe_en_el_negocio", "impacto": "informativo" },
+      { "id": "v19", "campo": "respuesta_y_seguimiento.medicion_de_leads_perdidos", "motivo": "dato_no_existe_en_el_negocio", "impacto": "informativo" },
+      { "id": "v20", "campo": "respuesta_y_seguimiento.frecuencia_de_no_respuesta", "motivo": "dato_no_existe_en_el_negocio", "impacto": "informativo" },
+      { "id": "v21", "campo": "respuesta_y_seguimiento.tiempo_de_respuesta_actual", "motivo": "dato_no_existe_en_el_negocio", "impacto": "informativo" },
+      { "id": "v22", "campo": "habilitacion_meta.business_manager", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v23", "campo": "habilitacion_meta.admin_del_bm", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v24", "campo": "habilitacion_meta.fanpage", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v25", "campo": "habilitacion_meta.cuenta_publicitaria", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v26", "campo": "habilitacion_meta.bloqueos_o_restricciones", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v27", "campo": "habilitacion_meta.categoria_permitida", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v28", "campo": "habilitacion_meta.accesos_en_manos_de_terceros", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v29", "campo": "lineas_negocio[0].ticket", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" },
+      { "id": "v30", "campo": "restricciones.base_legal_de_contacto", "motivo": "no_preguntado", "impacto": "bloquea_propuesta" }
+    ],
+
+    "agenda_diagnostico": [
+      { "id": "a1", "pregunta_sugerida": "Confirmemos los datos de facturación: ¿la operación factura como persona natural (Diego Cárdenas) o hay una razón social por punto? ¿Y la afiliación a la cadena cambia eso?", "campo_destino": "empresa.razon_social", "por_que_importa": "Define el contrato y la facturación; y la afiliación puede mover la titularidad de las cuentas.", "quien_debe_responder": "dueño", "prioridad": "alta", "momento": "brief_previo", "requiere_dato_previo": null, "deriva_de": "v2" },
+      { "id": "a2", "pregunta_sugerida": "Abramos su Business Manager, la fanpage y la cuenta publicitaria en pantalla: queremos ver qué existe hoy, quién es administrador y si hay restricciones activas. También si el negocio quedará bajo las cuentas de la cadena.", "campo_destino": "habilitacion_meta.*", "por_que_importa": "Es el bloqueo más caro del proyecto: sin BM propio y sin categoría habilitada no hay canal WhatsApp, y hoy nadie sabe en qué estado están. La afiliación a la cadena puede dejar las cuentas en manos de un tercero.", "quien_debe_responder": "dueño", "prioridad": "bloqueante", "momento": "evidencia_en_vivo", "requiere_dato_previo": null, "deriva_de": "v22,v23,v24,v25,v26,v28,h3" },
+      { "id": "a3", "pregunta_sugerida": "Meta tiene reglas específicas para farmacias y medicamentos. Revisemos juntos qué se puede publicitar y qué no antes de diseñar el canal.", "campo_destino": "habilitacion_meta.categoria_permitida", "por_que_importa": "Farmacia es categoría sensible; si no pasa, el diseño de domicilios por WhatsApp cambia de raíz.", "quien_debe_responder": "dueño", "prioridad": "bloqueante", "momento": "evidencia_en_vivo", "requiere_dato_previo": null, "deriva_de": "v27" },
+      { "id": "a4", "pregunta_sugerida": "Pidámosle a Postmas el CSV real y abrámoslo aquí: queremos ver columnas, frecuencia y si el mismo producto tiene el mismo código en los 6 puntos.", "campo_destino": "stack[0].mecanismo_alternativo", "por_que_importa": "De ese archivo depende que la IA responda disponibilidad real. Es el corazón del dolor #2 y hoy es una promesa de tercero sin verificar.", "quien_debe_responder": "dueño", "prioridad": "bloqueante", "momento": "evidencia_en_vivo", "requiere_dato_previo": "CSV de ejemplo solicitado al proveedor antes de la sesión", "deriva_de": "h2" },
+      { "id": "a5", "pregunta_sugerida": "Para dimensionar el ahorro: ¿cuál es el ticket promedio de una venta de mostrador y cuál esperaría por domicilio? ¿Y el margen aproximado de una venta típica?", "campo_destino": "lineas_negocio[].ticket_inicial", "por_que_importa": "Sin ticket ni margen la propuesta va en modo B (fugas en volumen). Con dos números el domicilio se puede valorar en dinero desde el primer mes.", "quien_debe_responder": "dueño", "prioridad": "bloqueante", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "v4,v5,v29" },
+      { "id": "a6", "pregunta_sugerida": "¿Qué presupuesto mensual tiene pensado para esto, contando la herramienta y la pauta? Y le dejamos por escrito la estructura completa de costos —software, IA, mensajes de WhatsApp e implementación— para que no aparezca nada después.", "campo_destino": "F.datos_economicos_capturados", "por_que_importa": "Dijo que los costos «son muy bajitos» sin declarar presupuesto: el ancla quedó baja y el alcance real puede ser mayor. Además pidió explícitamente que no le salgan costos ocultos.", "quien_debe_responder": "dueño", "prioridad": "bloqueante", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "v9,d5" },
+      { "id": "a7", "pregunta_sugerida": "Nadie perdió leads digitales porque no hay canal. Entonces la pregunta es al revés: ¿cuántos domicilios al día harían que esto valga la pena, y en qué mes? Definamos ese número hoy para poder medirlo después.", "campo_destino": "F.linea_base_caso_exito", "por_que_importa": "Este cliente es arranque de canal, no fuga: no hay línea base y hay que fabricarla. Sin meta declarada no hay caso de éxito posible.", "quien_debe_responder": "dueño", "prioridad": "bloqueante", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "v16,d1" },
+      { "id": "a8", "pregunta_sugerida": "Cuando abramos domicilios: ¿quién responde y en qué horario, cuántas personas por punto y quién va a ser el domiciliario? Necesitamos nombres y turnos, no números.", "campo_destino": "B.personas_por_funcion", "por_que_importa": "Propone 6 usuarios (uno por punto) pero nunca dijo cuánta gente hay ni en qué horario. Sin eso no se puede asignar ni escalar el bot al humano.", "quien_debe_responder": "dueño", "prioridad": "alta", "momento": "brief_previo", "requiere_dato_previo": null, "deriva_de": "v12,v13,v14" },
+      { "id": "a9", "pregunta_sugerida": "Dijo que la venta se muere cuando el punto no tiene el producto. ¿Cuántas veces al día pasa eso hoy, aunque sea a ojo, y cuánto vale una de esas ventas?", "campo_destino": "E.fugas_evidenciadas", "por_que_importa": "Es el dolor mejor contado de la llamada y está sin cuantificar. Es también el que justifica la integración con el POS.", "quien_debe_responder": "dueño", "prioridad": "alta", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "d2" },
+      { "id": "a10", "pregunta_sugerida": "Quiere atención 24/7 sin sumar gente. ¿Qué le cuesta hoy tener una persona atendiendo un turno, con prestaciones? Con ese número comparamos.", "campo_destino": "economia.costo_de_personal_sustituible", "por_que_importa": "Es el único cálculo de ROI que este cliente va a entender, y no requiere que sepa su tasa de cierre.", "quien_debe_responder": "dueño", "prioridad": "alta", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "v10,v11,d3" },
+      { "id": "a18", "pregunta_sugerida": "Para poder medir después: ¿cuánto factura al mes el conjunto de los 6 puntos, aunque sea un rango? ¿Y de cada 10 personas que preguntan por un producto, cuántas terminan comprando? ¿El personal tiene alguna comisión por venta?", "campo_destino": "F.linea_base_caso_exito", "por_que_importa": "Sin facturación, conversión ni esquema de comisión no hay línea base contra la cual mostrar resultados a los tres meses, y la propuesta se queda sin el «antes» del caso de éxito.", "quien_debe_responder": "dueño", "prioridad": "alta", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "v6,v7,v8" },
+      { "id": "a11", "pregunta_sugerida": "Cuando alguien pregunta por un medicamento y ustedes no lo tienen: hoy ¿qué hacen? ¿lo anotan, lo consiguen, lo dejan ir? Queremos diseñar esa ruta, no inventarla.", "campo_destino": "A.etapas", "por_que_importa": "Su regla declarada es «resolver siempre, así toque buscarlo en otra cadena». Eso es una etapa del embudo y una automatización, y está sin especificar.", "quien_debe_responder": "dueño", "prioridad": "alta", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "d4" },
+      { "id": "a12", "pregunta_sugerida": "Si mañana entraran 200 pedidos en un día en vez de 50, ¿qué se rompe primero: los domiciliarios, el inventario o quien responde?", "campo_destino": "D.punto_de_quiebre", "por_que_importa": "Pregunta 5 del guion, nunca formulada. Define qué se construye primero y qué se deja para la fase 2.", "quien_debe_responder": "dueño", "prioridad": "media", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "v15" },
+      { "id": "a13", "pregunta_sugerida": "El plan de IA ilimitada se cotizó asumiendo 1.500 conversaciones al mes. Propongo arrancar con el modo variable y cambiar cuando el volumen medido lo justifique. ¿Le hace sentido?", "campo_destino": "G.modo_ia", "por_que_importa": "El supuesto de volumen lo puso la extrapolación, no el negocio. Arrancar en ilimitada es sobrecosto garantizado en un canal que todavía no existe.", "quien_debe_responder": "dueño", "prioridad": "alta", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "h1" },
+      { "id": "a14", "pregunta_sugerida": "Para enviar campañas necesitamos base legal de contacto. ¿Cómo recogen hoy los datos de los clientes y hay algún consentimiento firmado o registrado?", "campo_destino": "F.base_legal_contacto", "por_que_importa": "Son datos de salud y quiere hacer campañas masivas. Sin base legal no se activa (regla dura de la cadena).", "quien_debe_responder": "dueño", "prioridad": "bloqueante", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "v30" },
+      { "id": "a15", "pregunta_sugerida": "¿Confirmamos su cargo y quién más va a firmar y a operar esto? Queremos que las sesiones tengan a la gente correcta.", "campo_destino": "interlocutores[].cargo", "por_que_importa": "Cargo y stakeholders no se capturaron; el domiciliario y el proveedor del POS son dueños de procesos y no estuvieron.", "quien_debe_responder": "dueño", "prioridad": "media", "momento": "brief_previo", "requiere_dato_previo": null, "deriva_de": "v3,v1" },
+      { "id": "a16", "pregunta_sugerida": "Antes de la sesión le enviamos dos casos de droguerías o retail con domicilios, como pidió en la demo.", "campo_destino": "no_aplica", "por_que_importa": "Objeción de prueba social pendiente y entregable prometido sin fecha. Es la deuda abierta de la demo y el cliente va a comparar con lo que vea en Villavicencio.", "quien_debe_responder": "ropofy", "prioridad": "alta", "momento": "brief_previo", "requiere_dato_previo": null, "deriva_de": "pregunta_sin_responder:referencias" },
+      { "id": "a17", "pregunta_sugerida": "Las redes van a ser de la cadena. ¿Quién controla esas cuentas y qué le permiten publicar a usted como punto afiliado?", "campo_destino": "F.dependencias_externas", "por_que_importa": "Si el activo de marca es de un tercero, el diseño del canal y la propiedad de los leads cambian por completo. Salió de pasada y nadie lo persiguió.", "quien_debe_responder": "dueño", "prioridad": "bloqueante", "momento": "en_sesion", "requiere_dato_previo": null, "deriva_de": "v28" }
+    ],
+
+    "modo_propuesta_previsto": "B",
+
+    "bloqueos_para_avanzar": [
+      { "bloqueo": "Habilitación Meta completamente sin verificar (BM, fanpage, cuenta publicitaria, bloqueos) en un negocio de categoría sensible.", "tipo": "tecnico", "dueño": "ropofy + cliente", "consecuencia": "No se puede prometer canal WhatsApp ni pauta; corresponde filtro técnico completo antes de cobrar Arquitectura." },
+      { "bloqueo": "El activo de marca y las cuentas de redes pasarían a la cadena a la que se afilia.", "tipo": "dependencia_externa", "dueño": "cliente", "consecuencia": "Puede invalidar el diseño de captación; hay que resolverlo antes de definir alcance." },
+      { "bloqueo": "Cero datos económicos: propuesta forzada a modo B.", "tipo": "comercial", "dueño": "ropofy", "consecuencia": "Las fugas se expresan en volumen, no en dinero, y pedir los datos es un paso del cierre." },
+      { "bloqueo": "Decisión aplazada a una comparación de proveedores con fecha propia del cliente (fin de semana del 3-ago).", "tipo": "comercial", "dueño": "ropofy", "consecuencia": "La ventana es corta y hay competencia activa; las referencias prometidas son el único material pendiente que Ropofy controla." }
+    ],
+
+    "resumen_para_el_consultor": "Droguería de 6 puntos en Granada (Meta), operada como persona natural por Diego Cárdenas, que es dueño y decide solo. No es un caso de fuga: es un caso de arranque — cero canal digital, cero pauta, cero CRM, y un Google My Business abandonado. Dos detonantes reales y uno de ellos con fecha: se está afiliando a una cadena que le cambia la fachada en 15-20 días, y quiere ser el primero del municipio en hacer domicilios. Su dolor mejor contado es el inventario fragmentado en 6 puntos (\"lo que no tiene una lo tiene la otra... y ya murió la venta\"), y su regla comercial es resolver siempre al cliente, aunque toque mandarlo a otra cadena. Lo técnico tiene un nudo concreto: el POS Postmas no tiene API y su proveedor ofreció un CSV al correo cada 30-60 minutos — de ese archivo depende que la IA no venda lo que no hay, y nadie lo ha visto. Nada del filtro Meta se preguntó, en un negocio de categoría sensible que además va a operar bajo las cuentas de la cadena. No hay un solo dato económico: ni ticket, ni margen, ni presupuesto; la propuesta va en modo B y pedir esos números es parte del cierre. Está comparando proveedores activamente (llegó con una lista de cinco y tuvo reuniones todo el día), pidió referencias que aún no se le enviaron, y su decisión estaba prevista para el fin de esa semana. La demo le dejó el ancla de precio baja (\"los costos son muy bajitos\") y ninguna objeción trabajada.",
+
+    "score_de_ejecucion": {
+      "adherencia_bloques": "5/13",
+      "preguntas_fijas": "0/5",
+      "indagacion_economica": "2/9",
+      "errores_graves": 8
+    }
+  }
+}
