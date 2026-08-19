@@ -87,6 +87,87 @@ def validar(ficha, transcripcion=None):
         if p in txt.lower():
             E.append(f"H1 · la ficha contiene '{p}': la etapa 1 registra, no evalúa ni propone")
 
+    # ---------- I. NOMBRES PROPIOS: consistencia y completitud (contrato v0.3) ----------
+    # Ningún chequeo de aquí juzga ortografía: eso no lo puede saber un script.
+    # Verifican que la duda esté DECLARADA como manda el contrato; si el apellido
+    # está bien escrito lo decide la compuerta de nombres y el criterio J2.
+    M = ficha.get('_meta', {})
+    ver = tuple(int(n) for n in re.findall(r'\d+', str(M.get('version_ficha','')))[:3])
+    v03, v022 = ver >= (0,3), ver >= (0,2,2)
+    ESTADOS = ('confirmada','por_confirmar')
+    TITULO_DE_REUNION = re.compile(
+        r'(t[ií]tulo|nombre|asunto)\s+de\s+(la\s+|el\s+)?(reuni|grabaci|invitaci|sesi|llamada|meeting)'
+        r'|invitaci\w*\s+(de|del|en)\s+(teams|calendario|outlook)', re.I)
+    pendientes = []
+
+    def nombre_propio(donde, obj, campo_estado, campo_grafia, duro):
+        """Revisa un bloque de nombre propio. duro=True bloquea; False solo advierte
+        (ficha anterior al contrato que lo introdujo: histórica válida)."""
+        S = E if duro else W
+        viejo = '' if duro else 'ficha < v0.3 · '
+        est, variantes = obj.get(campo_estado), obj.get('variantes_en_transcripcion')
+        grafia = str(obj.get(campo_grafia,'')).strip()
+        if est is None or variantes is None:
+            S.append(f"I2 · {viejo}{donde} sin {campo_estado} o sin variantes_en_transcripcion "
+                     "(v0.3 §Nombres propios): un nombre propio no declara su duda solo")
+            return
+        if est not in ESTADOS:
+            S.append(f"I3 · {donde}: {campo_estado} inválido {est!r} — solo 'confirmada' o 'por_confirmar'")
+        if not isinstance(variantes, list):
+            S.append(f"I8 · {donde}: variantes_en_transcripcion no es una lista ({type(variantes).__name__})")
+            return
+        if est == 'por_confirmar':
+            pendientes.append(donde)
+            if not variantes and grafia != 'no_capturado':
+                S.append(f"I4 · {donde}: por_confirmar con variantes_en_transcripcion vacío — si hay duda, "
+                         "algo trajo la transcripción y esa es la prueba (vacío solo si la grafía es no_capturado)")
+            if str(obj.get('fuente_escrita','')).strip():
+                W.append(f"I7 · {donde}: declara fuente_escrita y sigue por_confirmar — "
+                         "¿se corrió la compuerta de nombres y no se cerró el estado?")
+        elif est == 'confirmada':
+            fuente = str(obj.get('fuente_escrita','')).strip()
+            if not fuente:
+                S.append(f"I5 · {donde}: 'confirmada' sin fuente_escrita — oírla en la sesión no confirma "
+                         "nada; se declara dónde se vio ESCRITA (correo, firma, factura, sitio, contrato)")
+            elif TITULO_DE_REUNION.search(fuente):
+                S.append(f"I6 · {donde}: 'confirmada' con el título de la reunión como fuente ({fuente!r}) — "
+                         "eso lo escribió quien creó la reunión, casi siempre Ropofy: no confirma la grafía del cliente")
+
+    # I1 · marca (contratada en v0.2.2) y su consistencia con _meta.cliente
+    marca = M.get('marca')
+    if isinstance(marca, dict):
+        nombre_propio('_meta.marca', marca, 'estado', 'grafia', True)
+        if str(marca.get('grafia','')).strip() != str(M.get('cliente','')).strip():
+            E.append(f"I1 · _meta.cliente ({M.get('cliente')!r}) ≠ _meta.marca.grafia "
+                     f"({marca.get('grafia')!r}): alguien corrigió una y olvidó la otra")
+    elif v022:
+        E.append("I2 · sin _meta.marca y la ficha se declara v0.2.2+: la grafía de la marca no tiene dónde vivir")
+    else:
+        W.append("I2 · ficha < v0.2.2 sin _meta.marca: histórica válida; al reprocesarla se agrega")
+
+    # razón social (contratada en v0.3)
+    rs = M.get('razon_social')
+    if isinstance(rs, dict):
+        nombre_propio('_meta.razon_social', rs, 'estado', 'grafia', True)
+    elif v03:
+        E.append("I2 · sin _meta.razon_social y la ficha se declara v0.3: la razón social es un dato distinto "
+                 "de la marca y no se esconde dentro de ella")
+    else:
+        W.append("I2 · ficha < v0.3 sin _meta.razon_social: histórica válida; al reprocesarla se agrega")
+
+    # personas y sistemas (contratados en v0.3): duros solo si la ficha se declara v0.3
+    for per in B.get('personas_declaradas', []) or []:
+        nombre_propio(f"persona «{per.get('nombre','?')}»", per, 'grafia_estado', 'nombre', v03)
+    for sis in D.get('sistemas', []) or []:
+        nombre_propio(f"sistema «{sis.get('nombre','?')}»", sis, 'grafia_estado', 'nombre', v03)
+
+    # I9 · resumen: lo que sigue por confirmar es agenda, no defecto
+    if pendientes:
+        muestra = ', '.join(pendientes[:5]) + ('…' if len(pendientes) > 5 else '')
+        W.append(f"I9 · {len(pendientes)} nombre(s) propio(s) en por_confirmar ({muestra}): corre la compuerta "
+                 "de confirmación de nombres antes de la etapa 2; lo que el consultor no sepa va a la agenda "
+                 "de la segunda llamada")
+
     return E, W
 
 if __name__=='__main__':
