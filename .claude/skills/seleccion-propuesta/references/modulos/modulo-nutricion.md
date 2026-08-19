@@ -241,11 +241,12 @@ nombre_interno: "Reinyección conversacional: la IA retoma el hilo tras N días 
 nombre_cliente: "La conversación que se enfrió la retoma un asistente que recuerda todo"
 tipo: chatbot_ia
 visibilidad_cliente: front
+habilidad: retomador
 posicion_journey: 66
 plan_minimo: inteligente
 mecanismo_entrega: contenido_a_medida
 se_instancia_por: [linea_negocio]
-depende_de: [gestion-chatbot-precalificacion, nutricion-plantillas-whatsapp]
+depende_de: [gestion-asistente-informativo, nutricion-plantillas-whatsapp]
 cierra_fugas: []
 mitiga_fugas: [F-01, F-08]
 metrica_que_habilita: [conversaciones_reinyectadas, recuperados_por_ia]

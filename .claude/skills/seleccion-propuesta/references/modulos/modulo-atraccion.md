@@ -293,6 +293,7 @@ nombre_interno: "IA redacta borradores de respuesta a reseñas con tono de marca
 nombre_cliente: "Responder cien reseñas cuesta lo mismo que responder una"
 tipo: chatbot_ia
 visibilidad_cliente: front
+habilidad: redactor_resenas
 posicion_journey: 108
 plan_minimo: inteligente
 mecanismo_entrega: contenido_a_medida

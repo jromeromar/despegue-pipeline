@@ -280,7 +280,6 @@ nombre_cliente: "La llamada de las 9 pm la contesta un asistente que toma el cas
 tipo: chatbot_ia
 visibilidad_cliente: front
 habilidad: recepcionista_voz
-profundidad: 2
 posicion_journey: 27
 plan_minimo: inteligente
 mecanismo_entrega: contenido_a_medida
@@ -330,29 +329,87 @@ detalle:
 ```
 
 ```yaml
-id: gestion-chatbot-precalificacion
-nombre_interno: "Agente IA de precalificación y FAQ con escalamiento a humano"
-nombre_cliente: "Un asistente que atiende a todos, califica y entrega listos a tu equipo"
+id: gestion-asistente-informativo
+nombre_interno: "Asistente IA informativo: FAQ de proceso, requisitos y estado del catálogo, con escalamiento a humano"
+nombre_cliente: "Un asistente que sabe del negocio y responde al instante lo que tu equipo repite todo el día"
 tipo: chatbot_ia
 visibilidad_cliente: front
+habilidad: informativo
 posicion_journey: 26
 plan_minimo: avanzado
 mecanismo_entrega: contenido_a_medida     # la base de conocimiento es del cliente
 se_instancia_por: [linea_negocio]
-depende_de: [gestion-ruteo-intencion, gestion-campos-calificacion]
+depende_de: [gestion-ruteo-intencion]
 cierra_fugas: [F-08, F-14]
 mitiga_fugas: [F-02]
-metrica_que_habilita: [conversaciones_atendidas_por_ia, tasa_escalamiento, leads_precalificados_ia]
-esfuerzo_base: 8
-esfuerzo_por_instancia: 4
+metrica_que_habilita: [conversaciones_atendidas_por_ia, tasa_escalamiento]
+esfuerzo_base: 8                          # TODO reparto (ver nota de la división) — hereda el valor sin dividir
+esfuerzo_por_instancia: 4                 # TODO reparto — idem
 prerequisito_plataforma: ["Base de conocimiento aprobada por el cliente", "O-01: definir tono y límites con el cliente antes de activar"]
 detalle:
-  alcance: [faq_proceso, requisitos, precalificacion, estado_catalogo]
+  alcance: [faq_proceso, requisitos, estado_catalogo]
   base_conocimiento: [portafolio, requisitos_por_linea, proceso_por_mecanismo_de_cierre]
   criterio_escalamiento: "intencion_transaccional confirmada o solicitud explícita de humano"
   handoff_a_funcion: asesor
   horario_activo: 24_7
+  nota: "Mitad informativa de la división de gestion-chatbot-precalificacion (catálogo de habilidades §5 · C2). Habilidad `informativo`: responde con el contexto del contacto y registra la duda (N2). No infiere interés ni etiqueta temperatura — eso es el precalificador, y vive en Inteligente."
 ```
+
+```yaml
+id: gestion-precalificador
+nombre_interno: "Agente IA de precalificación: triage por línea, temperatura y entrega del lead desmenuzado"
+nombre_cliente: "Tu equipo solo habla con quien sí va a comprar"
+tipo: chatbot_ia
+visibilidad_cliente: front
+habilidad: precalificador
+posicion_journey: 26
+plan_minimo: inteligente
+mecanismo_entrega: contenido_a_medida
+se_instancia_por: [linea_negocio]
+depende_de: [gestion-ruteo-intencion, gestion-campos-calificacion]
+cierra_fugas: []                          # TODO reparto sin decidir — ver la nota de la división
+mitiga_fugas: []                          # TODO reparto sin decidir — ver la nota de la división
+metrica_que_habilita: [leads_precalificados_ia]
+esfuerzo_base: 8                          # TODO reparto — hereda el valor sin dividir
+esfuerzo_por_instancia: 4                 # TODO reparto — idem
+prerequisito_plataforma: ["scoring configurado (gestion-scoring-contacto)", "O-01: definir tono y límites con el cliente antes de activar"]
+detalle:
+  alcance: [precalificacion]
+  criterio_escalamiento: "umbral alto de score: alerta + llamada del asesor en <= 5 min"
+  handoff_a_funcion: asesor
+  horario_activo: 24_7
+  nota: "Mitad precalificadora de la división (catálogo §3.5 · C2). Habilidad `precalificador`, exclusiva de Inteligente: hace el triage del vertical, aplica descalificadoras con salida digna, verifica leads de terceros al ingreso y entrega el lead desmenuzado. Empieza donde la regla dura termina: filtrar por cobertura u oferta es el recepcionista N2 (frontera del catálogo §3.1)."
+```
+
+**TODO abierto por la división (C2) — no decidir sin producto.**
+
+1. **Reparto de fugas.** `gestion-asistente-informativo` conserva
+   `cierra_fugas: [F-08, F-14]` y `mitiga_fugas: [F-02]`, y
+   `gestion-precalificador` queda **sin fugas asignadas**. No es un olvido: es
+   que el reparto que C2 supone no es inequívoco contra el catálogo de fugas.
+   F-08 es *"el volumen desborda la capacidad y se responde a medias"* y F-14
+   es *"el inventario sin precio genera consultas que nadie puede responder"* —
+   ambas son atención de volumen y de conocimiento, ninguna es inferir cuánto
+   vale un lead. Ninguna parte de F-08 ni de F-14 depende de *precalificar*.
+   El candidato natural para el precalificador es **F-13** (*el costo de los
+   leads descalificados se paga en tiempo del asesor*), pero hoy la cierra
+   `atraccion-formularios-precalificacion` "donde es más barato" y duplicarla
+   sería una decisión de producto, no una corrección. El propio catálogo lo
+   deja pendiente: §7 v1.2, *"verificar los ids de fugas citados en C2 contra
+   el catálogo de fugas al ejecutar la corrección"*. **Se deja abierto.**
+2. **Reparto de esfuerzo.** Los dos componentes declaran el `esfuerzo_base: 8`
+   y `esfuerzo_por_instancia: 4` del componente original, **sin dividir**: no
+   se suman hasta que producto fije el esfuerzo de cada mitad. Repartirlos
+   habría sido inventar cifras.
+3. **`depende_de` repuntados al id nuevo.** Tres componentes apuntaban al id
+   que ya no existe: `cierre-recuperacion-ia`, `nutricion-reinyeccion-ia` y
+   `reactivacion-absorcion-oleadas` — los dos primeros los nombra C2, el
+   tercero no y también dependía. Los tres apuntan ahora a
+   `gestion-asistente-informativo`, que es la continuación directa del
+   componente original (mismo mecanismo, misma instanciación, núcleo de
+   alcance). En el caso de `reactivacion-absorcion-oleadas` es además la única
+   opción válida: es Avanzado y no puede depender de un componente Inteligente
+   (V1).
 
 ### Pipeline y agenda (30–49)
 
@@ -807,13 +864,14 @@ anterior no puede.
 |---|---|---|---|---|
 | 1 | **En origen** | `atraccion-formularios-precalificacion` | Atracción · Fundamental | El curioso no entra: preguntas descalificadoras antes del primer contacto. Cierra F-13 donde es más barato |
 | 2 | **Estructura del dato** | `gestion-campos-calificacion` | Gestión · Fundamental | Nada: habilita. Sin campos, calificar es una opinión en una nota de voz |
-| 3 | **Conversación** | `gestion-chatbot-precalificacion` (habilidad `precalificador`) | Gestión · Avanzado | Al que llegó por chat: pregunta, captura y etiqueta temperatura 24/7 |
+| 3a | **Conversación · informar** | `gestion-asistente-informativo` (habilidad `informativo`) | Gestión · Avanzado | Al que llegó por chat: responde proceso, requisitos y estado del catálogo 24/7 |
+| 3b | **Conversación · precalificar** | `gestion-precalificador` (habilidad `precalificador`) | Gestión · **Inteligente** | Al mismo, pero inferido: triage, temperatura y entrega del lead desmenuzado |
 | 4 | **Aritmética** | `gestion-scoring-contacto` | Gestión · **Inteligente** | Prioriza entre los que sí pasan: pondera señales, aplica umbrales y descalificadores |
 
 Refuerzos aguas abajo, mismo mecanismo: `nutricion-encuesta-recalificacion`
 (el que cambió de situación se reclasifica), `cierre-señales-decision` (suma
 score por comportamiento), `fidelizacion-tiers-valor` (scoring de clientes, no
-de leads), `reactivacion-precalificacion-ia` (recalifica al que despertó).
+de leads), `reactivacion-absorcion-oleadas` (clasifica al que despertó).
 
 Tres reglas que este mapa hace explícitas:
 
@@ -826,3 +884,26 @@ Tres reglas que este mapa hace explícitas:
   en centrales de riesgo" — no lo sabe el CRM, lo sabe el sistema del cliente o
   un tercero. Por eso `scoring.variables[].fuente_del_dato` es obligatorio: si la
   señal no tiene fuente, el umbral es decorativo.
+
+---
+
+## G. Componentes por crear (C6 · catálogo de habilidades §5)
+
+**No se crean todavía.** El catálogo v1.1 lista cinco habilidades sin componente
+en la librería; esta es la lista pendiente, aquí para que no se pierda y para que
+nadie la implemente por su cuenta. Crearlos exige decidir plan, esfuerzo, fugas y
+`aplica_si`, y eso es decisión de producto.
+
+| Por crear | Habilidad | Plan de entrada (catálogo) | Nota del catálogo |
+|---|---|---|---|
+| recepcionista de chat como `chatbot_ia` propio | `recepcionista` | fundamental (N1) | hoy solo existe `gestion-ruteo-intencion`, que lo cubre **parcialmente** (§3.1) |
+| `agendador` conversacional | `agendador` | avanzado | el tipo `calendario` existe; la habilidad conversacional no (§3.3) |
+| `asesor_recomendador` | `asesor_recomendador` | inteligente | la matriz la lista, la librería no la tiene (§3.6). Exige catálogo vivo con dueño (H5) |
+| `gestion-preaprobacion-credito` | `preaprobador_credito` | inteligente, **condicionada** | `aplica_si` vertical con venta financiada; `costo_externo: consumo_variable`; su spec E4 corre `calculo_roi` obligatorio (§3.11) |
+| `integracion` de consulta a buró | — (soporte del anterior) | — | componente `integracion` aparte; por V11 lo no nativo no viaja dentro del plan |
+
+Dos cosas que estos componentes arrastran cuando se creen: **H3** (su
+`plan_minimo` no puede ser menor que el `plan_entrada` de su habilidad) y **H6**
+(el preaprobador no se activa sin variables de semáforo y habeas data aprobados y
+versionados). La familia transaccional del Vendedor Virtual (§3.12) **no** entra
+en esta lista: es producto aparte y no se repliega a los planes.

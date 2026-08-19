@@ -88,23 +88,24 @@ detalle:
     - { orden: 1, tipo: mensaje, canal: whatsapp, plantilla_ref: reactivacion-por-segmento }
     - { orden: 2, tipo: monitorear_calidad, condicion: "pausa automática si el rating de la línea baja" }
   ramas:
-    - { condicion: respondio, acciones: [{ tipo: derivar_a, condicion: reactivacion-precalificacion-ia }] }
+    - { condicion: respondio, acciones: [{ tipo: derivar_a, condicion: reactivacion-absorcion-oleadas }] }
     - { condicion: opt_out, acciones: [{ tipo: marcar_no_contactar }] }
     - { condicion: sin_respuesta_2_oleadas, acciones: [{ tipo: mover_a, condicion: archivo_frio }] }
   nota: "Prioridad de oleadas: represado_reciente primero (intención viva), base histórica después. Nunca big-bang: la primera oleada calibra plantilla y tasa de respuesta."
 ```
 
 ```yaml
-id: reactivacion-precalificacion-ia
+id: reactivacion-absorcion-oleadas
 nombre_interno: "IA que atiende la avalancha de respuestas: precalifica, actualiza interés y rutea"
 nombre_cliente: "Cuando 400 dormidos contestan el mismo día, nadie del equipo se ahoga"
 tipo: chatbot_ia
 visibilidad_cliente: front
+habilidad: reactivador
 posicion_journey: 95
 plan_minimo: avanzado
 mecanismo_entrega: contenido_a_medida
 se_instancia_por: [linea_negocio]
-depende_de: [reactivacion-campana-oleadas, gestion-chatbot-precalificacion, gestion-ruteo-intencion]
+depende_de: [reactivacion-campana-oleadas, gestion-asistente-informativo, gestion-ruteo-intencion]
 cierra_fugas: []
 mitiga_fugas: [F-08]                      # la campaña genera su propio pico de volumen
 metrica_que_habilita: [respuestas_atendidas_ia, reactivados_a_pipeline, descartados_con_motivo]
@@ -117,6 +118,14 @@ detalle:
   horario_activo: 24_7
   nota: "Sin este componente, la campaña masiva reproduce el represamiento que vino a resolver. Campaña sin capacidad de respuesta es F-08 autoinfligida."
 ```
+
+**TODO abierto por el renombre (C4) — no decidir sin producto.** El id ya no
+promete precalificación, pero quedan dos restos que el propio C4 señala y que
+la corrección no ordenó tocar, porque cambiarlos es cambiar alcance:
+`nombre_interno` sigue diciendo *"precalifica"*, y `detalle.alcance` sigue
+incluyendo `recalificar`, que según C4 es N3 mientras este componente es
+Avanzado (habilidad `reactivador` N2: clasificar, actualizar la línea de
+interés y rutear). Ambos son decisión de producto, no del ejecutor.
 
 ```yaml
 id: reactivacion-oferta-reenganche
@@ -210,7 +219,7 @@ detalle:
   widgets:
     - { metrica: tasa_respuesta_reactivacion, fuente: reactivacion-campana-oleadas, visualizacion: serie }
     - { metrica: calidad_linea_whatsapp, fuente: reactivacion-campana-oleadas, visualizacion: semaforo }
-    - { metrica: reactivados_a_pipeline, fuente: reactivacion-precalificacion-ia, visualizacion: contador }
+    - { metrica: reactivados_a_pipeline, fuente: reactivacion-absorcion-oleadas, visualizacion: contador }
   frecuencia_revision: diaria_durante_campana
   nota: "Excepción consciente a la frontera con Tableros: la campaña necesita su vista operativa el día uno. V3 ✔: todas sus métricas nacen en este mismo módulo y plan (Avanzado)."
 ```

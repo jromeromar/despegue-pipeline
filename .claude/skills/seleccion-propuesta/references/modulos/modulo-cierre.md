@@ -198,11 +198,12 @@ nombre_interno: "IA de retoma sobre propuestas frías: resuelve dudas y renegoci
 nombre_cliente: "Las propuestas que nadie retomaría las retoma un asistente que sí sabe qué ofrecer"
 tipo: chatbot_ia
 visibilidad_cliente: front
+habilidad: negociador
 posicion_journey: 86
 plan_minimo: inteligente
 mecanismo_entrega: contenido_a_medida
 se_instancia_por: [linea_negocio]
-depende_de: [cierre-secuencia-propuesta, gestion-chatbot-precalificacion]
+depende_de: [cierre-secuencia-propuesta, gestion-asistente-informativo]
 cierra_fugas: []
 mitiga_fugas: [F-04]
 metrica_que_habilita: [propuestas_retomadas_ia, cierres_asistidos_ia]
