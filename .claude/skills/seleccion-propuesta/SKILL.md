@@ -75,10 +75,18 @@ dudoso, leer su bloque completo en el módulo, no solo la fila compilada.
    `condicion_comercial`. Base y tramos son política de negocio: vienen dados,
    el script se niega a inventarlos. El multiplicador es INTERNO: panel del
    consultor, nunca texto del cliente.
-7. **Heredar sin recalcular**: fugas, madurez, nota, modo, silencios y
+7. **Armar el as-is con su cifra en el campo, no en la prosa**: cada fila de
+   `as_is` es `[etiqueta, nota]`, y si la fila tiene un dato duro se agrega el
+   tercer elemento `{"cifra": "306", "unidad": "leads/mes"}`. La cifra se
+   **copia** de la nota (no se calcula, no se redondea, no se trae de otra
+   parte); la unidad se nombra como la usa el cliente. La nota lleva **una sola
+   cifra**: si la frase trae dos números, se reescribe o se parte en dos filas,
+   porque el lienzo no puede saber cuál destacar. Fila sin dato duro: dos
+   elementos y nada más.
+8. **Heredar sin recalcular**: fugas, madurez, nota, modo, silencios y
    advertencias vienen del diagnóstico tal cual. Esta etapa agrega — las
    condiciones de arranque, la razón de los no_aplican — pero no re-juzga.
-8. **Salida**: `propuesta-<cliente>.json` validada con
+9. **Salida**: `propuesta-<cliente>.json` validada con
    `scripts/validar_propuesta.py` antes de entregar.
 
 ## Puntos de criterio humano (los únicos)
@@ -107,6 +115,16 @@ la dominante se ataca con el que sigue — y se registra en advertencias.
 el precio del cliente es un número entero limpio. El desglose vive en el
 bloque `condicion_comercial.desglose_interno`.
 
+**Dejar la cifra del as-is suelta en la prosa.** El renderizador no interpreta
+texto: si la fila no declara su dato en el tercer elemento, el número que el
+lienzo muestre saldrá de escarbar dígitos de la nota, y escarbar acierta poco.
+Casos reales: la fila "Pedix" mostró un 4 que venía de «zonas fuera del radio de
+4 km», y "Comanda impresa" mostró 3 y 4 que venían de «ítems de 3 o 4 sectores».
+Ninguno era un dato malo: eran datos sin campo. La regla operativa es doble —
+una sola cifra por nota, y la cifra que el lienzo destaca va declarada y tiene
+que aparecer en la nota que la respalda. Un número sin frase que lo sostenga no
+entra a la propuesta.
+
 **Prometer sobre instancias infladas.** El multiplicador calculado sirve para
 tramificar el precio, no para comprometer alcance por línea. La frase segura:
 "hasta N configuraciones según se confirme en el arranque".
@@ -120,6 +138,8 @@ tramificar el precio, no para comprometer alcance por línea. La frase segura:
 - [ ] Carril de integraciones con etiqueta de costo cada una
 - [ ] Multiplicador aritméticamente correcto por plan
 - [ ] Fugas/madurez/nota idénticas al diagnóstico (herencia sin edición)
+- [ ] Cada fila del as-is con dato duro declara `{cifra, unidad}` en el tercer elemento, y esa cifra aparece literal en su nota
+- [ ] Ninguna nota del as-is con más de una cifra (si trae dos, se reescribe o se parte la fila)
 - [ ] Cero HTML, cero colores, cero coordenadas
 - [ ] Instancias, multiplicador y precios los escribió `calcular_condicion.py`, no el modelo
 - [ ] Ajustes manuales de instancias marcados con `instancias_fijadas_por_consultor`

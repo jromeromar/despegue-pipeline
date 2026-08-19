@@ -95,6 +95,59 @@ def validar(p, lib, diag=None):
     if 'copy' not in advs and 'texto' not in advs:
         W.append("8 · las advertencias no incluyen la regla global del copy (el cliente aprueba todo texto)")
 
+    # ---------- 9. as_is: la cifra tiene campo, no se escarba de la prosa ----------
+    # Un rango unido por guion es UNA cifra ("20–30"); unido por palabras son dos.
+    NUM = re.compile(r'\d+(?:[.,]\d+)*(?:\s*[-\u2013\u2014]\s*\d+(?:[.,]\d+)*)?')
+    def _norm(x):
+        return re.sub(r'\s+', '', str(x).replace('\u2013', '-').replace('\u2014', '-'))
+    a = p.get('as_is')
+    if not isinstance(a, dict) or not a:
+        E.append("9a · sin bloque as_is: la sección 1b del lienzo no tiene de dónde salir")
+        a = {}
+    for carril in ('de_donde_llegan', 'por_donde_pasan', 'donde_queda'):
+        filas = a.get(carril)
+        if not isinstance(filas, list) or not filas:
+            E.append(f"9b · as_is sin el carril '{carril}' (o vacío)")
+            continue
+        for fila in filas:
+            if not isinstance(fila, list) or not 2 <= len(fila) <= 3:
+                E.append(f"9c · fila de as_is.{carril} mal formada — se espera "
+                         f"[etiqueta, nota] o [etiqueta, nota, {{cifra, unidad}}]: {fila}")
+                continue
+            etiqueta, nota = fila[0], fila[1]
+            if not str(etiqueta).strip() or not str(nota).strip():
+                E.append(f"9d · fila de as_is.{carril} con etiqueta o nota vacía: {fila}")
+                continue
+            tokens = NUM.findall(str(nota))
+            if len(tokens) > 1:
+                E.append(f"9e · nota de as_is.{carril} con {len(tokens)} cifras {tokens}: el lienzo no "
+                         f"puede saber cuál destacar — dejar una sola en la nota (o partir la fila) y "
+                         f"declararla en el tercer elemento · «{nota}»")
+            if len(fila) == 2:
+                if tokens:
+                    W.append(f"9f · as_is.{carril} · «{nota}» trae la cifra {tokens[0]} en la prosa pero la "
+                             f"fila no la declara: el lienzo no la destacará (agregar "
+                             f'{{"cifra": "{tokens[0]}", "unidad": "…"}} como tercer elemento)')
+                continue
+            dato = fila[2]
+            if not isinstance(dato, dict):
+                E.append(f"9g · tercer elemento de as_is.{carril} · «{etiqueta}» no es un objeto "
+                         f'{{"cifra", "unidad"}}: {dato!r}')
+                continue
+            sobra = sorted(set(dato) - {'cifra', 'unidad'})
+            if sobra:
+                E.append(f"9h · dato destacado de as_is.{carril} · «{etiqueta}» con campos no contratados: {sobra}")
+            cifra, unidad = dato.get('cifra'), dato.get('unidad')
+            if not isinstance(cifra, str) or not cifra.strip():
+                E.append(f"9i · dato destacado de as_is.{carril} · «{etiqueta}» sin 'cifra' de texto "
+                         f"no vacío (se copia de la nota, no se calcula): {dato}")
+            elif _norm(cifra) not in _norm(nota):
+                E.append(f"9j · la cifra '{cifra}' de as_is.{carril} · «{etiqueta}» no aparece en su nota "
+                         f"«{nota}»: el número del lienzo debe ser trazable a la frase que lo respalda")
+            if not isinstance(unidad, str) or not unidad.strip():
+                E.append(f"9k · dato destacado de as_is.{carril} · «{etiqueta}» sin 'unidad': un número "
+                         f"suelto en el lienzo no dice nada ({dato})")
+
     return E, W
 
 if __name__ == '__main__':

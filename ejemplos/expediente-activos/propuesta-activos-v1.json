@@ -1,5 +1,5 @@
 {
- "_contrato": "propuesta.json v0.1 — salida de las etapas 1-3, entrada del renderizador",
+ "_contrato": "propuesta.json v0.2 — salida de las etapas 1-3, entrada del renderizador",
  "cliente": "Activos por Colombia S.A.S.",
  "sesiones": [
   "11-ago-2026 · 23 min",
@@ -29,7 +29,11 @@
    ],
    [
     "Seis portales inmobiliarios",
-    "306 leads/mes en promedio; se extraen a mano"
+    "306 leads/mes en promedio; se extraen a mano",
+    {
+     "cifra": "306",
+     "unidad": "leads/mes"
+    }
    ],
    [
     "Calle",
@@ -43,7 +47,11 @@
    ],
    [
     "10 personas atendiendo",
-    "20–30 conversaciones diarias solo en arriendos"
+    "20–30 conversaciones diarias solo en arriendos",
+    {
+     "cifra": "20–30",
+     "unidad": "conversaciones/día"
+    }
    ],
    [
     "Ruteo manual al asesor",

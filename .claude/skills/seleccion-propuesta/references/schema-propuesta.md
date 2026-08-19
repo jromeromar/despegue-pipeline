@@ -13,9 +13,13 @@ la ficha ni el diagnóstico: todo lo que el lienzo muestra sale de aquí.
   "modo": "A" | "B",
 
   "as_is": {                         // sección 1b del lienzo
-    "de_donde_llegan": [[canal, nota]],
-    "por_donde_pasan": [[quien, nota]],
-    "donde_queda":    [[sistema, nota]]
+    // Fila = [etiqueta, nota] o [etiqueta, nota, dato_destacado].
+    // Los índices 0 y 1 NO cambian de significado (compatibilidad).
+    // El tercer elemento es opcional: solo las filas que tienen un dato duro.
+    //   dato_destacado = { "cifra": str, "unidad": str }
+    "de_donde_llegan": [[canal,   nota, dato_destacado?]],
+    "por_donde_pasan": [[quien,   nota, dato_destacado?]],
+    "donde_queda":     [[sistema, nota, dato_destacado?]]
   },
 
   "fugas":   [ …heredadas del diagnóstico tal cual… ],
@@ -71,3 +75,36 @@ la ficha ni el diagnóstico: todo lo que el lienzo muestra sale de aquí.
 4. `fugas` y `madurez.hoy` idénticos al diagnóstico de entrada.
 5. `no_aplican` no vacío en la práctica: una selección sin exclusiones es sospechosa.
 6. Prohibido en todo el archivo: etiquetas HTML, hex de colores, coordenadas, clases CSS.
+7. **La cifra del as-is tiene campo propio; no se escarba de la prosa.** Cada
+   fila de `as_is` es `[etiqueta, nota]` y, cuando la fila tiene un dato duro,
+   `[etiqueta, nota, {"cifra": str, "unidad": str}]`. Reglas, todas duras:
+   - **Una nota no puede contener más de un token numérico.** Dos números en la
+     misma frase hacen imposible saber cuál es el dato de la fila (caso real:
+     «ítems de 3 o 4 sectores» terminó mostrando un 3 y un 4 en el lienzo). Se
+     reescribe la nota para que lleve una sola cifra, o se parte en dos filas.
+     Un rango unido por guion (`20–30`, `7-10`) cuenta como **un** token: es una
+     sola cifra. Unido por palabras («3 o 4», «20 a 30») cuenta como dos.
+   - **Si la fila declara `cifra`, esa cifra tiene que aparecer en la nota**,
+     copiada tal cual (mismos separadores; el guion y los espacios se normalizan
+     al comparar). El número que el lienzo destaca debe ser trazable a la frase
+     que lo respalda: sin frase que lo sostenga, el número no existe.
+   - `cifra` es **texto**, no número: admite rangos (`"20–30"`), aproximaciones
+     y separadores de miles (`"1.200"`). El renderizador la muestra, no calcula
+     con ella.
+   - `unidad` es obligatoria cuando hay `cifra` (`"leads/mes"`,
+     `"conversaciones/día"`, `"km"`). No necesita aparecer literal en la nota:
+     «conversaciones diarias» → `"conversaciones/día"` es la misma unidad, no
+     una invención.
+   - Una fila sin dato duro **omite** el tercer elemento; no se rellena con una
+     cifra sacada de otro lado ni con `null` disfrazado. Si la nota trae un
+     número y la fila no lo declara, el validador avisa (advertencia): el lienzo
+     simplemente no destacará nada, que es preferible a destacar el número
+     equivocado.
+
+## Nota para el renderizador
+
+El dato destacado de cada fila del as-is se lee de `fila[2]` — **jamás
+extrayendo dígitos de `fila[1]`**. Una fila de longitud 2 no tiene cifra: la
+fila se dibuja sin número. El contrato garantiza que `fila[2].cifra` aparece
+literal en `fila[1]`, así que el número y su frase de respaldo siempre
+coinciden.
