@@ -1,4 +1,4 @@
-# Matriz de fronteras entre planes — contrato v1.0
+# Matriz de fronteras entre planes — contrato v1.1
 
 Define la identidad de cada plan, su frase, su prueba de pertenencia y las
 habilidades de IA que desbloquea. Es el documento que responde "¿por qué este
@@ -58,20 +58,30 @@ El nivel lo fija el plan (N1/N2/N3), y además **la habilidad misma tiene plan d
 entrada** — esto es lo que hace al asistente de Inteligente otro producto, no el
 mismo bot con más profundidad:
 
+La fuente de verdad de las habilidades es
+`catalogo-habilidades-ia.md` (contrato v1.1): alcance, fuera_de_alcance y
+niveles viven allí. Esta tabla es su matriz consolidada por plan.
+
 | Habilidad | Fundamental | Avanzado | Inteligente |
 |---|---|---|---|
-| Recepcionista (recibe y clasifica) | N1 responde | N2 enruta y escribe en CRM | N3 decide prioridad |
-| Informativo (FAQs) | N1 responde | N2 con contexto del contacto | N3 con datos vivos del catálogo |
-| Agendador | — | N2 agenda en la conversación | N3 reagenda y optimiza |
-| Reactivador (absorbe oleadas) | — | N2 clasifica respuestas | N3 decide a quién reintentar |
-| **Precalificador** | — | — | N3 conversa y etiqueta interés |
-| **Asesor recomendador** | — | — | N3 recomienda del catálogo vivo |
-| **Retomador** | — | — | N3 revive la conversación fría |
-| **Recepcionista de voz** | — | — | N3 contesta llamadas fuera de horario |
-| **Redactor de reseñas** | — | — | N3 responde reseñas con criterio |
+| recepcionista | N1 responde | N2 enruta y escribe en CRM | N3 prioriza la fila |
+| informativo | N1 FAQs estáticas | N2 con contexto del contacto | N3 con catálogo vivo |
+| agendador | — | N2 agenda en la conversación | N3 reagenda y optimiza |
+| reactivador | — | N2 clasifica la oleada | N3 decide a quién reintentar |
+| **precalificador** | — | — | N3 triage, salida digna, verificación de terceros |
+| **asesor_recomendador** | — | — | N3 recomienda del catálogo vivo |
+| **retomador** | — | — | N3 revive la conversación fría |
+| **negociador** | — | — | N3 condiciones estándar pre-aprobadas |
+| **recepcionista_voz** | — | — | N3 contesta y radica llamadas |
+| **redactor_resenas** | — | — | N3 responde reseñas con criterio |
+| **preaprobador_credito** ⚑ | — | — | N3 semáforo de buró *(condicionada + consumo variable)* |
 
-Cinco habilidades son **exclusivas de Inteligente** y son las que venden el
-salto: las cuatro de arriba llegan más lejos, pero estas cinco no existen abajo.
+**Siete habilidades son exclusivas de Inteligente** (antes cinco). Fundamental
+incluye respuesta inmediata N1 en dos habilidades — y **no se comercializa como
+asistente** (regla de lenguaje del catálogo §0): el argumento del salto a
+Avanzado ("deje de contestar usted") queda intacto porque N1 responde pero no
+ejecuta. La familia transaccional (Vendedor Virtual, catálogo §3.12) no aparece
+en esta matriz a propósito: es producto aparte, no plan.
 
 ---
 
@@ -85,6 +95,15 @@ salto: las cuatro de arriba llegan más lejos, pero estas cinco no existen abajo
 | Piezas de conocimiento que Ropofy redacta | 10 | 25 | 50 |
 | Plantillas de WhatsApp gestionadas | 4 | 8 | 15 |
 | Reglas de asignación | 3 | 6 | ilimitadas dentro de la librería |
+| Rondas de entrenamiento inicial del asistente | *por confirmar* | *por confirmar* | *por confirmar* |
+| Ajustes del asistente post-activación, por mes | *por confirmar* | *por confirmar* | *por confirmar* |
+
+**Las dos últimas cuotas están sin fijar** (catálogo de habilidades §4). El
+brochure ago-2026 traía 4/6 rondas de entrenamiento y 4/6/8 ajustes mensuales,
+pero esas cifras eran **por bot standalone**; al replegarse los bots a los
+planes hay que fijarlas por plan, y esa decisión es de producto. Se registran
+aquí para que no se pierdan, no para usarse. Ambas cuentan **entregables, no
+horas** — consistentes con la decisión "sin boosters ni bolsas de horas".
 
 (Recordatorio de la regla global del copy: Ropofy redacta el punto de partida
 con metodología; el texto final lo proporciona o aprueba el cliente.)
@@ -93,8 +112,9 @@ con metodología; el texto final lo proporciona o aprueba el cliente.)
 
 ## 5. Silencios que esta matriz explica
 
-- Fundamental **no tiene IA**: es deliberado. El plan de entrada ordena; vender
-  "bot barato" en la puerta activa la objeción del 56% del VoC.
+- Fundamental **incluye respuesta inmediata (N1): responde, no ejecuta. No se
+  comercializa como asistente** — esa palabra y ese argumento pertenecen a
+  Avanzado.
 - Reactivación **empieza en Avanzado** (oleadas) y solo se vuelve **permanente
   en Inteligente**: despertar una base exige que Gestión ya esté operativa.
 - El **tablero económico es Inteligente** aunque técnicamente sea simple: sin
