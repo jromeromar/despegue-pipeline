@@ -194,7 +194,7 @@ nombre_cliente: "Preguntarle al lead qué cambió, y ajustar el trato según su 
 tipo: formulario
 visibilidad_cliente: front
 posicion_journey: 62
-plan_minimo: avanzado
+plan_minimo: inteligente
 mecanismo_entrega: snapshot
 se_instancia_por: [linea_negocio]
 depende_de: [nutricion-secuencia-no-respuesta]
@@ -246,7 +246,7 @@ posicion_journey: 66
 plan_minimo: inteligente
 mecanismo_entrega: contenido_a_medida
 se_instancia_por: [linea_negocio]
-depende_de: [gestion-asistente-informativo, nutricion-plantillas-whatsapp]
+depende_de: [gestion-precalificador, nutricion-plantillas-whatsapp]
 cierra_fugas: []
 mitiga_fugas: [F-01, F-08]
 metrica_que_habilita: [conversaciones_reinyectadas, recuperados_por_ia]

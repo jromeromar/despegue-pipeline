@@ -96,7 +96,7 @@ detalle:
 
 ```yaml
 id: reactivacion-absorcion-oleadas
-nombre_interno: "IA que atiende la avalancha de respuestas: precalifica, actualiza interés y rutea"
+nombre_interno: "IA que absorbe la oleada de respuestas: clasifica, actualiza la línea de interés y rutea"
 nombre_cliente: "Cuando 400 dormidos contestan el mismo día, nadie del equipo se ahoga"
 tipo: chatbot_ia
 visibilidad_cliente: front
@@ -112,20 +112,12 @@ metrica_que_habilita: [respuestas_atendidas_ia, reactivados_a_pipeline, descarta
 esfuerzo_base: 4
 esfuerzo_por_instancia: 2
 detalle:
-  alcance: [confirmar_interes_vigente, actualizar_linea_de_interes, recalificar, agendar_o_rutear]
+  alcance: [confirmar_interes_vigente, clasificar_respuesta, actualizar_linea_de_interes, agendar_o_rutear]
   criterio_escalamiento: "interes transaccional confirmado"
   handoff_a_funcion: asesor
   horario_activo: 24_7
   nota: "Sin este componente, la campaña masiva reproduce el represamiento que vino a resolver. Campaña sin capacidad de respuesta es F-08 autoinfligida."
 ```
-
-**TODO abierto por el renombre (C4) — no decidir sin producto.** El id ya no
-promete precalificación, pero quedan dos restos que el propio C4 señala y que
-la corrección no ordenó tocar, porque cambiarlos es cambiar alcance:
-`nombre_interno` sigue diciendo *"precalifica"*, y `detalle.alcance` sigue
-incluyendo `recalificar`, que según C4 es N3 mientras este componente es
-Avanzado (habilidad `reactivador` N2: clasificar, actualizar la línea de
-interés y rutear). Ambos son decisión de producto, no del ejecutor.
 
 ```yaml
 id: reactivacion-oferta-reenganche

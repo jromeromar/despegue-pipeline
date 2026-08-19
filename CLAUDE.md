@@ -197,20 +197,29 @@ Reglas del híbrido:
 
 Debe reportar el total y un hash de versión. Ese hash queda registrado en cada
 propuesta: es lo que permite saber si una propuesta vieja se hizo con librería
-vieja. Estado actual: **82 componentes, hash `429593a761`, distribución 30
-fundamental / 29 avanzado / 22 inteligente**, más un componente sin plan (la
+vieja. Estado actual: **82 componentes, hash `f1f8871e22`, distribución 30
+fundamental / 28 avanzado / 23 inteligente**, más un componente sin plan (la
 integración de plataforma propia — correcto por V11: lo no nativo no viaja
 dentro del plan).
 
-Estado anterior: 81 componentes, hash `639f4fc256`, 30/29/21. El salto lo
-produjo la corrección C2 del catálogo de habilidades IA, que dividió
-`gestion-chatbot-precalificacion` en `gestion-asistente-informativo`
-(avanzado) y `gestion-precalificador` (inteligente). **Las propuestas emitidas
-contra `639f4fc256` referencian dos ids que ya no existen** —el dividido y
-`reactivacion-precalificacion-ia`, renombrado por C4—: validarlas contra la
-librería nueva falla, y eso es exactamente para lo que el hash está en cada
-propuesta. Una propuesta vieja no se edita (regla 7): si su alcance sigue
-vigente se emite `-v2` contra la librería nueva.
+Cómo se llegó aquí desde `639f4fc256` (81 componentes, 30/29/21):
+
+- La corrección **C2** del catálogo de habilidades IA dividió
+  `gestion-chatbot-precalificacion` en `gestion-asistente-informativo`
+  (avanzado) y `gestion-precalificador` (inteligente) — de ahí el componente
+  extra. La **C4** renombró `reactivacion-precalificacion-ia` a
+  `reactivacion-absorcion-oleadas`.
+- `nutricion-encuesta-recalificacion` subió de avanzado a **inteligente**: se
+  dispara tras la secuencia de no-respuesta, o sea por ausencia de acción, que
+  es la prueba de pertenencia de Inteligente. Eso mueve un componente entre
+  columnas y cierra una violación V1 que traía la librería.
+
+**Las propuestas emitidas contra un hash anterior referencian ids que ya no
+existen** y eso ya no rompe nada: cada propuesta declara su `libreria_hash`
+(schema de propuesta §9) y el validador la reconoce como *histórica* — valida
+estructura, aritmética y herencia, y sale 0 con advertencia. Una propuesta
+vieja no se edita (regla 7): si su alcance sigue vigente, se emite `-v2`
+contra la librería nueva.
 
 **Carpeta compartida:** esta carpeta vive en OneDrive compartido. La librería y
 la política son únicas y compartidas a propósito — nadie trabaja sobre copias

@@ -343,8 +343,8 @@ depende_de: [gestion-ruteo-intencion]
 cierra_fugas: [F-08, F-14]
 mitiga_fugas: [F-02]
 metrica_que_habilita: [conversaciones_atendidas_por_ia, tasa_escalamiento]
-esfuerzo_base: 8                          # TODO reparto (ver nota de la división) — hereda el valor sin dividir
-esfuerzo_por_instancia: 4                 # TODO reparto — idem
+esfuerzo_base: 5
+esfuerzo_por_instancia: 3
 prerequisito_plataforma: ["Base de conocimiento aprobada por el cliente", "O-01: definir tono y límites con el cliente antes de activar"]
 detalle:
   alcance: [faq_proceso, requisitos, estado_catalogo]
@@ -370,8 +370,8 @@ depende_de: [gestion-ruteo-intencion, gestion-campos-calificacion]
 cierra_fugas: []                          # TODO reparto sin decidir — ver la nota de la división
 mitiga_fugas: []                          # TODO reparto sin decidir — ver la nota de la división
 metrica_que_habilita: [leads_precalificados_ia]
-esfuerzo_base: 8                          # TODO reparto — hereda el valor sin dividir
-esfuerzo_por_instancia: 4                 # TODO reparto — idem
+esfuerzo_base: 4
+esfuerzo_por_instancia: 2
 prerequisito_plataforma: ["scoring configurado (gestion-scoring-contacto)", "O-01: definir tono y límites con el cliente antes de activar"]
 detalle:
   alcance: [precalificacion]
@@ -397,19 +397,17 @@ detalle:
    sería una decisión de producto, no una corrección. El propio catálogo lo
    deja pendiente: §7 v1.2, *"verificar los ids de fugas citados en C2 contra
    el catálogo de fugas al ejecutar la corrección"*. **Se deja abierto.**
-2. **Reparto de esfuerzo.** Los dos componentes declaran el `esfuerzo_base: 8`
-   y `esfuerzo_por_instancia: 4` del componente original, **sin dividir**: no
-   se suman hasta que producto fije el esfuerzo de cada mitad. Repartirlos
-   habría sido inventar cifras.
-3. **`depende_de` repuntados al id nuevo.** Tres componentes apuntaban al id
-   que ya no existe: `cierre-recuperacion-ia`, `nutricion-reinyeccion-ia` y
-   `reactivacion-absorcion-oleadas` — los dos primeros los nombra C2, el
-   tercero no y también dependía. Los tres apuntan ahora a
-   `gestion-asistente-informativo`, que es la continuación directa del
-   componente original (mismo mecanismo, misma instanciación, núcleo de
-   alcance). En el caso de `reactivacion-absorcion-oleadas` es además la única
-   opción válida: es Avanzado y no puede depender de un componente Inteligente
-   (V1).
+2. **`depende_de` repuntados.** Tres componentes apuntaban al id que ya no
+   existe. `cierre-recuperacion-ia` y `nutricion-reinyeccion-ia` dependen ahora
+   de **`gestion-precalificador`**: las dos actualizan calificación o
+   temperatura, que es semántica N3, y siendo Inteligente V1 lo permite.
+   `reactivacion-absorcion-oleadas` —que C2 no nombra y también dependía—
+   depende de **`gestion-asistente-informativo`**, y ahí la elección es
+   forzada: es Avanzado y no puede depender de un componente Inteligente (V1).
+
+   *El reparto de esfuerzo de la división ya está decidido:*
+   `gestion-asistente-informativo` 5 + 3 por instancia,
+   `gestion-precalificador` 4 + 2.
 
 ### Pipeline y agenda (30–49)
 

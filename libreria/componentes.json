@@ -1,7 +1,7 @@
 {
  "_meta": {
   "total": 82,
-  "version": "429593a761",
+  "version": "f1f8871e22",
   "fuente": ".claude/skills/seleccion-propuesta/references/modulos"
  },
  "componentes": {
@@ -859,7 +859,7 @@
    "nombre_interno": "Encuesta corta de recalificación a mitad de secuencia",
    "nombre_cliente": "Preguntarle al lead qué cambió, y ajustar el trato según su respuesta",
    "tipo": "formulario",
-   "plan_minimo": "avanzado",
+   "plan_minimo": "inteligente",
    "visibilidad_cliente": "front",
    "posicion_journey": 62,
    "se_instancia_por": "[linea_negocio]",
@@ -950,7 +950,7 @@
   },
   "reactivacion-absorcion-oleadas": {
    "id": "reactivacion-absorcion-oleadas",
-   "nombre_interno": "IA que atiende la avalancha de respuestas: precalifica, actualiza interés y rutea",
+   "nombre_interno": "IA que absorbe la oleada de respuestas: clasifica, actualiza la línea de interés y rutea",
    "nombre_cliente": "Cuando 400 dormidos contestan el mismo día, nadie del equipo se ahoga",
    "tipo": "chatbot_ia",
    "plan_minimo": "avanzado",

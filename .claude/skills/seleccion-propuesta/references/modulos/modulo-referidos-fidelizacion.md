@@ -27,7 +27,7 @@ posicion_journey: 110
 plan_minimo: fundamental
 mecanismo_entrega: snapshot
 se_instancia_por: [linea_negocio]
-depende_de: [cierre-contrato-firma, nutricion-plantillas-whatsapp]
+depende_de: [gestion-pipeline-demandante, nutricion-plantillas-whatsapp]
 cierra_fugas: []
 mitiga_fugas: [F-11]                      # el abandono post-venta empieza el día uno
 metrica_que_habilita: [onboardings_completados, tiempo_firma_primer_contacto_postventa]
@@ -39,6 +39,7 @@ detalle:
     - { orden: 1, tipo: mensaje, plantilla_ref: bienvenida-y-pasos, espera_min: 0 }
     - { orden: 2, tipo: crear_tarea, asigna_a_funcion: postventa_administracion }
     - { orden: 3, tipo: mensaje, plantilla_ref: checkin-semana-1, espera_min: 10080 }
+  nota: "Depende del pipeline, no de la firma en línea: el disparador real es la etapa ganada (`cerrada_ganada`), que existe desde Fundamental. Dependía de cierre-contrato-firma, que es Avanzado, y eso violaba V1 en un componente Fundamental. Si el plan incluye contrato-firma, el disparador puede ser la firma."
 ```
 
 ```yaml

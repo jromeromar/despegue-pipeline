@@ -203,7 +203,7 @@ posicion_journey: 86
 plan_minimo: inteligente
 mecanismo_entrega: contenido_a_medida
 se_instancia_por: [linea_negocio]
-depende_de: [cierre-secuencia-propuesta, gestion-asistente-informativo]
+depende_de: [cierre-secuencia-propuesta, gestion-precalificador]
 cierra_fugas: []
 mitiga_fugas: [F-04]
 metrica_que_habilita: [propuestas_retomadas_ia, cierres_asistidos_ia]
