@@ -221,6 +221,28 @@ componentes contra miedos.
   y se cuantifica después, con el propio tablero.
 - `aplica_si`: existe número telefónico publicado como canal de entrada.
 
+**F-19 · El pedido de ciclo corto vive en la cabeza de quien lo tomó**
+`modulo: cierre` · `etapa: cierre` · **caso Bifteki (primer negocio de ciclo corto)**
+- Síntoma: el pedido se toma por WhatsApp y se le grita a la cocina. Nadie puede
+  decir en qué va sin preguntarle a alguien; el cliente vuelve a escribir «¿ya
+  salió?» y la respuesta depende de que alguien se acuerde. Pedidos que se caen
+  entre el chat y el sector de preparación, y reclamos que llegan antes que el
+  pedido.
+- Causa: en el ciclo corto no hay artefacto. Sin cotización ni contrato, el
+  pedido nunca se vuelve un objeto del sistema: no tiene estado, ni dueño, ni
+  reloj. Los nueve componentes de cierre formal asumían el artefacto y por eso
+  este negocio se quedaba sin módulo.
+- Distinta de **F-08** (el volumen desborda la capacidad): aquí el volumen puede
+  ser perfectamente manejable y el pedido igual se pierde, porque lo que falta es
+  el registro, no la capacidad. Distinta de **F-15**: el tramo que se pierde es
+  el propio, no el del tercero que reparte.
+- Cierre: pipeline de pedido con etapas y SLA en minutos — el pedido se vuelve
+  objeto con estado. Mitigan la confirmación al cliente, el despacho por sector y
+  la alerta de estancamiento.
+- Fórmula: `pedidos_mes × %_con_incidencia × ticket_promedio × margen`
+- Datos: pedidos por mes, % con reclamo o reproceso, ticket promedio.
+- `aplica_si`: `linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa`
+
 ---
 
 ### Fugas del embudo oferente

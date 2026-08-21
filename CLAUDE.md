@@ -275,10 +275,18 @@ Reglas del híbrido:
 
 Debe reportar el total y un hash de versión. Ese hash queda registrado en cada
 propuesta: es lo que permite saber si una propuesta vieja se hizo con librería
-vieja. Estado actual: **82 componentes, hash `f1f8871e22`, distribución 30
-fundamental / 28 avanzado / 23 inteligente**, más un componente sin plan (la
-integración de plataforma propia — correcto por V11: lo no nativo no viaja
-dentro del plan).
+vieja. Estado actual: **88 componentes, hash `ebfdbd2aa4`, distribución 32
+fundamental / 30 avanzado / 24 inteligente**, más **dos** componentes sin plan
+(la integración de plataforma propia y la impresión térmica de la comanda —
+correcto por V11: lo no nativo no viaja dentro del plan).
+
+El salto desde `f1f8871e22` (82 componentes, 30/28/23) lo produjo la familia de
+**Cierre de ciclo corto**: cinco componentes nuevos para el negocio donde el
+cierre y el primer contacto son el mismo momento (confirmación de pedido,
+estados del pedido, despacho por sector, aviso de avance, alerta de pedido
+estancado) más la impresión de comanda al carril. En la misma tanda, los cinco
+componentes de cierre formal ganaron un `aplica_si` que los excluye solos donde
+no hay cotización ni firma.
 
 Cómo se llegó aquí desde `639f4fc256` (81 componentes, 30/29/21):
 
