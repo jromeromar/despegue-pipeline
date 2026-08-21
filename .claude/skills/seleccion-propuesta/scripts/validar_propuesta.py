@@ -211,6 +211,37 @@ def validar(p, lib, diag=None):
             W.append(f"10g · {len(pend)} nombre(s) propio(s) que esta propuesta imprime siguen sin confirmar "
                      f"({listado}): se corrigen en la ficha y se rehace la cadena, nunca a mano aquí")
 
+    # ---------- 11. Campos de librería que el renderizador exige por componente ----------
+    # El contrato los declara obligatorios (schema-propuesta.md §componentes) y hasta
+    # ago-2026 NADIE los verificaba aquí. Costó una carga fallida completa: la propuesta
+    # de Bifteki salió con exit 0 y los 56 componentes con 'vis' y 'journey' en null, y el
+    # renderizador la rechazó entera con 112 errores.
+    #
+    # Causa raíz: la librería compilada guarda estos campos con nombre largo
+    # ('visibilidad_cliente', 'posicion_journey') y el contrato de la propuesta los espera
+    # con nombre corto ('vis', 'journey'). Quien arma la propuesta tiene que traducirlos, y
+    # si lee la clave equivocada obtiene null sin que nada se queje. El mapeo canónico vive
+    # en scripts/construir_propuesta.py (MAPA_LIBRERIA); esto es la red que lo respalda.
+    VIS_OK = {'front', 'back', 'ambos'}
+    for cid, c in sel.items():
+        ref = comps_lib.get(cid, {})
+        v = c.get('vis')
+        if v not in VIS_OK:
+            E.append(f"11a · '{cid}' con vis {v!r}: el renderizador espera uno de "
+                     f"{sorted(VIS_OK)} — en la librería ese campo se llama 'visibilidad_cliente'")
+        elif ref and ref.get('visibilidad_cliente') not in (None, v):
+            E.append(f"11c · '{cid}' con vis {v!r} pero la librería dice "
+                     f"{ref.get('visibilidad_cliente')!r}: la propuesta no reescribe la librería")
+        j = c.get('journey')
+        if not isinstance(j, int) or isinstance(j, bool):
+            E.append(f"11b · '{cid}' con journey {j!r}: se espera un entero — en la "
+                     "librería ese campo se llama 'posicion_journey'")
+        elif ref and ref.get('posicion_journey') not in (None, j):
+            E.append(f"11d · '{cid}' con journey {j!r} pero la librería dice "
+                     f"{ref.get('posicion_journey')!r}: la propuesta no reescribe la librería")
+        if not str(c.get('nombre_cliente', '')).strip():
+            W.append(f"11e · '{cid}' sin nombre_cliente: el lienzo dibujaría una pieza sin título")
+
     return E, W
 
 if __name__ == '__main__':
