@@ -1,4 +1,5 @@
 {
+ "_contrato": "diagnostico v0.2",
  "_meta": {
   "cliente": "Activos por Colombia S.A.S.",
   "ficha_fuente": "ficha-activos.json",
@@ -103,37 +104,37 @@
   {
    "m": "Gestión",
    "hoy": 1,
-   "por_que": "canal único sin ruteo ni dueño; el asistente que tenían se apagó (D_stack: Actichat apagado)"
+   "por_que": "Canal único sin ruteo ni dueño, y el asistente que tenían (Actichat, D_stack) está apagado. Hay registro mínimo pero nadie es dueño de la conversación: eso es nivel 1. Para el 2 falta una bandeja unificada con asignación y origen por contacto."
   },
   {
    "m": "Atracción",
    "hoy": 2,
-   "por_que": "pauta en 3 plataformas y 6 portales activos; Meta con lead form; sin atribución (captura_por_canal)"
+   "por_que": "Pauta activa en 3 plataformas y 6 portales, con lead form en Meta. Atraen con método pero sin atribución (captura_por_canal vacía): nivel 2. Para el 3 falta que cada lead entre con su campaña y su canal registrados."
   },
   {
    "m": "Nutrición",
    "hoy": 0,
-   "por_que": "ninguna secuencia de seguimiento mencionada en toda la sesión"
+   "por_que": "Ninguna secuencia de seguimiento se mencionó en toda la sesión. Sin seguimiento sistemático posterior al primer contacto, el módulo está en 0. Para el 1 faltan plantillas de seguimiento y un responsable de usarlas."
   },
   {
    "m": "Cierre",
    "hoy": 1,
-   "por_que": "el cierre ocurre en Activit (registro+Sagrilaft); sin acompañamiento medido al proceso"
+   "por_que": "El cierre ocurre en Activit con registro y Sagrilaft, sin acompañamiento medido del proceso. Hay proceso formal pero a ciegas: nivel 1. Para el 2 falta un embudo visible con etapas y tiempos del cierre."
   },
   {
    "m": "Reactivación",
    "hoy": 0,
-   "por_que": "3.900 represadas trabajadas «de manera manual»"
+   "por_que": "Las 3.900 conversaciones represadas se trabajan «de manera manual». No existe ningún mecanismo de reactivación: nivel 0. Para el 1 falta depurar y segmentar la base antes de cualquier campaña."
   },
   {
    "m": "Referidos y Fidelización",
    "hoy": 0,
-   "por_que": "cero menciones en 90 minutos: silencio leído como madurez, no como fuga"
+   "por_que": "Cero menciones en 90 minutos de sesión: el silencio se lee como madurez, no como fuga inventada. No hay nada instalado: nivel 0. Para el 1 falta un registro de quién refiere y un gesto de reconocimiento."
   },
   {
    "m": "Tableros",
    "hoy": 0,
-   "por_que": "métricas contadas a mano cuando alguien las pide (llamadas_medidas: no)"
+   "por_que": "Las métricas se cuentan a mano cuando alguien las pide (llamadas_medidas: no). Sin tablero vivo, el módulo está en 0. Para el 1 falta un tablero operativo con los datos que la operación ya genera."
   }
  ],
  "nota": {

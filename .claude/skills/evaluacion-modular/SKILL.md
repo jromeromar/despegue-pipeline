@@ -31,20 +31,34 @@ inválidas: los juicios sobre datos rotos son peores que no tener juicios.
    catálogo. Para cada hallazgo, registrar: id del catálogo, evidencia (el
    campo exacto de la ficha + la cita textual que ya trae), cuantificación en
    el modo disponible, y estado (`activa` · `mitigable` · `fuera_de_alcance`).
-3. **Elegir la dominante**: una sola, por magnitud del daño según los datos
+3. **Consolidar si el catálogo disparó de más (contrato v0.2, C11)**: máximo
+   **5** elementos con `categoria: "fuga"`. Si salen más, las que van
+   conectadas de verdad (el gasto de atracción que desemboca en la misma
+   persona y el mismo número, por ejemplo) se consolidan en una fuga más
+   general que las acapare, registrando los ids absorbidos en `absorbe` para
+   no perder trazabilidad. **Cegueras y restricciones no se consolidan ni se
+   recortan** — van explícitas y separadas. El `titulo` de toda fuga es la
+   frase protagonista: corta (≤ 60), en lenguaje del cliente y **sin la
+   palabra «fuga»** (el encabezado de sección ya la dice); la
+   `evidencia_textual` es subordinada.
+4. **Elegir la dominante**: una sola, por magnitud del daño según los datos
    del cliente — no por facilidad de venta. Criterio: la que el propio
    entrevistado cuantificó o describió con más carga emocional suele ser la
    correcta, pero la cifra manda sobre la emoción.
-4. **Madurez por módulo** (los 7): asignar 0–4 usando la escala de abajo. Cada
-   nivel DEBE citar el hecho de la ficha que lo justifica en el campo
-   `por_que`. Sin hecho, el nivel es 0 con `por_que: "sin evidencia de
-   capacidad instalada"`.
-5. **Nota /100**: NUNCA calcularla mentalmente. Correr
+5. **Madurez por módulo** (los 7): asignar 0–4 usando la escala de abajo. El
+   `por_que` de cada módulo son **2–3 frases** (contrato v0.2, C12): el hecho
+   citado de la ficha, qué nivel implica y qué falta para el siguiente — la
+   calificación por módulo es lo que el lienzo muestra en la sección de
+   diagnóstico, así que tiene que sostenerse sola. Sin hecho, el nivel es 0
+   con la primera frase «sin evidencia de capacidad instalada» y las otras dos
+   igual obligatorias.
+6. **Nota /100**: NUNCA calcularla mentalmente. Correr
    `python3 scripts/calcular_nota.py diagnostico-<cliente>.json` — suma los
    niveles, deriva la letra (F<25, E<40, D<55, C<70, B<85, A≥85) y la escribe
    en el archivo. No maquillar: el promedio del sector es F y eso es
    argumento, no vergüenza.
-6. **Salida**: `diagnostico-<cliente>.json` según el schema de
+7. **Salida**: `diagnostico-<cliente>.json` con `_contrato: "diagnostico
+   v0.2"` según el schema de
    `references/schema-diagnostico.md`, validado con
    `scripts/validar_diagnostico.py` antes de entregar.
 
@@ -89,6 +103,17 @@ del calendario es de un tercero (ficha: `dependencias_externas`), la fuga es
 `mitigable`, nunca `activa cerrable`. Se declara qué se puede medir y agilizar,
 jamás que se cierra.
 
+**Fugas que se sienten repetidas.** Varias fugas verdaderas pueden ser la
+misma historia contada dos veces («todo el gasto de atracción desemboca en la
+misma persona y el mismo número, nadie sabe de dónde vino»). Eso se consolida
+(`absorbe`), no se recorta: el tope es 5 fugas, y la trazabilidad de las
+absorbidas se conserva. La regla anti-doble-conteo aplica también entre la
+consolidada y sus absorbidas.
+
+**La palabra «fuga» dentro del título.** El encabezado de sección ya la dice;
+repetirla gasta la frase protagonista. El título es la idea en lenguaje del
+cliente; la cita va debajo, subordinada.
+
 **Modo B expresado en pesos.** Sin datos económicos no hay cifras en dinero:
 la cuantificación es en volumen y proceso. Poner pesos estimados "del sector"
 viola la etapa — eso es exactamente lo que el modo B existe para evitar.
@@ -98,11 +123,15 @@ viola la etapa — eso es exactamente lo que el modo B existe para evitar.
 - [ ] Compuerta de entrada corrida (ficha válida)
 - [ ] Cada fuga tiene id existente en el catálogo + evidencia trazable a un campo de la ficha
 - [ ] Exactamente UNA dominante
+- [ ] Máximo 5 `categoria: "fuga"`; si hubo consolidación, `absorbe` con ids del catálogo y sin entradas duplicadas
+- [ ] Títulos ≤ 60, sin la palabra «fuga», en lenguaje del cliente
+- [ ] Cegueras y restricciones explícitas y separadas (no consolidadas)
 - [ ] Cero doble conteo (una cifra vive en una sola fuga)
-- [ ] Madurez de los 7 módulos, cada una con `por_que` citando la ficha
+- [ ] Madurez de los 7 módulos, cada `por_que` con 2–3 frases: hecho de la ficha + qué nivel implica + qué falta para el siguiente
 - [ ] Silencios registrados como madurez, sin fugas inventadas
 - [ ] Cuantificación coherente con el modo (B = volumen/proceso, nunca pesos)
 - [ ] La nota la escribió `calcular_nota.py`, no el modelo
+- [ ] `_contrato: "diagnostico v0.2"` declarado
 - [ ] `validar_diagnostico.py` pasa (exit 0)
 
 ## Referencias
