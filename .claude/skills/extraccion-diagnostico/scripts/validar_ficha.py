@@ -168,6 +168,29 @@ def validar(ficha, transcripcion=None):
                  "de confirmación de nombres antes de la etapa 2; lo que el consultor no sepa va a la agenda "
                  "de la segunda llamada")
 
+    # ---------- K. CAMPOS DE LÍNEA DEL CONTRATO v0.4 ----------
+    # (Se salta la letra J a propósito: J1-J6 son los criterios de juicio humano
+    # de criterios-evaluacion.md y reusar la letra confundiría los códigos.)
+    # Ninguno de estos chequeos decide el valor: verifican que el dato exista y
+    # sea del enum. Cuál es el valor lo dice la sesión, no el script.
+    v04 = ver >= (0, 4)
+    ENUM_DOC = ('si', 'no', 'no_capturado')
+    ENUM_COBRO = ('al_pedir', 'contra_entrega', 'mixto', 'no_capturado')
+    for l in lineas:
+        lid = l.get('id', '?')
+        for campo, enum in (('emite_documento_formal', ENUM_DOC), ('momento_de_cobro', ENUM_COBRO)):
+            if campo not in l:
+                (E if v04 else W).append(
+                    f"K1 · línea {lid} sin {campo} (contrato v0.4): "
+                    + ("aunque sea no_capturado, debe existir — decide arquitectura, no configuración"
+                       if v04 else "ficha anterior a v0.4; al reprocesarla se agrega"))
+            elif l[campo] not in enum:
+                E.append(f"K2 · línea {lid}: {campo} inválido {l[campo]!r} — solo {list(enum)}")
+    nc_doc = [l.get('id','?') for l in lineas if l.get('emite_documento_formal') == 'no_capturado']
+    if nc_doc:
+        W.append(f"K3 · {len(nc_doc)} línea(s) sin saber si emiten documento formal ({', '.join(nc_doc)}): "
+                 "el módulo Cierre decidirá con ciclo_dias como respaldo — preguntarlo en la segunda llamada")
+
     return E, W
 
 if __name__=='__main__':

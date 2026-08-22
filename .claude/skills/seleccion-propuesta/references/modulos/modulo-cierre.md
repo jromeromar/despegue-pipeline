@@ -25,7 +25,7 @@ posicion_journey: 70
 plan_minimo: fundamental
 mecanismo_entrega: snapshot
 se_instancia_por: [linea_negocio]
-aplica_si: "linea.mecanismo_de_cierre in [venta_directa, contrato_recurrente] and linea.ciclo_dias != 0"
+aplica_si: "linea.mecanismo_de_cierre in [venta_directa, contrato_recurrente] and (linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0))"
 depende_de: [gestion-pipeline-demandante, gestion-campos-calificacion]
 cierra_fugas: []                          # habilita F-04: sin propuesta rastreada no hay retoma posible
 metrica_que_habilita: [propuestas_enviadas, valor_propuesto_mes]
@@ -51,7 +51,7 @@ posicion_journey: 72
 plan_minimo: inteligente
 mecanismo_entrega: snapshot
 se_instancia_por: [linea_negocio]
-aplica_si: "linea.ciclo_dias != 0"   # no_capturado NO excluye: solo excluye si se sabe que el ciclo es de cero días
+aplica_si: "linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0)"   # sin el dato, respaldo v0.3: solo excluye si se sabe que el ciclo es de cero días
 depende_de: [cierre-cotizador, nutricion-plantillas-whatsapp]
 cierra_fugas: [F-04]                      # la fuga más rentable: intención ya demostrada
 metrica_que_habilita: [propuestas_sin_respuesta, recuperadas_post_propuesta, ciclo_propuesta_decision]
@@ -106,7 +106,7 @@ posicion_journey: 78
 plan_minimo: avanzado
 mecanismo_entrega: snapshot
 se_instancia_por: [linea_negocio]
-aplica_si: "linea.ciclo_dias != 0"   # no_capturado NO excluye: solo excluye si se sabe que el ciclo es de cero días
+aplica_si: "linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0)"   # sin el dato, respaldo v0.3: solo excluye si se sabe que el ciclo es de cero días
 depende_de: [cierre-cotizador]
 cierra_fugas: []
 metrica_que_habilita: [contratos_enviados, tasa_firma_contrato, ciclo_aceptacion_firma]
@@ -185,7 +185,7 @@ posicion_journey: 85
 plan_minimo: inteligente
 mecanismo_entrega: snapshot
 se_instancia_por: [unico]
-aplica_si: "linea.ciclo_dias != 0"   # no_capturado NO excluye: solo excluye si se sabe que el ciclo es de cero días
+aplica_si: "linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0)"   # sin el dato, respaldo v0.3: solo excluye si se sabe que el ciclo es de cero días
 depende_de: [cierre-cotizador, gestion-scoring-contacto]
 cierra_fugas: []
 mitiga_fugas: [F-04]
@@ -210,7 +210,7 @@ posicion_journey: 86
 plan_minimo: inteligente
 mecanismo_entrega: contenido_a_medida
 se_instancia_por: [linea_negocio]
-aplica_si: "linea.ciclo_dias != 0"   # no_capturado NO excluye: solo excluye si se sabe que el ciclo es de cero días
+aplica_si: "linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0)"   # sin el dato, respaldo v0.3: solo excluye si se sabe que el ciclo es de cero días
 depende_de: [cierre-secuencia-propuesta, gestion-precalificador]
 cierra_fugas: []
 mitiga_fugas: [F-04]
@@ -262,8 +262,10 @@ Los journeys se **intercalan** con los de las otras subsecciones a propósito: e
 ciclo corto ocurre en las mismas posiciones del tramo Cierre, no después. Por eso
 los títulos de las subsecciones enumeran sus journeys en vez de declarar rangos
 —los rangos se pisarían— y por eso los cinco comparten un `aplica_si` que los
-excluye solos donde el ciclo no es corto, mientras las otras subsecciones ganaron
-el complemento (ver §Validaciones).
+excluye solos donde el negocio **sí** emite documento formal, mientras las otras
+subsecciones ganaron el complemento (ver §Validaciones). La discriminante es
+`linea.emite_documento_formal` (ficha v0.4), con `ciclo_dias` como respaldo
+cuando no se capturó.
 
 Verificado contra la documentación de la plataforma (19-ago-2026): salvo la
 impresión térmica, **todo esto es nativo** — pipeline de Oportunidades con el
@@ -282,7 +284,7 @@ posicion_journey: 71
 plan_minimo: fundamental
 mecanismo_entrega: contenido_a_medida      # el texto final lo aprueba el cliente (regla global del copy)
 se_instancia_por: [linea_negocio]
-aplica_si: "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa"
+aplica_si: "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))"
 depende_de: [gestion-whatsapp-api, nutricion-plantillas-whatsapp]
 cierra_fugas: []
 mitiga_fugas: [F-19]                       # reduce el error de toma; la causa la elimina el pipeline de estados
@@ -308,7 +310,7 @@ posicion_journey: 73
 plan_minimo: fundamental
 mecanismo_entrega: snapshot
 se_instancia_por: [unico]                  # un solo tablero de pedidos: el eje no es la línea, es el pedido
-aplica_si: "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa"
+aplica_si: "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))"
 depende_de: [gestion-pipeline-demandante]
 cierra_fugas: [F-19]                       # elimina la causa: el pedido pasa a ser objeto con estado, dueño y reloj
 metrica_que_habilita: [pedidos_por_estado, ciclo_pedido_a_entrega, pedidos_cancelados_por_motivo]
@@ -352,7 +354,7 @@ posicion_journey: 75
 plan_minimo: avanzado
 mecanismo_entrega: snapshot
 se_instancia_por: [funcion]                # el eje real son los sectores (parrilla, plancha, pizzas, despacho), no las líneas
-aplica_si: "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa"
+aplica_si: "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))"
 depende_de: [cierre-estados-del-pedido, gestion-permisos-roles]
 cierra_fugas: []
 mitiga_fugas: [F-15, F-19]                 # F-15: la preparación física no la controla Ropofy · F-19: parte el pedido y lo hace visible por sector
@@ -381,7 +383,7 @@ posicion_journey: 81
 plan_minimo: avanzado
 mecanismo_entrega: snapshot
 se_instancia_por: [linea_negocio]
-aplica_si: "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa"
+aplica_si: "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))"
 depende_de: [cierre-estados-del-pedido]
 cierra_fugas: []
 metrica_que_habilita: [avisos_de_avance_enviados, entregas_confirmadas_por_tercero]
@@ -407,7 +409,7 @@ posicion_journey: 83
 plan_minimo: inteligente                   # prueba de la matriz: actúa cuando NADIE actúa
 mecanismo_entrega: snapshot
 se_instancia_por: [unico]
-aplica_si: "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa"
+aplica_si: "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))"
 depende_de: [cierre-estados-del-pedido, gestion-tareas-sla]
 cierra_fugas: []                           # nunca cierra: el tiempo del tercero no se cierra, se mide
 mitiga_fugas: [F-15, F-19]                 # F-15: se acorta el tramo propio · F-19: descubre el pedido que nadie movió
@@ -432,7 +434,7 @@ posicion_journey: 77
 plan_minimo: null                          # V11: lo no nativo no viaja dentro del plan
 mecanismo_entrega: integracion_externa
 se_instancia_por: [unico]
-aplica_si: "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa"
+aplica_si: "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))"
 depende_de: [cierre-estados-del-pedido]
 integraciones_requeridas: []
 cierra_fugas: []
@@ -556,10 +558,11 @@ un eje estructural: cambia qué componentes existen, no solo cuántas instancias
    registrado, y si el negocio cobra contra entrega esa ruta no sirve — hay que ir
    por Oportunidades, que es lo que hace `cierre-estados-del-pedido`. Sin este
    dato la etapa 3 elige a ciegas entre dos arquitecturas distintas.
-5. **La discriminante `ciclo_dias` es un proxy.** Lo que de verdad separa las dos
-   formas de cierre no es la duración sino si el negocio **emite un documento
-   formal** antes de vender (cotización, contrato). Hoy la ficha no tiene ese
-   campo y se usa `ciclo_dias` en su lugar. Candidato a campo propio de la ficha.
+5. ~~La discriminante `ciclo_dias` es un proxy.~~ **Resuelto (ficha v0.4)**: la
+   ficha declara `linea.emite_documento_formal` y los once `aplica_si` de este
+   módulo se apoyan en él. `ciclo_dias` queda solo como respaldo cuando el campo
+   es `no_capturado`, que preserva el comportamiento de v0.3 para las fichas
+   viejas.
 6. **La frontera se sostiene por tercera vez**: Fundamental = ninguna propuesta
    ni aprobación se pierde (cobertura); Avanzado = el cierre se ejecuta digital
    — contrato, pago, evento (sustancia); Inteligente = el sistema detecta la

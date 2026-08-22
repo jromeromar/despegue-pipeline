@@ -1,4 +1,4 @@
-# Ficha de perfil del cliente — v0.3
+# Ficha de perfil del cliente — v0.4
 
 Contrato de datos de la etapa 1. Alimenta `aplica_si`, `se_instancia_por` y la
 selección de alcance de la etapa 3. Actualizada con los hallazgos del piloto
@@ -112,6 +112,15 @@ Cómo se ve, con el caso Bifteki:
    completitud (bloque I); si el apellido está bien escrito lo decide un humano
    (criterio J2).
 
+### Fichas anteriores a v0.4
+
+Las fichas < v0.4 no traen `emite_documento_formal` ni `momento_de_cobro` en sus
+líneas. El validador **advierte y no bloquea** según la `version_ficha`
+declarada, igual que con los nombres propios. Mientras el campo no esté, el
+módulo Cierre decide con `ciclo_dias` como respaldo, que es exactamente el
+comportamiento de v0.3 — así una ficha vieja no cambia de propuesta por el solo
+hecho de que el contrato avanzó. Al reprocesarla se preguntan los dos campos.
+
 ### Fichas anteriores a v0.3
 
 Las fichas < v0.3 no llevan `razon_social` ni los campos de personas y sistemas;
@@ -137,6 +146,7 @@ Arreglo. Una entrada por línea de ingreso.
 | `mecanismo_de_cierre` | enum | venta_directa · subasta · licitacion · contrato_recurrente. Dos mecanismos = dos pipelines aunque la línea parezca una. |
 | `estado_del_catalogo` | objeto | `{ items_publicados_sin_precio: bool, motivo }`. Inventario incompleto por diseño genera carga comercial propia. |
 | `ciclo_dias` | número | |
+| `emite_documento_formal` | enum | **nuevo v0.4** — `si` · `no` · `no_capturado`. ¿El negocio emite cotización o contrato **antes** de vender? Es la discriminante real entre las dos formas de cerrar (módulo Cierre): con documento formal aplica el cierre largo —cotizador, secuencia de retoma, firma, señales de decisión—; sin documento, el cierre y el primer contacto son el mismo momento y aplica la familia de ciclo corto. Hasta v0.3 se usaba `ciclo_dias` como proxy de esto, y un proxy falla: un catering o una grúa cotizan formalmente y cierran el mismo día. `ciclo_dias` queda como respaldo cuando este campo es `no_capturado`. |
 | `momento_de_cobro` | enum | **nuevo v0.4** — `al_pedir` · `contra_entrega` · `mixto` · `no_capturado`. Decide arquitectura, no configuración: la ruta de comercio electrónico de la plataforma exige un pago real registrado, así que un negocio que cobra contra entrega va por el pipeline de Oportunidades. Sin este dato la etapa 3 elige a ciegas entre dos arquitecturas distintas. |
 | `ticket_inicial` / `ingreso_recurrente` | moneda | |
 | `es_principal` | bool | |

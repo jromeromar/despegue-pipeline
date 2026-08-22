@@ -1,7 +1,7 @@
 {
  "_meta": {
   "total": 88,
-  "version": "ebfdbd2aa4",
+  "version": "f92c2bb130",
   "fuente": ".claude/skills/seleccion-propuesta/references/modulos"
  },
  "componentes": {
@@ -200,7 +200,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 70,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "linea.mecanismo_de_cierre in [venta_directa, contrato_recurrente] and linea.ciclo_dias != 0",
+   "aplica_si": "linea.mecanismo_de_cierre in [venta_directa, contrato_recurrente] and (linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0))",
    "cierra_fugas": [
     "F-04"
    ],
@@ -217,7 +217,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 72,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "linea.ciclo_dias != 0",
+   "aplica_si": "linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0)",
    "cierra_fugas": [
     "F-04"
    ],
@@ -249,7 +249,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 78,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "linea.ciclo_dias != 0",
+   "aplica_si": "linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0)",
    "cierra_fugas": [],
    "mecanismo_entrega": "snapshot",
    "costo_externo": null,
@@ -294,7 +294,7 @@
    "visibilidad_cliente": "back",
    "posicion_journey": 85,
    "se_instancia_por": "[unico]",
-   "aplica_si": "linea.ciclo_dias != 0",
+   "aplica_si": "linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0)",
    "cierra_fugas": [],
    "mecanismo_entrega": "snapshot",
    "costo_externo": null,
@@ -309,7 +309,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 86,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "linea.ciclo_dias != 0",
+   "aplica_si": "linea.emite_documento_formal == si or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias != 0)",
    "cierra_fugas": [],
    "mecanismo_entrega": "contenido_a_medida",
    "costo_externo": null,
@@ -339,7 +339,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 71,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "aplica_si": "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))",
    "cierra_fugas": [],
    "mecanismo_entrega": "contenido_a_medida",
    "costo_externo": null,
@@ -354,7 +354,7 @@
    "visibilidad_cliente": "ambos",
    "posicion_journey": 73,
    "se_instancia_por": "[unico]",
-   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "aplica_si": "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))",
    "cierra_fugas": [
     "F-19"
    ],
@@ -371,7 +371,7 @@
    "visibilidad_cliente": "back",
    "posicion_journey": 75,
    "se_instancia_por": "[funcion]",
-   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "aplica_si": "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))",
    "cierra_fugas": [],
    "mecanismo_entrega": "snapshot",
    "costo_externo": null,
@@ -386,7 +386,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 81,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "aplica_si": "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))",
    "cierra_fugas": [],
    "mecanismo_entrega": "snapshot",
    "costo_externo": null,
@@ -401,7 +401,7 @@
    "visibilidad_cliente": "back",
    "posicion_journey": 83,
    "se_instancia_por": "[unico]",
-   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "aplica_si": "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))",
    "cierra_fugas": [],
    "mecanismo_entrega": "snapshot",
    "costo_externo": null,
@@ -416,7 +416,7 @@
    "visibilidad_cliente": "back",
    "posicion_journey": 77,
    "se_instancia_por": "[unico]",
-   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "aplica_si": "linea.mecanismo_de_cierre == venta_directa and (linea.emite_documento_formal == no or (linea.emite_documento_formal == no_capturado and linea.ciclo_dias == 0))",
    "cierra_fugas": [],
    "mecanismo_entrega": "integracion_externa",
    "costo_externo": null,

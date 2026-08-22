@@ -7,7 +7,7 @@
   ],
   "extraido_por": "etapa-1-extraccion-diagnostico",
   "regla": "solo lo dicho. Lo no dicho se marca no_capturado, nunca se infiere.",
-  "version_ficha": "0.3",
+  "version_ficha": "0.4",
   "marca": {
    "grafia": "Activos por Colombia S.A.S.",
    "estado": "por_confirmar",
@@ -36,7 +36,9 @@
    ],
    "evidencia": "«la mayor parte de inmuebles que vendemos son inmuebles del Estado que sí o sí se deben hacer por subasta electrónica»",
    "evidencia_dependencias": "«el 95% de la llave la maneja directamente SAE» — «hay que esperar la agenda de las territoriales»",
-   "volumen_declarado": "portafolio público de 6.300 inmuebles"
+   "volumen_declarado": "portafolio público de 6.300 inmuebles",
+   "emite_documento_formal": "no_capturado",
+   "momento_de_cobro": "no_capturado"
   },
   {
    "id": "venta-privados",
@@ -45,7 +47,9 @@
    "control_del_activo": "tercero_privado",
    "mecanismo_de_cierre": "venta_directa",
    "dependencias_externas": [],
-   "evidencia": "«las únicas ventas directas que hacemos son las de inmuebles que son de privados»"
+   "evidencia": "«las únicas ventas directas que hacemos son las de inmuebles que son de privados»",
+   "emite_documento_formal": "no_capturado",
+   "momento_de_cobro": "no_capturado"
   },
   {
    "id": "venta-societarios",
@@ -54,7 +58,9 @@
    "control_del_activo": "propio",
    "mecanismo_de_cierre": "venta_directa",
    "dependencias_externas": [],
-   "evidencia": "«los inmuebles societarios propios, de los cuales sí podemos hacer programaciones, porque sí contamos con las llaves»"
+   "evidencia": "«los inmuebles societarios propios, de los cuales sí podemos hacer programaciones, porque sí contamos con las llaves»",
+   "emite_documento_formal": "no_capturado",
+   "momento_de_cobro": "no_capturado"
   },
   {
    "id": "arriendo",
@@ -65,7 +71,9 @@
    "dependencias_externas": [
     "SAE/territoriales para llaves en inmuebles del Estado"
    ],
-   "evidencia": "línea con equipo propio (Tatiana): 20–30 conversaciones/día"
+   "evidencia": "línea con equipo propio (Tatiana): 20–30 conversaciones/día",
+   "emite_documento_formal": "no_capturado",
+   "momento_de_cobro": "no_capturado"
   },
   {
    "id": "captacion",
@@ -74,7 +82,9 @@
    "control_del_activo": "tercero_privado",
    "mecanismo_de_cierre": "contrato_recurrente",
    "dependencias_externas": [],
-   "evidencia": "Steven: recorridos de precaptación, letreros de «se vende/se arrienda», corretaje comercial e industrial"
+   "evidencia": "Steven: recorridos de precaptación, letreros de «se vende/se arrienda», corretaje comercial e industrial",
+   "emite_documento_formal": "no_capturado",
+   "momento_de_cobro": "no_capturado"
   },
   {
    "id": "administracion",
@@ -83,7 +93,9 @@
    "control_del_activo": "propio",
    "mecanismo_de_cierre": "contrato_recurrente",
    "dependencias_externas": [],
-   "evidencia": "mencionada como línea; detalle no_capturado"
+   "evidencia": "mencionada como línea; detalle no_capturado",
+   "emite_documento_formal": "no_capturado",
+   "momento_de_cobro": "no_capturado"
   }
  ],
  "A_notas": {
