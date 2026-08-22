@@ -257,6 +257,15 @@ Reglas del híbrido:
 - El código y los contratos NUNCA se editan en OneDrive: se editan en el repo
   (commit) y la siguiente sesión los trae. OneDrive solo lleva transcripciones,
   expedientes y `politica-comercial.json`.
+- **Las skills instaladas en la cuenta de Claude son LANZADORES, no
+  implementaciones.** No contienen contratos, scripts ni lógica: solo disparan
+  el flujo (leer `config-acceso.json`, clonar este repo, ejecutar la skill
+  real desde `.claude/skills/` del clon). Nunca instalar en la cuenta una
+  skill con lógica: la lógica entra por commit aquí y el lanzador no cambia.
+  Si un lanzador y el repo parecen contradecirse, manda el repo. (La regla
+  existe porque las copias completas derivaron en ambas direcciones y hubo
+  que reconciliarlas: ficha v0.3 vivía solo en el repo; propuesta v0.5 y
+  diagnóstico v0.2 vivían solo en la cuenta.)
 - `politica-comercial.json` vive en `despegue-operacion/` (OneDrive) (lo edita el humano sin tocar
   Git): traerlo al sandbox junto con la transcripción antes de la etapa 3.
 - Verificar SIEMPRE tras clonar: compilar la librería y comparar el hash con
