@@ -9,6 +9,9 @@ LETRA = lambda p: 'A' if p>=85 else 'B' if p>=70 else 'C' if p>=55 else 'D' if p
 
 def validar(d, catalogo_md, ficha=None):
     E, W = [], []
+    ver = tuple(int(n) for n in re.findall(r'\d+', str(d.get('_contrato', '')))[:2])
+    v02 = ver >= (0, 2)   # diagnósticos sin _contrato son anteriores: se advierte, no se bloquea
+    NUEVA = E if v02 else W   # reglas v0.2 (C11/C12) — el contrato no se reescribe hacia atrás
     ids_catalogo = set(re.findall(r'\*\*([A-Z]+-\d+)', catalogo_md)) \
                  | set(re.findall(r'^\|\s*([A-Z]+-\d+)', catalogo_md, re.M)) \
                  | set(re.findall(r'^#{2,4}\s+([A-Z]+-\d+)', catalogo_md, re.M))
@@ -19,6 +22,36 @@ def validar(d, catalogo_md, ficha=None):
     for f in fugas:
         if f.get('id') not in ids_catalogo:
             E.append(f"1b · id '{f.get('id')}' NO existe en el catálogo: prohibido inventar categorías")
+
+    # ---------- 1c-1g. Consolidación y título protagonista (C11, contrato v0.2) ----------
+    solo_fugas = [f for f in fugas if f.get('categoria') == 'fuga']
+    if len(solo_fugas) > 5:
+        NUEVA.append(f"1c · {len(solo_fugas)} elementos con categoria 'fuga' (tope duro: 5) — se consolidan "
+                     "en una fuga más general registrando los ids absorbidos en 'absorbe'; "
+                     "cegueras y restricciones NO se consolidan ni se recortan")
+    ids_presentes = {f.get('id') for f in fugas}
+    for f in fugas:
+        t = str(f.get('titulo', ''))
+        if 'fuga' in t.lower():
+            NUEVA.append(f"1d · título de {f.get('id')} contiene la palabra 'fuga' — el encabezado de "
+                         f"sección ya la dice: «{t}»")
+        if len(t) > 60:
+            NUEVA.append(f"1e · título de {f.get('id')} con {len(t)} caracteres (máx 60 — es la frase "
+                         f"protagonista, corta y en lenguaje del cliente): «{t[:70]}»")
+        ab = f.get('absorbe')
+        if ab is None:
+            continue
+        if f.get('categoria') != 'fuga':
+            E.append(f"1f · {f.get('id')} declara 'absorbe' pero no es categoria 'fuga': solo las fugas se consolidan")
+        if not isinstance(ab, list) or not ab:
+            E.append(f"1f · 'absorbe' de {f.get('id')} debe ser una lista no vacía de ids del catálogo: {ab!r}")
+            continue
+        for aid in ab:
+            if aid not in ids_catalogo:
+                E.append(f"1f · {f.get('id')} absorbe '{aid}', que no existe en el catálogo")
+            if aid in ids_presentes:
+                E.append(f"1g · {f.get('id')} absorbe '{aid}' pero '{aid}' sigue como entrada propia: "
+                         "una fuga absorbida no se cuenta dos veces (anti-doble-conteo extendido)")
 
     # ---------- 2. Dominante única ----------
     doms = [f['id'] for f in fugas if f.get('dominante')]
@@ -68,8 +101,17 @@ def validar(d, catalogo_md, ficha=None):
         if m not in presentes: E.append(f"6a · falta madurez de {m}")
     for m in mad:
         if m.get('hoy') not in (0,1,2,3,4): E.append(f"6b · nivel inválido en {m.get('m')}: {m.get('hoy')}")
-        if not m.get('por_que') or len(str(m.get('por_que')))<15:
+        pq = str(m.get('por_que') or '')
+        if not pq or len(pq) < 15:
             E.append(f"6c · {m.get('m')} sin por_que sustantivo: cada nivel cita su hecho")
+        else:
+            # C12 (contrato v0.2): 2–3 frases — el hecho de la ficha, qué nivel implica
+            # y qué falta para el siguiente. En diagnósticos históricos solo advierte.
+            segmentos = [s for s in re.split(r'[.;·]', pq) if len(s.split()) >= 3]
+            if len(pq) < 80 or len(segmentos) < 2:
+                NUEVA.append(f"6d · por_que de {m.get('m')} corto para el contrato v0.2 ({len(pq)} car., "
+                             f"{len(segmentos)} frase(s)): debe traer el hecho de la ficha, qué nivel "
+                             f"implica y qué falta para el siguiente — «{pq[:60]}…»")
 
     # ---------- 7. Nota aritméticamente correcta ----------
     niveles_ok = mad and all(m.get('hoy') in (0,1,2,3,4) for m in mad) and len(mad)==len(MODULOS)
