@@ -1,6 +1,12 @@
 # Schema `prospecto.json` — Etapa 0: de demo comercial a insumo del diagnóstico
 
-Contrato de datos v0.1 (19-ago-2026).
+Contrato de datos v0.1.1 (19-ago-2026).
+v0.1.1: `ejecucion_del_guion.bloques[]` deja de ser una lista fija de 13 y
+pasa a validarse contra el **mapa canónico de la versión de guion declarada**
+en `_meta.version_guion` — v2026 y v3 auditan 13 bloques (ids 1–13); el
+**Guion v4.1** audita 19 (`0, 1.1–1.5, 2–11, FT, 12, 13`). El mapa vive en
+`GUION_BLOQUES` dentro de `scripts/validar_prospecto.py`. Sin otro cambio de
+estructura: los prospectos v0.1 existentes siguen siendo válidos.
 
 **Posición en la cadena:** **demo (E0)** → `prospecto.json` → ficha.json (E1) →
 diagnostico.json (E2) → propuesta.json (E3) → blueprint.json (E4).
@@ -146,7 +152,7 @@ propuesta como si fuera un hecho del negocio.
 |---|---|---|
 | `id_prospecto` | slug | `demo-<cliente>-<yyyymmdd>` |
 | `version_schema` | texto | `"0.1"` |
-| `version_guion` | texto | Guion contra el que se audita: `"Guion Demo v2026 / genérico"` o `"…/ Nuevo Despegue Arquitecto"`. Los dos guiones difieren en el bloque 9 (Despegue Express vs. Arquitectura Comercial); auditar contra el equivocado invalida §I. |
+| `version_guion` | texto | Guion contra el que se audita: `"Guion Demo v2026 / genérico"`, `"…/ Nuevo Despegue Arquitecto"`, `"Guion Demo v3 / maestro"` o `"Guion Demo v4.1 / consultivo"`. Determina el mapa canónico de bloques de §I (regla P13); auditar contra el guion equivocado invalida §I. |
 | `fuentes[]` | [objeto] | `{ archivo, tipo: transcripcion\|formulario\|crm\|chat_bot, fecha }` |
 | `fecha_demo` | ISO | |
 | `ejecutivo` | texto | |
@@ -671,10 +677,18 @@ cierre, decisor presente, detonante con fecha dura y objeciones pendientes.
 
 ## I. `ejecucion_del_guion` — QA
 
-### `bloques[]` — 13 entradas
+### `bloques[]` — una entrada por bloque del guion auditado
 
-`{ id: 1..13, nombre, estado, minuto_inicio, micro_checks_obligatorios:
+`{ id, nombre, estado, minuto_inicio, micro_checks_obligatorios:
 [{ check, ocurrio }], notas }`
+
+El conjunto de `id` debe coincidir exactamente con el mapa canónico de la
+`version_guion` declarada (P13): **v2026 / v3** → 13 bloques, ids `1..13`;
+**v4.1** → 19 bloques, ids `0, 1.1, 1.2, 1.3, 1.4, 1.5, 2, 3, 4, 5, 6, 7, 8,
+9, 10, 11, FT, 12, 13` (las situaciones especiales del v4.1 no son bloques:
+se auditan vía `objeciones[].manejo` y `errores_detectados[]`). En v4.1 los
+ids `3` (recap) y `4` (transición) conservan la semántica de validación y
+encuadre que el QA puntúa.
 
 `estado`: `ejecutado` · `ejecutado_debil` · `parcial` · `omitido` ·
 `fuera_de_orden` · `iniciado_por_el_cliente`.
@@ -894,7 +908,7 @@ las desviaciones de precio son obligaciones que el diagnóstico hereda.
 | **P10** | `datos_en_conflicto[]`: solo si `objeto_a == objeto_b` | error |
 | **P11** | Todo `dolor` con `quien_lo_verbalizo == "cliente"` tiene ≥ 1 cita | error |
 | **P12** | Todo `dolor` con `cuantificado == false` genera entrada en `agenda_diagnostico` (regla J5) | error |
-| **P13** | `bloques[]` tiene exactamente 13 entradas; `preguntas_fijas_descubrimiento[]` exactamente 5 | error |
+| **P13** | El conjunto de ids de `bloques[]` coincide con el mapa canónico de la `version_guion` declarada (13 para v2026/v3; 19 para v4.1); `preguntas_fijas_descubrimiento[]` exactamente 5 | error |
 | **P14** | Cotización dicha vs. catálogo: toda diferencia queda en `desviaciones_de_catalogo[]` | error |
 | **P15** | `agenda_diagnostico[]`: `deriva_de` resuelve a un id existente; `campo_destino` apunta a una ruta válida de ficha.json | error |
 | **P16** | Ninguna entrada de `agenda_diagnostico` pregunta por un campo que ya tiene valor con `fuente` `cliente_declaro` o `cliente_confirmo` (regla J2) | **advertencia** mientras `campo_destino` apunte a rutas de ficha.json que el validador no puede resolver; pasa a error cuando exista el mapeo formal (§6) |

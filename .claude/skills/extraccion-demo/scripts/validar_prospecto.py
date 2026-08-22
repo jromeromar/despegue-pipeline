@@ -96,6 +96,25 @@ ESTADOS_BLOQUE = {
     "ejecutado", "ejecutado_debil", "parcial", "omitido",
     "fuera_de_orden", "iniciado_por_el_cliente",
 }
+
+# Mapa canónico de bloques auditables por versión de guion (schema v0.1.1).
+# La clave se resuelve por subcadena en _meta.version_guion; el primer match
+# gana, así que "v4" debe evaluarse antes que el fallback.
+GUION_BLOQUES = {
+    "v4": ["0", "1.1", "1.2", "1.3", "1.4", "1.5", "2", "3", "4", "5", "6",
+           "7", "8", "9", "10", "11", "FT", "12", "13"],   # Guion v4.1 (19)
+    "v3": [str(i) for i in range(1, 14)],                  # Guion v3 (13)
+    "v2026": [str(i) for i in range(1, 14)],               # Guion v2026 (13)
+}
+GUION_DEFAULT = [str(i) for i in range(1, 14)]
+
+
+def bloques_canonicos(version_guion):
+    v = (version_guion or "").lower()
+    for clave in ("v4", "v3", "v2026"):
+        if clave in v:
+            return GUION_BLOQUES[clave]
+    return GUION_DEFAULT
 FORMULADA = {"si", "no", "parcial", "reformulada_como_configuracion"}
 MOMENTOS = {"brief_previo", "en_sesion", "evidencia_en_vivo", "asincrono_cliente"}
 PRIORIDADES = {"bloqueante", "alta", "media"}
@@ -295,11 +314,18 @@ def validar(p):
         if d.get("cuantificado") is True and not (d.get("magnitud") or {}).get("valor"):
             err("P12", f"dolor '{did}': cuantificado=true sin 'magnitud'")
 
-    # ---- P13 ejecución
+    # ---- P13 ejecución (mapa canónico por versión de guion)
     eje = p.get("ejecucion_del_guion", {}) or {}
     bl = eje.get("bloques", []) or []
-    if len(bl) != 13:
-        err("P13", f"bloques[] tiene {len(bl)} entradas (deben ser 13)")
+    canon = bloques_canonicos(meta.get("version_guion"))
+    ids = sorted(str(b.get("id")) for b in bl)
+    if ids != sorted(canon):
+        faltan = sorted(set(canon) - set(ids))
+        sobran = sorted(set(ids) - set(canon))
+        err("P13", f"bloques[] no coincide con el mapa canónico del guion "
+                   f"'{meta.get('version_guion')}' ({len(canon)} bloques)"
+                   + (f"; faltan {faltan}" if faltan else "")
+                   + (f"; sobran {sobran}" if sobran else ""))
     for b in bl:
         if b.get("estado") not in ESTADOS_BLOQUE:
             err("P13", f"bloque {b.get('id')}: estado '{b.get('estado')}' fuera del enum")
