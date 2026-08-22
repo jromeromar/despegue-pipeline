@@ -43,10 +43,24 @@ dudoso, leer su bloque completo en el módulo, no solo la fila compilada.
 
 ## Proceso
 
-1. **Filtrar por `aplica_si`**: recorrer los 81 componentes evaluando su
-   condición contra la ficha. Lo que no aplica va a `no_aplican` CON su razón
-   en lenguaje del cliente ("ya tienen sitio con catálogo", "no se capturó si
-   cobran anticipo"). Nada desaparece en silencio.
+1. **Filtrar por `aplica_si` y materializar con el script**: recorrer los
+   componentes de la librería evaluando su condición contra la ficha. Lo que no
+   aplica va a `panel_interno.no_aplican` CON su razón en lenguaje del cliente
+   ("ya tienen sitio con catálogo", "no se capturó si cobran anticipo") — desde
+   v0.5 lo interno vive ahí y solo ahí. Nada desaparece en silencio.
+
+   El resultado de esa decisión se escribe en un **borrador** —`seleccion`,
+   `exclusiones`, `cuotas`, más todo lo que el modelo decide— y el bloque
+   `componentes` lo **materializa el script**, nunca una transcripción a mano:
+
+   ```
+   python3 scripts/construir_propuesta.py borrador.json <libreria> propuesta.json
+   ```
+
+   El script copia de la librería los campos que el renderizador exige, con los
+   nombres que el contrato pide. La traducción entre unos y otros vive en su
+   `MAPA_LIBRERIA` y en ningún otro lugar del repo (ver §Trampas conocidas). No
+   escribe cifras: eso sigue siendo del paso 3.
 2. **Respetar lo que el cliente ya tiene**: si la ficha muestra capacidad
    instalada equivalente (números dedicados propios, catálogo publicado), el
    componente se marca `no_aplican` con razón "ya lo resuelven con X" — se
@@ -168,6 +182,15 @@ la dominante se ataca con el que sigue — y se registra en advertencias.
 el precio del cliente es un número entero limpio. El desglose vive en el
 bloque `condicion_comercial.desglose_interno`.
 
+**Los campos de la librería cambian de nombre al entrar a la propuesta.** La
+librería guarda `visibilidad_cliente` y `posicion_journey`; el contrato espera
+`vis` y `journey`. Leer la clave equivocada devuelve `null` en silencio y el
+renderizador rechaza el archivo completo. Caso real: Bifteki v4, 56 componentes,
+validador en verde. La traducción vive en `MAPA_LIBRERIA` de
+`scripts/construir_propuesta.py` y el **bloque 17** del validador la respalda —
+no la reconstruyas a mano. (Era el bloque 11 hasta que el contrato v0.5 ocupó
+las ranuras 11–16.)
+
 **Dejar la cifra del as-is suelta en la prosa.** El renderizador no interpreta
 texto: si la fila no declara su dato en el tercer elemento, el número que el
 lienzo muestre saldrá de escarbar dígitos de la nota, y escarbar acierta poco.
@@ -225,6 +248,8 @@ tramificar el precio, no para comprometer alcance por línea. La frase segura:
 - [ ] Cero HTML, cero colores, cero coordenadas
 - [ ] Instancias, multiplicador y precios los escribió `calcular_condicion.py`, no el modelo
 - [ ] Ajustes manuales de instancias marcados con `instancias_fijadas_por_consultor`
+- [ ] Cada componente con `vis` en `{front, back, ambos}` y `journey` entero, copiados de la librería
+- [ ] El bloque `componentes` lo materializó `construir_propuesta.py`, no una transcripción a mano
 - [ ] `libreria_hash` escrito con el hash de la librería usada (obligatorio desde v0.4)
 - [ ] `validar_propuesta.py` pasa (exit 0) — y si reporta «histórica», la propuesta se emitió contra otra librería: verificar que era lo esperado
 
