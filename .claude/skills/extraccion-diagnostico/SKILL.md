@@ -171,6 +171,7 @@ que el consultor sea de la misma ciudad, no).
 - [ ] Todos los campos del contrato presentes; los sin dato dicen `"no_capturado"` (no vacíos, no null salvo que el contrato lo pida)
 - [ ] Cada dato no obvio tiene `evidencia` textual
 - [ ] `datos_en_conflicto` solo con `objeto_a` == `objeto_b`; si difieren, registrados como dos datos
+- [ ] `momento_de_cobro` por línea: ¿cobra al pedir o contra entrega? Es dato de arquitectura, no de configuración — si no se preguntó, va como `no_capturado` a la agenda de la segunda llamada, no se deduce
 - [ ] `modo_propuesta` = "B" si no hay ticket, margen, comisión ni ad spend
 - [ ] `funciones_sin_representacion` revisado (¿quién es dueño de un proceso y no estuvo?)
 - [ ] Bloque D incluye `whatsapp_estado`, `numeros_publicados`, `llamadas_medidas`, `decision_del_numero` (aunque sea todo no_capturado: la sesión vieja no los preguntaba)

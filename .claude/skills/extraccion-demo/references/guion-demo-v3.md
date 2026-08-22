@@ -492,6 +492,12 @@ pagar:
 - Diseño de flujos y ramas de automatización → E4 (`automatizacion`).
 - Verificación en pantalla de inventarios, CSVs, dominios y cuentas → E1/E4 `evidencia_en_vivo` (en demo solo se pregunta si existen y quién los controla; la excepción es el bloque 12, que sí verifica lo que pueda verse).
 - Precio final de implementación → sale del diagnóstico (R2).
+- **Cómo cobra el negocio: al pedir (en línea) o contra entrega** → E1
+  (`linea.momento_de_cobro`). En demo basta con que exista el canal de pago; el
+  momento del cobro decide una **arquitectura completa** —la ruta de comercio
+  electrónico de la plataforma exige pago real registrado, así que un negocio
+  que cobra contra entrega va por Oportunidades— y elegirla es trabajo de la
+  sesión, no de la llamada de venta.
 
 La promesa comercial que esto habilita (bloque 9): «no te vamos a volver a
 preguntar lo que ya me contaste».

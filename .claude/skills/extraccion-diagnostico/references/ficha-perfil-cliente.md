@@ -137,6 +137,7 @@ Arreglo. Una entrada por línea de ingreso.
 | `mecanismo_de_cierre` | enum | venta_directa · subasta · licitacion · contrato_recurrente. Dos mecanismos = dos pipelines aunque la línea parezca una. |
 | `estado_del_catalogo` | objeto | `{ items_publicados_sin_precio: bool, motivo }`. Inventario incompleto por diseño genera carga comercial propia. |
 | `ciclo_dias` | número | |
+| `momento_de_cobro` | enum | **nuevo v0.4** — `al_pedir` · `contra_entrega` · `mixto` · `no_capturado`. Decide arquitectura, no configuración: la ruta de comercio electrónico de la plataforma exige un pago real registrado, así que un negocio que cobra contra entrega va por el pipeline de Oportunidades. Sin este dato la etapa 3 elige a ciegas entre dos arquitecturas distintas. |
 | `ticket_inicial` / `ingreso_recurrente` | moneda | |
 | `es_principal` | bool | |
 
