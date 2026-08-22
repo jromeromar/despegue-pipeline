@@ -78,7 +78,12 @@ ACCIONES = {
 def evaluar(p):
     eje = p.get("ejecucion_del_guion", {}) or {}
     met = eje.get("metricas_ejecucion", {}) or {}
-    bloques = {b.get("id"): b for b in (eje.get("bloques") or [])}
+    bloques = {str(b.get("id")): b for b in (eje.get("bloques") or [])}
+    # Roles de bloque por versión de guion: en v2026/v3 la validación del
+    # entendimiento es el bloque 3 y el encuadre del demo el 4; en v4.1 el
+    # recap es "3" y la transición "4" — misma semántica, mismos ids.
+    # El filtro técnico se lee de cierres.filtro_tecnico, no de bloques,
+    # así que su renumeración ("FT" en v4.1) no afecta al scoring.
     errores = eje.get("errores_detectados", []) or []
     cod_err = {e.get("codigo") for e in errores}
     pf = eje.get("preguntas_fijas_descubrimiento", []) or []
@@ -170,8 +175,8 @@ def evaluar(p):
     # ---------------- 3. CONDUCCIÓN
     h = []
     s = 0
-    b3 = (bloques.get(3) or {}).get("estado")
-    b4 = (bloques.get(4) or {}).get("estado")
+    b3 = (bloques.get("3") or {}).get("estado")
+    b4 = (bloques.get("4") or {}).get("estado")
     if b3 in ("ejecutado", "ejecutado_debil", "parcial"):
         s += 15
     else:

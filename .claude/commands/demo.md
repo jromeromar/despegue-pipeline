@@ -20,9 +20,11 @@ sin paradas interactivas.
 ## Etapa 0 — Extracción de la demo
 
 1. Lee S0/SKILL.md y S0/references/schema-prospecto.md COMPLETOS. El guion
-   contra el que se audita la ejecución está en S0/references/guion-demo-v3.md
-   (si la demo es anterior al guion v3, registrar `version_guion` v2026 y
-   auditar contra ese).
+   vigente contra el que se audita la ejecución es
+   S0/references/guion-demo-v4.1.md (19 bloques: 0, 1.1-1.5, 2-11, FT, 12, 13).
+   Si la demo es anterior, registrar `version_guion` v3 o v2026 (13 bloques)
+   y auditar contra el guion que corresponda — el mapa canónico está en
+   GUION_BLOQUES de S0/scripts/validar_prospecto.py.
 2. Extrae el texto de la transcripción (docx → texto plano en /tmp/demo-$1.txt).
    Antes de extraer, resuelve el `_meta`: hablantes reales, ruido del ASR y
    dónde termina la demo efectiva (el audio ambiente posterior no se procesa

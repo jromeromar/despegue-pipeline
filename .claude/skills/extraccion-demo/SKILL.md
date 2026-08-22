@@ -155,6 +155,8 @@ Entregar ambos.
 ## Referencias
 
 - `references/schema-prospecto.md` — el contrato completo con las reglas P1–P18. **Leerlo siempre antes de extraer.**
-- `references/guion-demo-v3.md` — el guion maestro con bifurcación por arquetipo (Ruta F / Ruta A) contra el que se audita `ejecucion_del_guion` cuando `version_guion` es "Guion Demo v3 / maestro". Para demos anteriores, auditar contra el guion v2026.
+- `references/guion-demo-v4.1.md` — **el guion vigente** (consultivo con capa de riesgo, fusión V4 de Mariana + reinjertos del V3). Audita 19 bloques (`0, 1.1–1.5, 2–11, FT, 12, 13`) cuando `version_guion` es "Guion Demo v4.1 / consultivo".
+- `references/guion-demo-v3.md` — referencia histórica: audita 13 bloques para demos ejecutadas con el v3. Para demos anteriores a ambos, auditar contra el guion v2026 (también 13).
+- El mapa canónico de bloques por versión vive en `GUION_BLOQUES` dentro de `scripts/validar_prospecto.py`: si cambia el guion, se actualiza ahí o la regla P13 audita contra el mapa equivocado.
 - `examples/prospecto-drogueria-rr-20260803.json` — arquetipo *arranque de canal*: cero digital, decisor presente, comparación activa de proveedores, modo B. Es el caso que muestra por qué el descubrimiento del guion no aplica tal cual.
 - `examples/prospecto-american-20260803.json` — arquetipo *fuga con expansión comprometida*: detonante contractual con fecha dura, decisor ausente, objeción técnica sobre una línea de 25 años, cotización improvisada. Es el estándar de cuánta agenda produce una demo bien extraída (22 preguntas).
