@@ -30,14 +30,22 @@ FORMATO DEL BORRADOR
 --------------------
 Todo lo que el modelo decide, tal cual va a la propuesta, más dos bloques propios:
 
-    "seleccion":   { "<id-componente>": null | <int> }
-                   null  = las instancias las calcula calcular_condicion.py
-                   <int> = el consultor las fija (se marca instancias_fijadas_por_consultor)
+    "seleccion":   { "<id-componente>": <valor> }
+                   <valor> puede ser:
+                     null    → las instancias las calcula calcular_condicion.py
+                     <int>   → el consultor las fija (se marca instancias_fijadas_por_consultor)
+                     objeto  → { "instancias": null|<int>, "sintesis": str, "conecta_con": [id] }
+                   Desde el contrato v0.5 cada componente exige `sintesis` (≤90 caracteres,
+                   una sola idea) y `conecta_con` (lista, [] si no engrana con nada). Las dos
+                   son decisiones del MODELO, así que entran por el borrador: este script las
+                   copia, nunca las redacta.
     "exclusiones": { "<id-componente>": "razón en lenguaje del cliente" }
     "cuotas":      { "<id-componente>": "hasta 3 formularios embebibles" }   (opcional)
 
 El resto de las claves del borrador (cliente, titular, resumen, as_is, fugas, madurez,
-integraciones, advertencias, plan_recomendado, condicion_comercial…) se copian sin tocar.
+integraciones, advertencias, plan_recomendado, condicion_comercial, panel_interno…) se
+copian sin tocar. Las exclusiones aterrizan en `panel_interno.no_aplican`: desde v0.5 lo
+interno vive junto y solo ahí, y dejarlas al nivel de la raíz es el error 15g del validador.
 """
 import json
 import sys
@@ -71,7 +79,13 @@ def construir(borrador, lib):
                          "o se recompila la librería.")
 
     componentes = {}
-    for cid, fijadas in seleccion.items():
+    for cid, decidido in seleccion.items():
+        # el valor puede ser escalar (solo instancias) u objeto (v0.5: + sintesis y conecta_con)
+        if isinstance(decidido, dict):
+            fijadas = decidido.get('instancias')
+            del_modelo = {k: decidido[k] for k in ('sintesis', 'conecta_con') if k in decidido}
+        else:
+            fijadas, del_modelo = decidido, {}
         ref = comps_lib[cid]
         plan = ref.get('plan_minimo')
         if plan is None:
@@ -82,6 +96,7 @@ def construir(borrador, lib):
             c[destino] = ref.get(origen)
         c['plan'] = plan
         c['cuota'] = cuotas.get(cid)
+        c.update(del_modelo)                     # sintesis y conecta_con: del modelo, no de la librería
         # Valor de partida. calcular_condicion.py lo sobrescribe salvo que esté fijado.
         c['instancias'] = 1
         if fijadas is not None:
@@ -100,9 +115,19 @@ def construir(borrador, lib):
                          "\n".join(f"    {cid}.{k} = {v!r}" for cid, k, v in rotos) +
                          "\n  Revisar la librería compilada o MAPA_LIBRERIA.")
 
+    # Compuerta local del contrato v0.5: sintesis y conecta_con son del modelo y este script
+    # no los inventa. Mejor fallar aquí que en el validador con 13a/13c por 56 componentes.
+    faltan = [(cid, k) for cid, c in componentes.items()
+              for k in ('sintesis', 'conecta_con') if k not in c]
+    if faltan:
+        raise SystemExit("✖ el borrador no trae los campos que el contrato v0.5 exige del modelo:\n" +
+                         "\n".join(f"    {cid}.{k}" for cid, k in faltan) +
+                         "\n  `sintesis` (≤90 car.) y `conecta_con` ([] si no engrana) se deciden, no se derivan.")
+
     borrador['componentes'] = componentes
-    borrador['no_aplican'] = [[comps_lib[cid]['nombre_cliente'], razon]
-                              for cid, razon in exclusiones.items()]
+    # v0.5: lo interno vive en panel_interno y solo ahí (validador §15g)
+    borrador.setdefault('panel_interno', {})['no_aplican'] = [
+        [comps_lib[cid]['nombre_cliente'], razon] for cid, razon in exclusiones.items()]
     return borrador
 
 
@@ -118,7 +143,8 @@ if __name__ == '__main__':
     por_plan = dict(Counter(c['plan'] for c in prop['componentes'].values()))
     fijadas = sum(1 for c in prop['componentes'].values()
                   if c.get('instancias_fijadas_por_consultor'))
-    print(f"✔ {len(prop['componentes'])} componentes · {len(prop['no_aplican'])} exclusiones "
+    print(f"✔ {len(prop['componentes'])} componentes · "
+          f"{len(prop['panel_interno']['no_aplican'])} exclusiones "
           f"· {len(prop.get('integraciones', []))} en el carril")
     print(f"  por plan: {por_plan} · instancias fijadas por el consultor: {fijadas}")
     print(f"✔ escrito en {sys.argv[3]}")
