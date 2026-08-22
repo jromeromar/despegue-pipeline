@@ -548,10 +548,9 @@ un eje estructural: cambia qué componentes existen, no solo cuántas instancias
 2. `cierre-pago-enlace` reveló un dato que el guión no pregunta directo: **si el
    anticipo/separación se cobra en línea hoy o podría cobrarse**. Candidato a
    repregunta del Bloque 7.
-3. **Plantillas del ciclo corto** (confirmación de pedido con su variante
-   interactiva de dirección, pedido-despachado, pedido-entregado): redacción
-   pendiente, y el texto final lo aprueba el cliente como todo
-   `contenido_a_medida`.
+3. **Plantillas del ciclo corto**: redactadas como punto de partida en §E. Lo
+   que queda pendiente es lo que no nos toca — que el cliente apruebe el texto
+   final, y que decida tuteo, emojis y si el asistente se declara asistente.
 4. **Pregunta nueva para el guión: ¿cobra en línea o contra entrega?** De eso
    depende la ruta de plataforma: la de comercio electrónico exige pago real
    registrado, y si el negocio cobra contra entrega esa ruta no sirve — hay que ir
@@ -566,3 +565,46 @@ un eje estructural: cambia qué componentes existen, no solo cuántas instancias
    — contrato, pago, evento (sustancia); Inteligente = el sistema detecta la
    decisión y actúa solo (iniciativa). Patrón **cobertura → sustancia →
    iniciativa** confirmado en 3 de 7 módulos.
+
+---
+
+## E. Plantillas del ciclo corto — punto de partida
+
+Redacción metodológica de Ropofy. **El texto final lo proporciona o aprueba el
+cliente** antes de activarse (regla global del copy): la voz de la marca es
+suya, la estructura y el método son nuestros. Las variables van entre `{{ }}` y
+salen del contacto o del pedido; el tono y los modismos salen de la guía de voz
+del cliente, no de aquí.
+
+### `confirmacion-pedido` — al confirmarse el pedido
+
+> Listo {{nombre_contacto}}, tu pedido quedó confirmado 🙌
+> {{detalle_pedido}}
+> Total: {{total}}
+> Sale para {{direccion_de_entrega}} y demora aprox. {{demora_estimada}}.
+> Cualquier cambio, escríbeme por acá.
+
+**Variante interactiva — confirmar la dirección** (hasta 3 botones de respuesta
+rápida; si son más opciones, mensaje de lista):
+
+> {{nombre_contacto}}, ¿a dónde te lo enviamos?
+> [ {{direccion_1}} ] [ {{direccion_2}} ] [ Otra dirección ]
+
+Con «Otra dirección» el asistente pide la dirección en texto y la registra en el
+contacto. La confirmación no se manda hasta que la dirección esté resuelta:
+mandar el detalle a una dirección equivocada cuesta el pedido completo.
+
+### `pedido-despachado` — al entrar a Despachado
+
+> {{nombre_contacto}}, tu pedido ya salió 🛵
+> Llega en aprox. {{demora_estimada}} a {{direccion_de_entrega}}.
+
+### `pedido-entregado` — al entrar a Entregado
+
+> ¡Entregado, {{nombre_contacto}}! Que lo disfrutes 😋
+> Si algo no llegó como esperabas, cuéntame por acá y lo resolvemos.
+
+**Tres decisiones que el cliente tiene que tomar sobre estos textos**, y que la
+etapa 4 registra: si se tutea o se trata de usted, si se usan emojis y cuáles, y
+si el asistente se declara asistente o habla como el negocio. Nada de eso se
+decide aquí.
