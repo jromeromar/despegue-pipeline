@@ -28,7 +28,7 @@ cliente lee («Gosen casa de Comidas» → «Gocé en casa de comidas»; la tele
 salió «Sharina», «Yanina» y «Danina» en ocho segundos; «Pixo Gestión» salió
 «It's pizza», «BXO», «Pitso» y «Bitso»).
 
-Qué se verifica, en los cuatro lugares donde el contrato v0.3 lo declara
+Qué se verifica, en los cuatro lugares donde el contrato lo declara desde v0.3
 (`_meta.marca`, `_meta.razon_social`, cada persona, cada sistema): ¿la grafía de
 la ficha es una que **alguien de la empresa escribió**, o solo se oyó? Si solo se
 oyó, el estado dice `por_confirmar` y `variantes_en_transcripcion` trae las

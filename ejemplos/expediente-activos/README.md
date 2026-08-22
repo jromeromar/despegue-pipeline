@@ -6,8 +6,8 @@ los ignora (`clientes/` está en `.gitignore`).
 
 | Archivo | Etapa | Contrato con el que se emitió |
 |---|---|---|
-| `ficha-activos.json` | 1 · extracción | ficha **v0.3** (migrada desde v0.2.1) |
-| `diagnostico-activos.json` | 2 · evaluación | diagnóstico v0.1 |
+| `ficha-activos.json` | 1 · extracción | ficha **v0.4** (migrada desde v0.2.1) |
+| `diagnostico-activos.json` | 2 · evaluación | anterior a v0.2: **no declara `_contrato`** |
 | `propuesta-activos-v1.json` | 3 · selección | propuesta **v0.3** · librería **`639f4fc256`** (81 componentes) |
 
 ## Procedencia de la propuesta v1
@@ -40,7 +40,17 @@ se edita ni se borra.
 
 ## Las dos etapas anteriores
 
-`ficha-activos.json` está migrada al contrato v0.3 (nombres propios con grafía,
-estado y variantes). Como es una ficha **migrada y no reprocesada** contra la
-transcripción, todos sus nombres propios quedan `por_confirmar`: migrar no
-confirma nada. Por eso su validador sale con 0 y una advertencia `I9`.
+`ficha-activos.json` está migrada al contrato **v0.4**: los nombres propios con
+su grafía, estado y variantes (v0.3), y `emite_documento_formal` y
+`momento_de_cobro` por línea (v0.4). Como es una ficha **migrada y no
+reprocesada** contra la transcripción, todo eso queda sin resolver —los nombres
+en `por_confirmar` y los dos campos nuevos en `no_capturado`—: migrar no
+pregunta. Por eso su validador sale con 0 y **dos** advertencias: `I9` por los
+13 nombres propios pendientes y `K3` por las 6 líneas sin saber si emiten
+documento formal.
+
+`diagnostico-activos.json` es anterior al contrato v0.2 y no declara
+`_contrato`; su validador lo acepta y avisa con cuatro `6d` (los `por_que` de
+madurez son más cortos que lo que pide v0.2). Es la misma lógica que la
+propuesta: un archivo emitido no se reescribe para que encaje en un contrato
+que llegó después.

@@ -204,7 +204,8 @@ precios los escribe el script:
 
 **En este repo (se edita solo por commit):**
 - `.claude/skills/` — las etapas con sus contratos, ejemplos y validadores:
-  `extraccion-demo` (E0, incluye el guion de demo v3 y el QA),
+  `extraccion-demo` (E0, con el QA y dos guiones: **v4.1 es el vigente** —19
+  bloques— y v3 queda como referencia de auditoría para demos anteriores),
   `extraccion-diagnostico` (E1), `evaluacion-modular` (E2),
   `seleccion-propuesta` (E3) y `especificacion-blueprint` (E4, solo contrato)
 - `.claude/commands/diagnostico.md` y `.claude/commands/demo.md` — los flujos

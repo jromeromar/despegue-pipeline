@@ -55,7 +55,7 @@ una sesión de 60 minutos es señal de invención, no de calidad.
 
 ## Compuerta de confirmación de nombres propios
 
-El contrato v0.3 da dónde **registrar** que una grafía está por confirmar. Esta
+El contrato (desde v0.3) da dónde **registrar** que una grafía está por confirmar. Esta
 compuerta es lo que la **resuelve**: sin ella la duda queda escrita y nadie la
 levanta, y una grafía equivocada llega intacta al lienzo que el cliente lee.
 
