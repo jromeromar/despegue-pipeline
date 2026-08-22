@@ -275,7 +275,7 @@ Reglas del híbrido:
 
 Debe reportar el total y un hash de versión. Ese hash queda registrado en cada
 propuesta: es lo que permite saber si una propuesta vieja se hizo con librería
-vieja. Estado actual: **88 componentes, hash `ebfdbd2aa4`, distribución 32
+vieja. Estado actual: **88 componentes, hash `f92c2bb130`, distribución 32
 fundamental / 30 avanzado / 24 inteligente**, más **dos** componentes sin plan
 (la integración de plataforma propia y la impresión térmica de la comanda —
 correcto por V11: lo no nativo no viaja dentro del plan).
@@ -295,6 +295,10 @@ Cómo se llegó aquí desde `639f4fc256` (81 componentes, 30/29/21):
   (avanzado) y `gestion-precalificador` (inteligente) — de ahí el componente
   extra. La **C4** renombró `reactivacion-precalificacion-ia` a
   `reactivacion-absorcion-oleadas`.
+- Los once `aplica_si` del módulo Cierre pasaron a apoyarse en
+  `linea.emite_documento_formal` (ficha v0.4) en vez de en `ciclo_dias`. No
+  cambia ningún componente ni ningún plan — cambia la condición, que es campo
+  compilado, y por eso el hash se mueve.
 - `nutricion-encuesta-recalificacion` subió de avanzado a **inteligente**: se
   dispara tras la secuencia de no-respuesta, o sea por ausencia de acción, que
   es la prueba de pertenencia de Inteligente. Eso mueve un componente entre
