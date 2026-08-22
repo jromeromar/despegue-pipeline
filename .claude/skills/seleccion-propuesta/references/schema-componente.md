@@ -115,7 +115,15 @@ Dos casos donde el renderizador **no** dibuja una tarjeta por componente:
 etapas[]: { nombre, criterio_entrada, criterio_salida, sla_dias, es_perdida }
 motivos_perdida[]: texto
 objeto_base: oportunidad | objeto_personalizado
+sla_unidad: dias | horas | minutos        # v0.2.8 — ausente equivale a dias
 ```
+`sla_unidad` declara **en qué unidad están los números de `sla_dias`**. Ausente =
+`dias`, que es lo que asumen todos los pipelines anteriores a v0.2.8; el nombre
+del campo de la etapa se conserva por compatibilidad — es el número, y la unidad
+la fija `sla_unidad`. Origen (ago-2026): en un pipeline de ciclo corto el SLA se
+mide en **minutos**, y sin este campo un `sla_dias: 5` que significaba cinco
+minutos se leía como cinco días. Un SLA sin unidad declarada es una trampa
+esperando a alguien.
 
 ### `campos_personalizados`
 ```

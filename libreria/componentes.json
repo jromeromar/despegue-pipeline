@@ -1,7 +1,7 @@
 {
  "_meta": {
-  "total": 82,
-  "version": "f1f8871e22",
+  "total": 88,
+  "version": "ebfdbd2aa4",
   "fuente": ".claude/skills/seleccion-propuesta/references/modulos"
  },
  "componentes": {
@@ -200,7 +200,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 70,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "linea.mecanismo_de_cierre in [venta_directa, contrato_recurrente]",
+   "aplica_si": "linea.mecanismo_de_cierre in [venta_directa, contrato_recurrente] and linea.ciclo_dias != 0",
    "cierra_fugas": [
     "F-04"
    ],
@@ -217,7 +217,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 72,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "siempre",
+   "aplica_si": "linea.ciclo_dias != 0",
    "cierra_fugas": [
     "F-04"
    ],
@@ -249,7 +249,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 78,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "siempre",
+   "aplica_si": "linea.ciclo_dias != 0",
    "cierra_fugas": [],
    "mecanismo_entrega": "snapshot",
    "costo_externo": null,
@@ -294,7 +294,7 @@
    "visibilidad_cliente": "back",
    "posicion_journey": 85,
    "se_instancia_por": "[unico]",
-   "aplica_si": "siempre",
+   "aplica_si": "linea.ciclo_dias != 0",
    "cierra_fugas": [],
    "mecanismo_entrega": "snapshot",
    "costo_externo": null,
@@ -309,7 +309,7 @@
    "visibilidad_cliente": "front",
    "posicion_journey": 86,
    "se_instancia_por": "[linea_negocio]",
-   "aplica_si": "siempre",
+   "aplica_si": "linea.ciclo_dias != 0",
    "cierra_fugas": [],
    "mecanismo_entrega": "contenido_a_medida",
    "costo_externo": null,
@@ -327,6 +327,98 @@
    "aplica_si": "existe estructura.puntos_de_aprobacion",
    "cierra_fugas": [],
    "mecanismo_entrega": "snapshot",
+   "costo_externo": null,
+   "_archivo": "modulo-cierre.md"
+  },
+  "cierre-confirmacion-pedido": {
+   "id": "cierre-confirmacion-pedido",
+   "nombre_interno": "Plantilla de confirmación de pedido con detalle, demora estimada y confirmación interactiva de dirección",
+   "nombre_cliente": "El cliente recibe su pedido confirmado y cuánto va a demorar, sin que nadie escriba el mensaje",
+   "tipo": "plantilla_mensaje",
+   "plan_minimo": "fundamental",
+   "visibilidad_cliente": "front",
+   "posicion_journey": 71,
+   "se_instancia_por": "[linea_negocio]",
+   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "cierra_fugas": [],
+   "mecanismo_entrega": "contenido_a_medida",
+   "costo_externo": null,
+   "_archivo": "modulo-cierre.md"
+  },
+  "cierre-estados-del-pedido": {
+   "id": "cierre-estados-del-pedido",
+   "nombre_interno": "Pipeline de pedido de ciclo corto: recibido → en preparación → despachado → entregado",
+   "nombre_cliente": "Cada pedido con su estado visible: quién lo tiene, desde cuándo y qué falta",
+   "tipo": "pipeline",
+   "plan_minimo": "fundamental",
+   "visibilidad_cliente": "ambos",
+   "posicion_journey": 73,
+   "se_instancia_por": "[unico]",
+   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "cierra_fugas": [
+    "F-19"
+   ],
+   "mecanismo_entrega": "snapshot",
+   "costo_externo": null,
+   "_archivo": "modulo-cierre.md"
+  },
+  "cierre-despacho-a-sector": {
+   "id": "cierre-despacho-a-sector",
+   "nombre_interno": "Despacho de la comanda por sector de preparación vía notificación interna",
+   "nombre_cliente": "Cada sector ve solo su parte del pedido, en el momento en que entra a preparación",
+   "tipo": "automatizacion",
+   "plan_minimo": "avanzado",
+   "visibilidad_cliente": "back",
+   "posicion_journey": 75,
+   "se_instancia_por": "[funcion]",
+   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "cierra_fugas": [],
+   "mecanismo_entrega": "snapshot",
+   "costo_externo": null,
+   "_archivo": "modulo-cierre.md"
+  },
+  "cierre-aviso-de-avance": {
+   "id": "cierre-aviso-de-avance",
+   "nombre_interno": "Avisos al cliente en las transiciones a Despachado y Entregado, con confirmación de entrega por tercero",
+   "nombre_cliente": "El cliente se entera de que su pedido salió y de que llegó, sin preguntar",
+   "tipo": "automatizacion",
+   "plan_minimo": "avanzado",
+   "visibilidad_cliente": "front",
+   "posicion_journey": 81,
+   "se_instancia_por": "[linea_negocio]",
+   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "cierra_fugas": [],
+   "mecanismo_entrega": "snapshot",
+   "costo_externo": null,
+   "_archivo": "modulo-cierre.md"
+  },
+  "cierre-alerta-pedido-estancado": {
+   "id": "cierre-alerta-pedido-estancado",
+   "nombre_interno": "Alerta al coordinador por pedido que excede el SLA de su etapa",
+   "nombre_cliente": "El pedido que se quedó quieto lo descubre el sistema, no el cliente reclamando",
+   "tipo": "automatizacion",
+   "plan_minimo": "inteligente",
+   "visibilidad_cliente": "back",
+   "posicion_journey": 83,
+   "se_instancia_por": "[unico]",
+   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "cierra_fugas": [],
+   "mecanismo_entrega": "snapshot",
+   "costo_externo": null,
+   "_archivo": "modulo-cierre.md"
+  },
+  "cierre-impresion-comanda": {
+   "id": "cierre-impresion-comanda",
+   "nombre_interno": "Impresión de la comanda en impresora térmica de cocina",
+   "nombre_cliente": "La comanda sale impresa en la cocina, como hoy, pero disparada por el sistema",
+   "tipo": "integracion",
+   "plan_minimo": null,
+   "visibilidad_cliente": "back",
+   "posicion_journey": 77,
+   "se_instancia_por": "[unico]",
+   "aplica_si": "linea.ciclo_dias == 0 and linea.mecanismo_de_cierre == venta_directa",
+   "cierra_fugas": [],
+   "mecanismo_entrega": "integracion_externa",
    "costo_externo": null,
    "_archivo": "modulo-cierre.md"
   },
